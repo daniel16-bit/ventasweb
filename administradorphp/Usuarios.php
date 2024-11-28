@@ -1,11 +1,16 @@
 <?php 
 include 'models/conexion.php';
 
-$sql = "SELECT * FROM USUARIO";
+$sql = "SELECT * FROM USUARIO ";
 $result = $conexion->query($sql);
 
-if (!$result) {
-    die("Error en la consulta: " . $conexion->error);
+$usuarios = [];
+if ($result->num_rows > 0) {    
+    while ($row = $result->fetch_assoc()) { 
+        $usuarios[] = $row;
+    }
+} else {
+    echo "No se encontraron ciudades.";
 }
 ?>
 <!DOCTYPE html>
@@ -49,7 +54,7 @@ if (!$result) {
                     <li>
                         <hr class="dropdown-divider" />
                     </li>
-                    <li><a class="dropdown-item" href="../index_1.php">Cerrar sesión</a></li>
+                    <li><a class="dropdown-item" href="../index.php">Cerrar sesión</a></li>
                 </ul>
             </li>
         </ul>
@@ -175,32 +180,25 @@ if (!$result) {
                                     </thead>
                                    
                                     <tbody>
-                                        <?php if ($result->num_rows > 0): ?>
-                                            <?php while ($Usuario = $result->fetch_assoc()): ?>
+                                    <?php foreach ($usuarios as $usuario): ?>
                                                 <tr>
-                                                    <td><?php echo $Usuario['ID_Usuario']; ?></td>
-                                                    <td><?php echo $Usuario['Prime_Nombre']; ?></td>
-                                                    <td><?php echo $Usuario['Segundo_Nombre']; ?></td>
-                                                    <td><?php echo $Usuario['Prime_Apellido']; ?></td>
-                                                    <td><?php echo $Usuario['Segundo_Apellido']; ?></td>
-                                                    <td><?php echo $Usuario['Telefono']; ?></td>
-                                                    <td><?php echo $Usuario['Contraseña']; ?></td>
-                                                    <td><?php echo $Usuario['Correo']; ?></td>
+                                                    <td><?php echo $usuario['ID_Usuario']; ?></td>
+                                                    <td><?php echo $usuario['Prime_Nombre']; ?></td>
+                                                    <td><?php echo $usuario['Segundo_Nombre']; ?></td>
+                                                    <td><?php echo $usuario['Prime_Apellido']; ?></td>
+                                                    <td><?php echo $usuario['Segundo_Apellido']; ?></td>
+                                                    <td><?php echo $usuario['Telefono']; ?></td>
+                                                    <td><?php echo $usuario['Contraseña']; ?></td>
+                                                    <td><?php echo $usuario['Correo']; ?></td>
                                                     <td>  <a href="#?id=<?php echo $row['ID_Usuario']; ?>">
                                                         <i class='fas fa-edit' style='font-size:25px; color: #d63384;'></i>
                                                     </a>
-                                                    <a href="#" data-href="#?id=<?php echo $row['ID_Departamento']; ?>" data-bs-toggle="modal" data-bs-target="#confirmar-delete">
-                                                        <i class='fas fa-trash-alt' style='font-size:25px; color:rgb(255, 70, 70)'></i>
-                                                    </a></td>
+                                                    <a href="Usuarios.php?id=<?php echo $usuario['ID_Usuario']; ?>" data-bs-toggle="modal" data-bs-target="#confirmar-delete">
+                                                    <i class="fas fa-trash-alt" style="font-size:30px; color:rgb(255, 70, 70)" ></i>
+                                                  </a></td>
                                                 </tr>
-                                            <?php endwhile; ?>
-                                        <?php else: ?>
-                                            <tr>
-                                                <td colspan="8" class="text-center">No hay usuarios registrados.</td>
-                                            </tr>
-                                        <?php endif; ?>
-                                    </tbody>
-                                                                 
+                                    <?php endforeach; ?>
+                                    </tbody>                             
                                 </table>
                             </div>
                         </div>
@@ -218,6 +216,26 @@ if (!$result) {
                         </div>
                     </div>
                 </footer>
+            </div>
+        </div>
+
+         <!-- Modal de Confirmación de Eliminación -->
+    <div class="modal fade" id="confirmar-delete" tabindex="-1" role="dialog" aria-labelledby="confirmar-delete-label" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmar-delete-label">Confirmar eliminación</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>  
+                <div class="modal-body">
+                    ¿Estás seguro de que deseas eliminar este cliente?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <a href="controllers/eliminar_usuario.php?id=<?php echo $usuario['ID_Usuario']; ?>" id="btn-eliminar" class="btn btn-danger">Eliminar</a>
+                </div>
             </div>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>

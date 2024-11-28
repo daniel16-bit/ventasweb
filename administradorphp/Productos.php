@@ -1,4 +1,4 @@
-<?php
+<?php 
 include 'models/conexion.php';
 
 $sql = "SELECT 
@@ -14,6 +14,15 @@ PRODUCTO P
 JOIN 
 PROVEEDOR PR ON P.ID_Proveedor = PR.ID_Proveedor";
 $result = $conexion->query($sql);
+
+$productos = [];
+if ($result->num_rows > 0) {    
+    while ($row = $result->fetch_assoc()) { 
+        $productos[] = $row;
+    }
+} else {
+    echo "No se encontraron ciudades.";
+}
 ?>
 
 <!DOCTYPE html>
@@ -171,7 +180,7 @@ $result = $conexion->query($sql);
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
                                             data-bs-dismiss="modal">Cerrar</button>
-                                        <a href="Productos.html" class="btn1">Registrar</a>
+                                        <a href="Productos.php" class="btn1">Registrar</a>
                                     </div>
                                 </div>
                             </div>
@@ -201,27 +210,28 @@ $result = $conexion->query($sql);
                                                 <th>ID_Proveedor</th>
                                                 <th>Stock</th>
                                                 <th>Existencia</th>
+                                                <th>Editar</th>
                                             </tr>   
                                         </thead>
                                         <tbody>
-                                        <?php
-                                if ($result->num_rows > 0) {
-                                    while ($row = $result->fetch_assoc()) {
-                                        echo "<tr>
-                                                <td>{$row['ID_Producto']}</td>
-                                                <td>{$row['Nombre_Producto']}</td>
-                                                <td>{$row['ValorProducto']}</td>
-                                                <td>{$row['ValorVenta']}</td>
-                                                <td>{$row['Nombre_Proveedor']}</td>
-                                                <td>{$row['Stock']}</td>
-                                                <td>{$row['Existencia']}</td>
-                                              </tr>";
-                                              
-                                    }
-                                } else {
-                                    echo "<tr><td colspan='7'>No hay productos disponibles</td></tr>";
-                                }
-                                ?>
+                                        <?php foreach ($productos as $producto): ?>
+                                           <tr>
+                                                <td><?php echo $producto['ID_Producto'];?></td>
+                                                <td><?php echo $producto['Nombre_Producto'];?></td>
+                                                <td><?php echo $producto['ValorProducto'];?></td>
+                                                <td><?php echo $producto['ValorVenta'];?></td>
+                                                <td><?php echo $producto['Nombre_Proveedor'];?></td>
+                                                <td><?php echo $producto['Stock'];?></td>
+                                                <td><?php echo $producto['Existencia'];?></td>
+                                                <td><a href="modificar_ciudad.php?id=<?php echo $producto['ID_Producto']; ?>">
+                                                    <i class="fas fa-edit" style="font-size:30px; color: #d63384;"></i>
+                                                  </a>
+                                                  <a href="Productos.php?id=<?php echo $producto['ID_Producto']; ?>" data-bs-toggle="modal" data-bs-target="#confirmar-delete">
+                                                    <i class="fas fa-trash-alt" style="font-size:30px; color:rgb(255, 70, 70)" ></i>
+                                                  </a>
+                                              </td>  
+                                              </tr>
+                                              <?php endforeach; ?>
                                         </tbody>
                                     </table>
                                 </div>
@@ -242,6 +252,25 @@ $result = $conexion->query($sql);
                     </footer>
                 </div>
             </div>
+             <!-- Modal de Confirmación de Eliminación -->
+    <div class="modal fade" id="confirmar-delete" tabindex="-1" role="dialog" aria-labelledby="confirmar-delete-label" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmar-delete-label">Confirmar eliminación</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>  
+                <div class="modal-body">
+                    ¿Estás seguro de que deseas eliminar este cliente?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <a href="controllers/eliminar_producto.php?id=<?php echo $producto['ID_Producto']; ?>" id="btn-eliminar" class="btn btn-danger">Eliminar</a>
+                </div>
+            </div>
+        </div>
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
             <script src="js/scripts.js"></script>
             <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
