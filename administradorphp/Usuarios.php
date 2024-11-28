@@ -104,6 +104,7 @@ if ($result->num_rows > 0) {
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#miModal">
                         Registrar Usuario Nuevo
                     </button>
+                    <a href="Reportes/usuarios_pdf.php" class="btn btn-primary">Generar Reporte</a>
 
                     <!-- Modal -->
                    <!-- Modal -->

@@ -47,7 +47,7 @@ $where";
             <table id="datatablesSimple"  class="table table-striped">
             <div class="container" >
                 <a href="../Vendedores.php" class="btn btn-dark r" >Regresar</a>        
-                <a href="GenerarExcel_departamentos.php" class="btn btn-success">Generar Excel</a>       
+                <a href="GenerarExcel_vendedores.php" class="btn btn-success">Generar Excel</a>       
                 <a href="" class="btn btn-warning botimpr" onclick="window.print()">Imprimir/Descargar PDF</a>                
             </div>
             <div class="card-header">

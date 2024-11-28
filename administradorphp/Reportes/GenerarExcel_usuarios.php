@@ -1,3 +1,8 @@
+<?php
+header("Content-type: application/xls");
+header("Content-Disposition: attachement; filename = Excel.xls");
+?>
+
 <?php  
   include "../models/conexion.php";   
     $where ="";     
@@ -7,7 +12,7 @@
             $where = "WHERE nombre LIKE '%$valor%'";
         }
     }    
-    $sql = "SELECT * FROM CIUDAD $where";
+    $sql = "SELECT * FROM USUARIO $where";
     $resultado = $conexion->query($sql);
    ?>
 <!DOCTYPE html>
@@ -24,28 +29,23 @@
     <title>Departamentos</title>
 </head>
 <body>
-<div class="imagen-imprimir">
-    <img src="image.png" alt="" class="img-fluid" id="imagen-imprimir">
-</div> 
     <div class="card mb-4">
-         
+        <div class="card-header">
+            <i class="fas fa-table me-1"></i>
+            Tabla Departamentos
+        </div>  
         <div class="card-body">             
             <table id="datatablesSimple"  class="table table-striped">
-            <div class="container" >
-                <a href="../Ciudades.php" class="btn btn-dark r" >Regresar</a>        
-                <a href="GenerarExcel_ciudades.php" class="btn btn-success">Generar Excel</a>       
-                <a href="" class="btn btn-warning botimpr" onclick="window.print()">Imprimir/Descargar PDF</a>                
-            </div> 
-            <div class="card-header">
-            <i class="fas fa-table me-1"></i>
-            Tabla Ciudedes 
-        </div>  
                 <thead>
                     <tr>
-                        <th>ID_Ciudad</th>
-                        <th>Nombre_ciudad</th>
-                        <th>Pais</th>
-                        <th>Codigo postal</th>                  
+                    <th>ID_Usuario</th>
+                        <th>Prime_Nombre</th>
+                        <th>Segundo_Nombre</th>
+                        <th>Prime_Apellido</th>
+                        <th>Segundo_Apellido</th>
+                        <th>Telefono</th>
+                        <th>Contraseña</th>
+                        <th>correo</th>                 
                     </tr>
                 </thead>
                 <tbody>                
@@ -54,18 +54,21 @@
                         while ($row = $resultado->fetch_assoc()) {                          
                     ?>             
                             <tr>
-                            <td><?php echo $row['ID_Ciudad']; ?></td>
-                                <td><?php echo $row['Nombre_ciudad']; ?></td>
-                                <td><?php echo $row['Pais']; ?></td>
-                                <td><?php echo isset($row['Codigo_postal']) ? $row['Codigo_postal'] : ''; ?></td>                             
+                                <td><?php echo $row['ID_Usuario']; ?></td>
+                                <td><?php echo $row['Prime_Nombre']; ?></td>
+                                <td><?php echo $row['Segundo_Nombre']; ?></td>
+                                <td><?php echo $row['Prime_Apellido']; ?></td>
+                                <td><?php echo $row['Segundo_Apellido']; ?></td>
+                                <td><?php echo $row['Telefono']; ?></td>
+                                <td><?php echo $row['Contraseña']; ?></td>
+                                <td><?php echo $row['Correo']; ?></td>                         
                             </tr>
                             <?php
                         }
                     }
                     ?>
                 </tbody>
-            </table>
-                    
+            </table>            
         </div>
     </div>
     </div>

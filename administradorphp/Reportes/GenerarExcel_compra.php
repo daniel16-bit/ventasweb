@@ -1,3 +1,8 @@
+<?php
+header("Content-type: application/xls");
+header("Content-Disposition: attachement; filename = Excel.xls");
+?>
+
 <?php  
   include "../models/conexion.php";   
     $where ="";     
@@ -7,7 +12,26 @@
             $where = "WHERE nombre LIKE '%$valor%'";
         }
     }    
-    $sql = "SELECT * FROM CIUDAD $where";
+    $sql = "SELECT 
+    c.ID_Compra,
+    c.Fecha,
+    c.Cantidad,
+    p.Nombre AS Nombre_Producto,
+    u.Prime_Nombre AS Nombre_Vendedor,  
+    u.Prime_Apellido AS Apellido_Vendedor, 
+    v.Fecha AS Fecha_Venta,
+    v.Descuentos,
+    v.Total
+FROM 
+    COMPRA c
+JOIN 
+    PRODUCTO p ON c.ID_Producto = p.ID_Producto
+JOIN 
+    VENTA v ON c.ID_Compra = v.ID_Venta
+JOIN 
+    VENDEDOR vd ON v.ID_Vendedor = vd.ID_Vendedor
+JOIN 
+    USUARIO u ON vd.ID_Usuario = u.ID_Usuario; $where";
     $resultado = $conexion->query($sql);
    ?>
 <!DOCTYPE html>
@@ -24,28 +48,20 @@
     <title>Departamentos</title>
 </head>
 <body>
-<div class="imagen-imprimir">
-    <img src="image.png" alt="" class="img-fluid" id="imagen-imprimir">
-</div> 
     <div class="card mb-4">
-         
+        <div class="card-header">
+            <i class="fas fa-table me-1"></i>
+            Tabla Departamentos
+        </div>  
         <div class="card-body">             
             <table id="datatablesSimple"  class="table table-striped">
-            <div class="container" >
-                <a href="../Ciudades.php" class="btn btn-dark r" >Regresar</a>        
-                <a href="GenerarExcel_ciudades.php" class="btn btn-success">Generar Excel</a>       
-                <a href="" class="btn btn-warning botimpr" onclick="window.print()">Imprimir/Descargar PDF</a>                
-            </div> 
-            <div class="card-header">
-            <i class="fas fa-table me-1"></i>
-            Tabla Ciudedes 
-        </div>  
                 <thead>
                     <tr>
-                        <th>ID_Ciudad</th>
-                        <th>Nombre_ciudad</th>
-                        <th>Pais</th>
-                        <th>Codigo postal</th>                  
+                    <th>ID_Compra</th>
+                        <th>Fecha</th>
+                        <th>Cantidad</th>
+                        <th>Nombre Producto</th>
+                        <th>Nombre Vendedor</th>                  
                     </tr>
                 </thead>
                 <tbody>                
@@ -54,18 +70,18 @@
                         while ($row = $resultado->fetch_assoc()) {                          
                     ?>             
                             <tr>
-                            <td><?php echo $row['ID_Ciudad']; ?></td>
-                                <td><?php echo $row['Nombre_ciudad']; ?></td>
-                                <td><?php echo $row['Pais']; ?></td>
-                                <td><?php echo isset($row['Codigo_postal']) ? $row['Codigo_postal'] : ''; ?></td>                             
+                            <td><?php echo $row['ID_Compra']; ?></td>
+                                <td><?php echo $row['Fecha']; ?></td>
+                                <td><?php echo $row['Cantidad']; ?></td>
+                                <td><?php echo $row['Nombre_Producto']; ?></td>
+                                <td><?php echo $row['Nombre_Vendedor']. '' .$row['Apellido_Vendedor']; ?></td>                          
                             </tr>
                             <?php
                         }
                     }
                     ?>
                 </tbody>
-            </table>
-                    
+            </table>            
         </div>
     </div>
     </div>

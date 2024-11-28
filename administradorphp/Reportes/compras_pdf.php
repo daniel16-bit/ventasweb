@@ -40,7 +40,7 @@ JOIN
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Asegúrate de que jQuery esté incluido -->
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../css/styles.css" media="print">
-    <title>Departamentos</title>
+    <title>Compras</title>
 </head>
 <body>
     <div class="imagen-imprimir">
@@ -52,8 +52,8 @@ JOIN
         <div class="card-body">             
             <table id="datatablesSimple"  class="table table-striped">
             <div class="container" >
-                <a href="../Departamentos.php" class="btn btn-dark r" >Regresar</a>        
-                <a href="GenerarExcel_departamentos.php" class="btn btn-success">Generar Excel</a>       
+                <a href="../Compras.php" class="btn btn-dark r" >Regresar</a>        
+                <a href="GenerarExcel_compra.php" class="btn btn-success">Generar Excel</a>       
                 <a href="" class="btn btn-warning botimpr" onclick="window.print()">Imprimir/Descargar PDF</a>                
             </div>
             <div class="card-header">
