@@ -1,20 +1,19 @@
-<?php
+<?php 
 include 'models/conexion.php';
 
-// Consulta para obtener las ventas
-$query = "SELECT 
-    V.ID_Venta,
-    V.Fecha,
-    V.Descuentos,
-    V.Total,
-    C.Nombre AS Nombre_Cliente,
-    U.Prime_Nombre AS Nombre_Vendedor,
-    U.Prime_Apellido AS Apellido_Vendedor,
-    Z.NombreZona AS Nombre_Zona,
-    D.Nombre AS Nombre_Departamento,
-    P.Nombre AS Nombre_Producto
+$sql =  "SELECT 
+V.ID_Venta,
+V.Fecha,
+V.Descuentos,
+V.Total,
+C.Nombre AS Nombre_Cliente,
+U.Prime_Nombre AS Nombre_Vendedor,
+U.Prime_Apellido AS Apellido_Vendedor,
+Z.NombreZona AS Nombre_Zona,
+D.Nombre AS Nombre_Departamento,
+P.Nombre AS Nombre_Producto
 FROM 
-    VENTA V
+VENTA V
 INNER JOIN CLIENTE C ON V.ID_Cliente = C.ID_Cliente
 INNER JOIN VENDEDOR VE ON V.ID_Vendedor = VE.ID_Vendedor
 INNER JOIN USUARIO U ON VE.ID_Usuario = U.ID_Usuario
@@ -22,16 +21,19 @@ INNER JOIN ZONA Z ON V.ID_Zona = Z.ID_Zona
 INNER JOIN DEPARTAMENTO D ON V.ID_Departamento = D.ID_Departamento
 INNER JOIN PRODUCTO P ON V.ID_Producto = P.ID_Producto;
 ";
-
-// Ejecutar la consulta
-$result = $conexion->query($query);
-
-// Verificar si hay resultados
+$result = $conexion->query($sql);
 if (!$result) {
     die("Error en la consulta: " . $conexion->error);
 }
+$ventas = [];
+if ($result->num_rows > 0) {    
+    while ($row = $result->fetch_assoc()) { 
+        $ventas[] = $row;
+    }
+} else {
+    echo "No se encontraron compras.";
+}
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -238,8 +240,7 @@ if (!$result) {
 
                                         </thead>
                                         <tbody>
-                                    <?php if ($result->num_rows > 0): ?>
-                                        <?php while ($venta = $result->fetch_assoc()): ?>
+                                        <?php foreach ($ventas as $venta): ?>
                                             <tr>
                                                 <td><?php echo $venta['ID_Venta']; ?></td>
                                                 <td><?php echo $venta['Fecha']; ?></td>
@@ -249,20 +250,15 @@ if (!$result) {
                                                 <td><?php echo $venta['Nombre_Zona']; ?></td>
                                                 <td><?php echo $venta['Nombre_Departamento']; ?></td>
                                                 <td><?php echo $venta['Nombre_Producto']; ?></td>
-                                                <td><a href="modificar_cliente.php?id=<?php echo $clientes['ID_Cliente']; ?>">
+                                                <td><a href="modificar_venta.php?id=<?php echo $venta['ID_Venta']; ?>">
                                                       <i class="fas fa-edit" style="font-size:22px; color: #d63384;"></i>
                                                      </a>
-                                                    <a href="#" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#confirmar-delete" data-id="<?php echo $clientes['ID_Cliente']; ?>">
-                                                        <i class="fas fa-trash-alt" style="font-size:22px; color:rgb(255, 70, 70)"></i>
-                                                    </a>
+                                                     <a href="Ventas.php?id=<?php echo $venta['ID_Venta']; ?>" data-bs-toggle="modal" data-bs-target="#confirmar-delete">
+                                                    <i class="fas fa-trash-alt" style="font-size:30px; color:rgb(255, 70, 70)" ></i>
+                                                  </a>
                                                 </td>
                                             </tr>
-                                        <?php endwhile; ?>
-                                    <?php else: ?>
-                                        <tr>
-                                            <td colspan="9" class="text-center">No hay ventas registradas.</td>
-                                        </tr>
-                                    <?php endif; ?>
+                                            <?php endforeach; ?>
                                 </tbody>
                                     </table>
                                 </div>
@@ -283,9 +279,40 @@ if (!$result) {
                     </footer>
                 </div>
             </div>
+            <!-- Modal de Confirmación de Eliminación -->
+            <div class="modal fade" id="confirmar-delete" tabindex="-1" role="dialog" aria-labelledby="confirmar-delete-label" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="confirmar-delete-label">Confirmar eliminación</h5>
+                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>  
+                        <div class="modal-body">
+                            ¿Estás seguro de que deseas eliminar esta venta?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <a href="controllers/eliminar_venta.php?id=<?php echo $venta['ID_Venta']; ?>" id="btn-eliminar" class="btn btn-danger">Eliminar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
             <script src="js/scripts.js"></script>
             <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
             <script src="js/datatables-simple-demo.js"></script>
+
+            <!-- Script para actualizar el enlace del botón de confirmación de eliminación -->
+        <script>
+        // Script para actualizar el enlace de eliminación en el modal
+        $('#confirmar-delete').on('show.bs.modal', function(event) {
+            var button = $(event.relatedTarget); // Botón que activó el modal
+            var href = button.data('href'); // Extraer la URL de eliminación
+            var modal = $(this);
+            modal.find('#btn-eliminar').attr('href', href); // Actualizar el botón de eliminación
+        });
+    </script>
     </body>
 </html>
