@@ -165,11 +165,11 @@ if ($result->num_rows > 0) {
                                               <td><?php echo $provedor['Telefono']; ?></td>
                                               <td><?php echo isset($provedor['Dirección']) ? $provedor['Dirección'] : ''; ?></td>
                                               <td><a href="modificar_proveedor.php?id=<?php echo $provedor['ID_Proveedor']; ?>">
-    <i class="fas fa-edit" style="font-size:30px; color: #d63384;"></i>
-</a>
+                                                      <i class="fas fa-edit" style="font-size:30px; color: #d63384;"></i>
+                                                  </a>
 
                                                   <a href="Proveedores?id=<?php echo $city['ID_Proveedor']; ?>" data-bs-toggle="modal" data-bs-target="#confirmar-delete">
-                                                    <i class="fas fa-trash-alt" style="font-size:30px; color:rgb(255, 70, 70)" ></i></a>
+                                                       <i class="fas fa-trash-alt" style="font-size:30px; color:rgb(255, 70, 70)" ></i></a>
                                               </td>  
                                           </tr>
                                       <?php endforeach; ?>
