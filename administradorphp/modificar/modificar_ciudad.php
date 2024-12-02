@@ -1,5 +1,5 @@
 <?php
-include_once 'models/conexion.php';
+include_once '../models/conexion.php';
 $id_ciudad = $_GET['id'];
 $sql= "SELECT * FROM ciudad WHERE ID_Ciudad = '$id_ciudad'";
 $result= $conexion->query($sql);
@@ -17,7 +17,7 @@ $city = $result->fetch_array(MYSQLI_ASSOC);
 <body>    
     <div class="container">
         <h1 class="mt-4">Modificar Ciudad</h1>
-        <form action="controllers/modificar_ciudades.php" method="post">
+        <form action="../controllers/modificar_ciudades.php" method="post">
         <input type="hidden" name="id" value="<?php echo $_GET['id']; ?>" required>
             <div class="mb-3">
                 <label for="nombre" class="form-label">Nombre Ciudad</label>

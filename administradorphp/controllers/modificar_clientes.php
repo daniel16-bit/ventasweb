@@ -17,9 +17,13 @@ if (!empty($_POST['modificar'])) {
             // Ejecutar la consulta
             if (mysqli_query($conexion, $sql)) {
                 echo "Cliente actualizado exitosamente.";
-                header("Location../Clientes.php");
-            }   
-        } 
+                // Corregir la redirección
+                header("Location: ../Clientes.php"); // Asegúrate de poner el espacio después de "Location:"
+                exit(); // Asegúrate de terminar el script después de redirigir
+            } else {
+                echo "Error al actualizar el cliente: " . mysqli_error($conexion); // Mostrar error si no se puede actualizar
+            }
+        }
     } else {
         echo "Todos los campos son obligatorios.";
     }

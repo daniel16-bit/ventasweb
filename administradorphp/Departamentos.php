@@ -156,7 +156,7 @@ if ($result->num_rows > 0) {
                                                 <td><?php echo $departamento['ID_Departamento']; ?></td>
                                                 <td><?php echo $departamento['Nombre']; ?></td>
                                                 <td>
-                                                    <a href="modificar_departamento.php?id=<?php echo $departamento['ID_Departamento']; ?>">
+                                                    <a href="./modificar/modificar_departamento.php?id=<?php echo $departamento['ID_Departamento']; ?>">
                                                         <i class="fas fa-edit" style="font-size:30px; color: #d63384;"></i>
                                                     </a>
     

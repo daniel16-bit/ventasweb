@@ -50,7 +50,7 @@ if ($result->num_rows > 0) {
                     <li><a class="dropdown-item" href="#!">Ajustes</a></li>
                     <li><a class="dropdown-item" href="#!">Historial de Actividades</a></li>
                     <li><hr class="dropdown-divider" /></li>
-                    <li><a class="dropdown-item" href="../index_1.php">Cerrar sesión</a></li>
+                    <li><a class="dropdown-item" href="../index.php">Cerrar sesión</a></li>
                 </ul>
             </li>
         </ul>
@@ -97,7 +97,6 @@ if ($result->num_rows > 0) {
                 <div class="container-fluid px-4">
                     <h1 class="mt-4">PROVEEDORES</h1>
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#miModal">Registrar Proveedor nueva</button>
-                    <!-- Modal -->
                     <!-- Modal -->
 <div class="modal fade" id="miModal" tabindex="-1" aria-labelledby="miModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -164,7 +163,7 @@ if ($result->num_rows > 0) {
                                               <td><?php echo $provedor['Nombe']; ?></td>
                                               <td><?php echo $provedor['Telefono']; ?></td>
                                               <td><?php echo isset($provedor['Dirección']) ? $provedor['Dirección'] : ''; ?></td>
-                                              <td><a href="modificar_proveedor.php?id=<?php echo $provedor['ID_Proveedor']; ?>">
+                                              <td><a href="./modificar/modificar_proveedor.php?id=<?php echo $provedor['ID_Proveedor']; ?>">
                                                       <i class="fas fa-edit" style="font-size:30px; color: #d63384;"></i>
                                                   </a>
 

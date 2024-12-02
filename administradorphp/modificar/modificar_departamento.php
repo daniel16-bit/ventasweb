@@ -1,5 +1,5 @@
 <?php
-include_once 'models/conexion.php';
+include_once '../models/conexion.php';
 
 $id_departamento = $_GET['id'];
 $sql= "SELECT * FROM DEPARTAMENTO WHERE ID_Departamento = '$id_departamento'";
@@ -19,7 +19,7 @@ $departamento = $result->fetch_array(MYSQLI_ASSOC);
 <body>
     <div class="container">
         <h1 class="mt-4">Modificar Departamento</h1>
-        <form action="controllers/modificar_departamentos.php" method="POST">
+        <form action="../controllers/modificar_departamentos.php" method="POST">
         <input type="hidden" name="id" value="<?php echo $_GET['id']; ?>" required>
             <div class="mb-3">
                 <label for="nombre" class="form-label">Nombre del Departamento</label>

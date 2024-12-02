@@ -1,5 +1,5 @@
 <?php
-include_once 'models/conexion.php';
+include_once '../models/conexion.php';
 $id_zona = $_GET['id'];
 $sql = "SELECT 
             Z.ID_Zona, 
@@ -34,7 +34,7 @@ $result_departamentos = $conexion->query($sql_departamentos);
 <body>    
     <div class="container">
         <h1 class="mt-4">Modificar Zona</h1>
-        <form action="controllers/modificar_zonas.php" method="post">
+        <form action="../controllers/modificar_zonas.php" method="post">
             <input type="hidden" name="id" value="<?php echo $_GET['id']; ?>" required>
             
             <div class="mb-3">

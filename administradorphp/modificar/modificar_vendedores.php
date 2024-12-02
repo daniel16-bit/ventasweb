@@ -1,5 +1,5 @@
 <?php 
-include_once 'models/conexion.php';
+include_once '../models/conexion.php';
 if (isset($_GET['id'])) {
     $id_vendedor = $_GET['id'];
     $sql = "SELECT 
@@ -38,7 +38,7 @@ if (isset($_GET['id'])) {
 <body>
     <div class="container">
         <h1 class="mt-4">Modificar Vendedor</h1>
-        <form action="controllers/modificar_vendedor.php" method="post">
+        <form action="../controllers/modificar_vendedor.php" method="post">
             <input type="hidden" name="id" value="<?php echo $vendedor['ID_Vendedor']; ?>" required>
             <div class="mb-3">
                 <label for="nombre_completo" class="form-label">Nombre Completo del Vendedor</label>

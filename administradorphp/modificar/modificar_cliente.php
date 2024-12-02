@@ -1,5 +1,5 @@
 <?php
-include_once 'models/conexion.php';
+include_once '../models/conexion.php';
 $id_cliente = $_GET['id'];
 $sql = "SELECT * FROM CLIENTE WHERE ID_Cliente = ?";
 $stmt = $conexion->prepare($sql);
@@ -20,7 +20,7 @@ $clientes = $result->fetch_array(MYSQLI_ASSOC);
 <body>
     <div class="container">
         <h1 class="mt-4">Modificar Cliente</h1>
-        <form action="controllers/modificar_clientes.php" method="post">
+        <form action="../controllers/modificar_clientes.php" method="post">
             <input type="hidden" name="id" value="<?php echo $_GET['id']; ?>" required>   
             <div class="mb-3">
                 <label for="tipo" class="form-label">Tipo</label>

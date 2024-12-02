@@ -88,7 +88,7 @@ if ($result->num_rows > 0) {
                             </a>
                             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">                                 
-                                    <a class="nav-link" href="layout-static.html">Departamentos</a>
+                                    <a class="nav-link" href="Departamentos.php">Departamentos</a>
                                     <a class="nav-link" href="Ciudades.php">Ciudades</a>
                                     <a class="nav-link" href="Zonas.php">Zonas</a>
                                     <a class="nav-link" href="Clientes.php">Clientes</a>
@@ -172,7 +172,7 @@ if ($result->num_rows > 0) {
                                             <td><?php echo $compra['Nombre_Producto']; ?></td>
                                             <td><?php echo $compra['Nombre_Vendedor'] . ''. $compra['Apellido_Vendedor']; ?></td>
                                                 
-                                              <td><a href="modificar_compra.php?id=<?php echo $compra['ID_Compra']; ?>">
+                                              <td><a href="./modificar/modificar_compra.php?id=<?php echo $compra['ID_Compra']; ?>">
                                                       <i class="fas fa-edit" style="font-size:30px; color: #d63384;"></i>
                                                   </a>
                                                   <a href="Compras.php?id=<?php echo $compra['ID_Compra']; ?>" data-bs-toggle="modal" data-bs-target="#confirmar-delete">

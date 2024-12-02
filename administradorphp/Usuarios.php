@@ -106,7 +106,6 @@ if ($result->num_rows > 0) {
                     </button>
                     <a href="Reportes/usuarios_pdf.php" class="btn btn-primary">Generar Reporte</a>
 
-                    <!-- Modal -->
                    <!-- Modal -->
 <div class="modal fade" id="miModal" tabindex="-1" aria-labelledby="miModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -139,6 +138,12 @@ if ($result->num_rows > 0) {
 
                     <label for="contraseña" class="form-label">Contraseña</label>
                     <input type="password" class="form-control" name="contraseña" placeholder="Contraseña" required>
+                    
+                    <label for="rol" class="form-label">Rol</label>
+                    <select name="rol" class="form-control" required>
+                        <option value="administrador">Administrador</option>
+                        <option value="vendedor">Vendedor</option>
+                    </select>
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
@@ -164,11 +169,11 @@ if ($result->num_rows > 0) {
                                 <i class="fas fa-table me-1"></i>
                                 Tabla Clientes
                             </div>
-                            <div class="card-body">
+                            <div class="table-striped">
                                 <table id="datatablesSimple">
                                     <thead>
                                         <tr>
-                                            <th>ID_Usuario</th>
+                                            <th>ID</th>
                                             <th>Prime_Nombre</th>
                                             <th>Segundo_Nombre</th>
                                             <th>Prime_Apellido</th>
@@ -176,6 +181,7 @@ if ($result->num_rows > 0) {
                                             <th>Telefono</th>
                                             <th>Contraseña</th>
                                             <th>correo</th>
+                                            <th>rol</th>
                                             <th>Editar</th>
                                         </tr>
                                     </thead>
@@ -191,9 +197,11 @@ if ($result->num_rows > 0) {
                                                     <td><?php echo $usuario['Telefono']; ?></td>
                                                     <td><?php echo $usuario['Contraseña']; ?></td>
                                                     <td><?php echo $usuario['Correo']; ?></td>
-                                                    <td>  <a href="#?id=<?php echo $row['ID_Usuario']; ?>">
-                                                        <i class='fas fa-edit' style='font-size:25px; color: #d63384;'></i>
-                                                    </a>
+                                                    <td><?php echo $usuario['rol'];?> </td>
+                                                    <td>  <a href="./modificar/modificar_usuario.php?id=<?php echo $usuario['ID_Usuario']; ?>">
+    <i class='fas fa-edit' style='font-size:25px; color: #d63384;'></i>
+</a>
+
                                                     <a href="Usuarios.php?id=<?php echo $usuario['ID_Usuario']; ?>" data-bs-toggle="modal" data-bs-target="#confirmar-delete">
                                                     <i class="fas fa-trash-alt" style="font-size:30px; color:rgb(255, 70, 70)" ></i>
                                                   </a></td>

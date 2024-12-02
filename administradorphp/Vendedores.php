@@ -46,7 +46,7 @@ if ($result->num_rows > 0) {
 <body>
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
         <!-- Navbar Brand-->
-        <a class="navbar-brand ps-3" href="iDashboard.php">Start Bootstrap</a>
+        <a class="navbar-brand ps-3" href="iDashboard.php">ADMINISTRACIÓN</a>
         <!-- Sidebar Toggle-->
         <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
                 class="fas fa-bars"></i></button>
@@ -68,7 +68,7 @@ if ($result->num_rows > 0) {
                     <li><a class="dropdown-item" href="#!">Ajustes</a></li>
                     <li><a class="dropdown-item" href="#!">Regidtro de actividaes</a></li>
                     <li><hr class="dropdown-divider" /></li>
-                    <li><a class="dropdown-item" href="../index_1.php">Cerrar sesión</a></li>
+                    <li><a class="dropdown-item" href="../index.php">Cerrar sesión</a></li>
                 </ul>
             </li>
         </ul>
@@ -155,41 +155,41 @@ if ($result->num_rows > 0) {
                         Registrar Vendedor Nuevo
                     </button>
                     <a href="Reportes/Vendedores_pdf.php" class="btn btn-primary">Generar Reporte</a>
-<!-- Modal para Registrar Zona y Vendedor -->
-<div class="modal fade" id="miModal" tabindex="-1" aria-labelledby="miModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="miModalLabel">
-                    <h2 class="text-center mb-4">Registrar Zona y Vendedor</h2>
-                </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form action="controllers/registrar_vendedores.php" method="POST">
-                    <!-- Registrar Zona -->
-                    <div class="mb-3">
-                        <label for="nombreZona" class="form-label">Nombre de la Zona</label>
-                        <input type="text" class="form-control" id="nombreZona" name="nombreZona" required>
+                    <!-- Modal para Registrar Zona y Vendedor -->
+                    <div class="modal fade" id="miModal" tabindex="-1" aria-labelledby="miModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="miModalLabel">
+                                        <h2 class="text-center mb-4">Registrar Zona y Vendedor</h2>
+                                    </h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="controllers/registrar_vendedores.php" method="POST">
+                                        <!-- Registrar Zona -->
+                                        <div class="mb-3">
+                                            <label for="nombreZona" class="form-label">Nombre de la Zona</label>
+                                            <input type="text" class="form-control" id="nombreZona" name="nombreZona" required>
+                                        </div>
+                                        <!-- Registrar Usuario (Vendedor) -->
+                                        <div class="mb-3">
+                                            <label for="nombreUsuario" class="form-label">Nombre del Vendedor</label>
+                                            <input type="text" class="form-control" id="nombreUsuario" name="nombreUsuario" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="apellidoUsuario" class="form-label">Apellido del Vendedor</label>
+                                            <input type="text" class="form-control" id="apellidoUsuario" name="apellidoUsuario" required>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                            <button type="submit" class="btn btn-primary">Registrar</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <!-- Registrar Usuario (Vendedor) -->
-                    <div class="mb-3">
-                        <label for="nombreUsuario" class="form-label">Nombre del Vendedor</label>
-                        <input type="text" class="form-control" id="nombreUsuario" name="nombreUsuario" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="apellidoUsuario" class="form-label">Apellido del Vendedor</label>
-                        <input type="text" class="form-control" id="apellidoUsuario" name="apellidoUsuario" required>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                        <button type="submit" class="btn btn-primary">Registrar</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
 
                     <!-- Modal -->
                     <div class="sb-sidenav-footer">
@@ -223,7 +223,7 @@ if ($result->num_rows > 0) {
                                                 <td><?php echo $vendedor['Nombre_Vendedor'] . ' ' . $vendedor['Segundo_Nombre_Vendedor'] . ' ' . $vendedor['Apellido_Vendedor'] . ' ' . $vendedor['Segundo_Apellido_Vendedor']; ?></td>
                                                 <td><?php echo $vendedor['Zona']; ?></td>
                                                 <td>
-                                                    <a href="modificar_vendedores.php?id=<?php echo $vendedor['ID_Vendedor']; ?>">
+                                                    <a href="./modificar/modificar_vendedores.php?id=<?php echo $vendedor['ID_Vendedor']; ?>">
                                                         <i class="fas fa-edit" style="font-size:30px; color: #d63384;"></i>
                                                     </a>
                                                     <a href="?id=<?php echo $vendedor['ID_Vendedor']; ?>" data-bs-toggle="modal" data-bs-target="#confirmar-delete">

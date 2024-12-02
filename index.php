@@ -1,7 +1,3 @@
-<?php 
-include 'models/conexion.php';
-
-?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -13,6 +9,7 @@ include 'models/conexion.php';
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="styles2.css"> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <!--barra de navegacion-->
@@ -24,7 +21,7 @@ include 'models/conexion.php';
       <span class="navbar-toggler-icon"></span>
     </button>
     <ul class="nav_list">
-      <li class="nav_item"><a href="index_1.php" class="nav_link">Inicio</a></li>
+      <li class="nav_item"><a href="index.php" class="nav_link">Inicio</a></li>
       <li class="nav_item"><a href="#SERVICIOS ESPECIALIZADOS" class="nav_link"></a></li>
       <li class="nav_item"><a href="./colfar 2.5.5/index.html" class="nav_link">Productos</a>
    
@@ -57,11 +54,11 @@ include 'models/conexion.php';
     <div class="listas">  
         <div class="list1">
             <ul class="sty">
-               <li><a href="#" class="listas_medi"><i class="fa fa-check" aria-hidden="true"></i>Antiácidos</a></li>
-               <li><a href="#" class="listas_medi"><i class="fa fa-check" aria-hidden="true"></i>Antidiarreicos</a></li>
-               <li><a href="#" class="listas_medi"><i class="fa fa-check" aria-hidden="true"></i>Calcios</a></li>
-               <li><a href="#" class="listas_medi"><i class="fa fa-check" aria-hidden="true"></i>Complementos Nutricionales</a></li>
-               <li><a href="#" class="listas_medi"><i class="fa fa-check" aria-hidden="true"></i>Suplementos Dietarios</a></li>
+               <li><a href="medicamentos/index -categoria2-alimentosybebidas.html" class="listas_medi"><i class="fa fa-check" aria-hidden="true"></i>Alimentos y Bebidas</a></li>
+               <li><a href="medicamentos/index -categoria3-fitoterapeuicosynaturales.html" class="listas_medi"><i class="fa fa-check" aria-hidden="true"></i>fitotera peuicos y naturales</a></li>
+               <li><a href="medicamentos/index -categoria4-dermocosmetico.html" class="listas_medi"><i class="fa fa-check" aria-hidden="true"></i>dermocosmetico</a></li>
+               <li><a href="medicamentos/index -categoria5-medicamento - page-2.html" class="listas_medi"><i class="fa fa-check" aria-hidden="true"></i>medicamento</a></li>
+               <li><a href="medicamentos/index -categoria6-saludsexual.html" class="listas_medi"><i class="fa fa-check" aria-hidden="true"></i>saludsexual</a></li>
             </ul>
         </div>
         <div  class="list2"> 
@@ -251,16 +248,16 @@ include 'models/conexion.php';
   </div>
 
   <!--imagen whatsapp-->
-  <a href="https://web.whatsapp.com/" target="_blank" ><img src="./img/whatsapp.png" alt="" class="whatsapp-button"></a>
+  <a href="https://wa.me/573001577611?text=¡Hola!%20Me%20interesa%20más%20información%20sobre%20la%20empresa%20Colfar" target="_blank" ><img src="./img/whatsapp.png" alt="" class="whatsapp-button"></a>
 
   <!--foooter-->
   <footer>
       <img class="logo_2" src="./img/colfarprecargador.png" alt="">
     <div>
       <ul class="lis_stile">
-         <li class="lista_footer"><a class="lis_foo" href="index_1.html">Inicio</a></li>
+         <li class="lista_footer"><a class="lis_foo" href="index.php">Inicio</a></li>
          <li class="lista_footer"><a class="lis_foo" href="#SERVICIOS ESPECIALIZADOS">Sevicios</a></li>
-         <li class="lista_footer"><a class="lis_foo" href="./colfar 2.5.5/index.html">productos</a></li>
+         <li class="lista_footer"><a class="lis_foo" href="./colfar 2.5.5/index.php">productos</a></li>
          <li class="lista_footer"><a class="lis_foo" href="./contacto.html">Contactenos</a></li>
       </ul>
     </div>

@@ -59,7 +59,7 @@ if ($result->num_rows > 0) {
                         <li><a class="dropdown-item" href="#!">Ajustes</a></li>
                         <li><a class="dropdown-item" href="#!">Historial de Actividades</a></li>
                         <li><hr class="dropdown-divider" /></li>
-                        <li><a class="dropdown-item" href="../index_1.php">Cerrar sesión</a></li>
+                        <li><a class="dropdown-item" href="../index.php">Cerrar sesión</a></li>
                     </ul>
                 </li>
             </ul>
@@ -211,6 +211,7 @@ if ($result->num_rows > 0) {
                                                 <th>Stock</th>
                                                 <th>Existencia</th>
                                                 <th>Editar</th>
+                                                <th>Eliminar</th>
                                             </tr>   
                                         </thead>
                                         <tbody>
@@ -225,7 +226,8 @@ if ($result->num_rows > 0) {
                                                 <td><?php echo $producto['Existencia'];?></td>
                                                 <td><a href="modificar_ciudad.php?id=<?php echo $producto['ID_Producto']; ?>">
                                                     <i class="fas fa-edit" style="font-size:30px; color: #d63384;"></i>
-                                                  </a>
+                                                  </a></td>
+                                                  <td>
                                                   <a href="Productos.php?id=<?php echo $producto['ID_Producto']; ?>" data-bs-toggle="modal" data-bs-target="#confirmar-delete">
                                                     <i class="fas fa-trash-alt" style="font-size:30px; color:rgb(255, 70, 70)" ></i>
                                                   </a>

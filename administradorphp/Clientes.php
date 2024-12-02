@@ -160,7 +160,7 @@ if ($result->num_rows > 0) {
                                                 <td><?php echo $cliente['Nombre']; ?></td>
                                                 <td><?php echo $cliente['Telefono']; ?></td>
                                                 <td><?php echo $cliente['Direccion']; ?></td>
-                                                <td><a href="modificar_cliente.php?id=<?php echo $cliente['ID_Cliente']; ?>">
+                                                <td><a href="./modificar/modificar_cliente.php?id=<?php echo $cliente['ID_Cliente']; ?>">
                                                       <i class="fas fa-edit" style="font-size:30px; color: #d63384;"></i>
                                                     </a>
                                                     <a href="Clientes.php?id=<?php echo $cliente['ID_Cliente']; ?>" data-bs-toggle="modal" data-bs-target="#confirmar-delete">

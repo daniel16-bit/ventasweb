@@ -172,6 +172,17 @@ li.nav_item {
     transform: scale(0.95); /* Efecto de reducción al hacer clic */
 }
 
+.text-danger {
+    color: red; /* Color del texto */
+        background-color: #ffc5ca; /* Color de fondo */
+        border: 1px solid #f5c6cb; /* Borde del cuadro */
+        padding: 10px;
+        margin: 20px 0;
+        border-radius: 5px;
+        text-align: center;
+        font-weight: bold; /* Texto en negrita */
+}
+
 /*form.crea_cuenta*/
 
 .bg {

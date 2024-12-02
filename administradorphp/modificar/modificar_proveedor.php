@@ -1,5 +1,5 @@
 <?php
-include_once 'models/conexion.php';
+include_once '../models/conexion.php';
 
 $id_proveedor = $_GET['id'];
 $sql = "SELECT * FROM PROVEEDOR WHERE ID_Proveedor = '$id_proveedor'";
@@ -22,7 +22,7 @@ if ($result->num_rows > 0) {
 <body>
     <div class="container">
         <h1 class="mt-4">Modificar Proveedor</h1>
-        <form action="controllers/modificar_provedores.php" method="post">
+        <form action="../controllers/modificar_provedores.php" method="post">
             <!-- Campo oculto para pasar el ID -->
             <input type="hidden" name="id" value="<?php echo $id_proveedor; ?>" required>
             <div class="mb-3">

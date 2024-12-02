@@ -13,6 +13,10 @@ if ($result->num_rows > 0) {
     echo "No se encontraron ciudades.";
 }
 ?>
+<?php
+session_start();
+if(isset($_SESSION['Prime_Nombre']));
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -36,8 +40,7 @@ if ($result->num_rows > 0) {
         <!-- Navbar Search-->
         <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
             <div class="input-group">
-                <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..."
-                    aria-describedby="btnNavbarSearch" />
+            <p class="text-light">Usted ingresó como:<?php echo $_SESSION['Prime_Nombre']; ?></p>
                 <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i
                         class="fas fa-search"></i></button>
             </div>
@@ -154,7 +157,7 @@ if ($result->num_rows > 0) {
                                               <td><?php echo $city['Nombre_ciudad']; ?></td>
                                               <td><?php echo $city['Pais']; ?></td>
                                               <td><?php echo isset($city['Codigo_postal']) ? $city['Codigo_postal'] : ''; ?></td>
-                                              <td><a href="modificar_ciudad.php?id=<?php echo $city['ID_Ciudad']; ?>">
+                                              <td><a href="./modificar/modificar_ciudad.php?id=<?php echo $city['ID_Ciudad']; ?>">
                                                     <i class="fas fa-edit" style="font-size:30px; color: #d63384;"></i>
                                                   </a>
                                                   <a href="Ciudades.php?id=<?php echo $city['ID_Ciudad']; ?>" data-bs-toggle="modal" data-bs-target="#confirmar-delete">

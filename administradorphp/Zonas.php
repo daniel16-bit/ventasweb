@@ -60,7 +60,7 @@ if ($result->num_rows > 0) {
                     <li><a class="dropdown-item" href="#!">Ajustes</a></li>
                     <li><a class="dropdown-item" href="#!">Regidtro de actividaes</a></li>
                     <li><hr class="dropdown-divider"/></li>
-                    <li><a class="dropdown-item" href="../index_1.php">Cerrar sesion</a></li>
+                    <li><a class="dropdown-item" href="../index.php">Cerrar sesion</a></li>
                 </ul>
             </li>
         </ul>
@@ -163,7 +163,7 @@ if ($result->num_rows > 0) {
                                                   <td><?php echo $zona['ID_Zona']; ?></td>
                                                   <td><?php echo $zona['NombreZona']; ?></td>
                                                   <td><?php echo $zona['NombreDepartamento']; ?></td>
-                                                  <td><a href="modificar_zona.php?id=<?php echo $zona['ID_Zona']; ?>">
+                                                  <td><a href="./modificar/modificar_zona.php?id=<?php echo $zona['ID_Zona']; ?>">
                                                           <i class="fas fa-edit" style="font-size:30px; color: #d63384;"></i>
                                                       </a>
                                                     <a href="Zonas.php" data-bs-toggle="modal" data-bs-target="#confirmar-delete">
