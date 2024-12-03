@@ -41,8 +41,6 @@ if(isset($_SESSION['Prime_Nombre']));
         <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
             <div class="input-group">
             <p class="text-light">Usted ingresó como:<?php echo $_SESSION['Prime_Nombre']; ?></p>
-                <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i
-                        class="fas fa-search"></i></button>
             </div>
         </form>
         <!-- Navbar-->
@@ -128,7 +126,6 @@ if(isset($_SESSION['Prime_Nombre']));
                         </div>
                     </div>
                     <div class="sb-sidenav-footer">
-                        <div>Usted ingresó como:</div>
                         <div>Administrador</div>
                     </div>
                 </div>
