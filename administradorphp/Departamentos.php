@@ -26,18 +26,12 @@ if(isset($_SESSION['Prime_Nombre']));
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Departamentos</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <title>Departamentos - Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="css/styles.css">
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
-
-
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-        crossorigin="anonymous"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -45,19 +39,17 @@ if(isset($_SESSION['Prime_Nombre']));
         <!-- Navbar Brand-->
         <a class="navbar-brand ps-3" href="Dashboard.php">ADMINISTRACIÓN</a>
         <!-- Sidebar Toggle-->
-        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
-                class="fas fa-bars"></i></button>
+        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
         <!-- Navbar Search-->
         <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
             <div class="input-group">
-            <p class="text-light">Usted ingresó como:<?php echo $_SESSION['Prime_Nombre']; ?></p>
+                <p class="text-light">Usted ingresó como:<?php echo $_SESSION['Prime_Nombre']; ?></p>
             </div>
         </form>
         <!-- Navbar-->
         <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
-                    aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                     <li><a class="dropdown-item" href="#!">Ajustes</a></li>
                     <li><a class="dropdown-item" href="#!">Historial de Actividades</a></li>
@@ -135,14 +127,13 @@ if(isset($_SESSION['Prime_Nombre']));
                                 </div>
                             </div>
                             <div class="sb-sidenav-footer">
-                               <div>Usted ingresó como:</div>
                                 <div>Administrador</div> 
-                            </div>       
-            <main>
+                            </div> 
+                        </div>      
+                <main>
                         <div class="card mb-4">
-                            <div class="card-header">
-                                <i class="fas fa-table me-1"></i>Tabla Departamentos</div>
-                            <div class="card-body">
+                            <div class="card-header"><i class="fas fa-table me-1"></i>Tabla Departamentos</div>
+                              <div class="card-body">
                                 <table id="datatablesSimple">
                                     <thead>
                                         <tr>
@@ -185,7 +176,7 @@ if(isset($_SESSION['Prime_Nombre']));
                         </div>
                     </div>
                 </div>
-            </footer>
+            </footer>     
         </div>
     </div>
          <!-- Modal de confirmación -->
@@ -199,7 +190,7 @@ if(isset($_SESSION['Prime_Nombre']));
                     </button>
                 </div>  
                 <div class="modal-body">
-                    ¿Estás seguro de que deseas eliminar este cliente?
+                    ¿Estás seguro de que deseas eliminar este Departamento?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -213,7 +204,6 @@ if(isset($_SESSION['Prime_Nombre']));
         crossorigin="anonymous"></script>
     <script src="js/datatables-simple-demo.js"></script>
     <script>
-        // Script para actualizar el enlace de eliminación en el modal
 $('#confirmar-delete').on('show.bs.modal', function(event) {
     var button = $(event.relatedTarget); // Botón que activó el modal
     var href = button.data('href'); // Extraer la URL de eliminación

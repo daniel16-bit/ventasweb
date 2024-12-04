@@ -25,7 +25,7 @@ if(isset($_SESSION['Prime_Nombre']));
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Ciudades - SB Admin</title>
+    <title>Ciudades - Admin</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="css/styles.css">
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
@@ -33,14 +33,13 @@ if(isset($_SESSION['Prime_Nombre']));
 <body>
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
         <!-- Navbar Brand-->
-        <a class="navbar-brand ps-3" href="Dashboard.html">ADMINISTRACIÓN</a>
+        <a class="navbar-brand ps-3" href="Dashboard.php">ADMINISTRACIÓN</a>
         <!-- Sidebar Toggle-->
-        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
-                class="fas fa-bars"></i></button>
+        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
         <!-- Navbar Search-->
         <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
             <div class="input-group">
-            <p class="text-light">Usted ingresó como:<?php echo $_SESSION['Prime_Nombre']; ?></p>
+                <p class="text-light">Usted ingresó como:<?php echo $_SESSION['Prime_Nombre']; ?></p>
             </div>
         </form>
         <!-- Navbar-->
@@ -130,14 +129,11 @@ if(isset($_SESSION['Prime_Nombre']));
                     </div>
                 </div>
                 <main>
-                    <div id="layoutSidenav_content">
-                      <div class="card mb-4">
-                            <div class="card-header">
-                                <i class="fas fa-table me-1"></i>
-                                Tabla Ciudades
-                            </div>
-                            <div class="card-body">
-                                <table id="datatablesSimple">
+                    <div class="card mb-4">
+                        <div class="card-header"><i class="fas fa-table me-1"></i>Tabla Ciudades</div>
+                        <div class="card-body">
+                              <div class="card-body">
+                              <table id="datatablesSimple">
                                     <thead>
                                         <tr>
                                           <th>ID_Ciudad</th>
@@ -184,32 +180,30 @@ if(isset($_SESSION['Prime_Nombre']));
             </div>
         </div>
         <!-- Modal de Confirmación de Eliminación -->
-    <div class="modal fade" id="confirmar-delete" tabindex="-1" role="dialog" aria-labelledby="confirmar-delete-label" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="confirmar-delete-label">Confirmar eliminación</h5>
-                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>  
-                <div class="modal-body">
-                    ¿Estás seguro de que deseas eliminar este cliente?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <a href="controllers/eliminar_ciudad.php?id=<?php echo $city['ID_Ciudad']; ?>" id="btn-eliminar" class="btn btn-danger">Eliminar</a>
+        <div class="modal fade" id="confirmar-delete" tabindex="-1" role="dialog" aria-labelledby="confirmar-delete-label" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="confirmar-delete-label">Confirmar eliminación</h5>
+                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>  
+                    <div class="modal-body">
+                        ¿Estás seguro de que deseas eliminar este ciudad?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <a href="controllers/eliminar_ciudad.php?id=<?php echo $city['ID_Ciudad']; ?>" id="btn-eliminar" class="btn btn-danger">Eliminar</a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="js/scripts.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
         <script src="js/datatables-simple-demo.js"></script>
-        <!-- Script para actualizar el enlace del botón de confirmación de eliminación -->
         <script>
-        // Script para actualizar el enlace de eliminación en el modal
         $('#confirmar-delete').on('show.bs.modal', function(event) {
             var button = $(event.relatedTarget); // Botón que activó el modal
             var href = button.data('href'); // Extraer la URL de eliminación

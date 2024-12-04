@@ -23,13 +23,10 @@
     <ul class="nav_list">
       <li class="nav_item"><a href="index.php" class="nav_link">Inicio</a></li>
       <li class="nav_item"><a href="#SERVICIOS ESPECIALIZADOS" class="nav_link"></a></li>
-      <li class="nav_item"><a href="./colfar 2.5.5/index.html" class="nav_link">Productos</a>
-   
-      </li>
+      <li class="nav_item"><a href="./colfar 2.5.5/index.html" class="nav_link">Productos</a></li>
       <li class="nav_item"><a href="contacto.html" class="nav_link">Contacto</a></li>
       <li class="nav_item"><a href="./formularios/formulario.php" class="nav_btn link_button">Long in</a>
         <ul class="submenu">
-
     </ul>
       </li>
     </ul>
