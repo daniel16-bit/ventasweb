@@ -57,7 +57,7 @@
 
                 // Redirigimos según el rol del usuario
                 if($row['rol'] == 'vendedor'){ // Ten en cuenta que debes coincidir los roles correctamente
-                    header('Location: ../../vendedor/DashboardVendedor.html');
+                    header('Location: ../../vendedor/DashboardVendedor.php');
                 } elseif($row['rol'] == 'administrador'){
                     header('Location: ../Dashboard.php');
                 }

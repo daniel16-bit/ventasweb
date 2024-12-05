@@ -218,24 +218,24 @@ if(isset($_SESSION['Prime_Nombre']));
                                             </tr>   
                                         </thead>
                                         <tbody>
-                                        <?php foreach ($productos as $producto): ?>
-                                           <tr>
-                                                <td><?php echo $producto['ID_Producto'];?></td>
-                                                <td><?php echo $producto['Nombre_Producto'];?></td>
-                                                <td><?php echo $producto['ValorProducto'];?></td>
-                                                <td><?php echo $producto['ValorVenta'];?></td>
-                                                <td><?php echo $producto['Nombre_Proveedor'];?></td>
-                                                <td><?php echo $producto['Stock'];?></td>
-                                                <td><?php echo $producto['Existencia'];?></td>
-                                                <td><a href="modificar_ciudad.php?id=<?php echo $producto['ID_Producto']; ?>">
-                                                    <i class="fas fa-edit" style="font-size:30px; color: #d63384;"></i>
-                                                  </a></td>
-                                                  <td>
-                                                  <a href="Productos.php?id=<?php echo $producto['ID_Producto']; ?>" data-bs-toggle="modal" data-bs-target="#confirmar-delete">
-                                                    <i class="fas fa-trash-alt" style="font-size:30px; color:rgb(255, 70, 70)" ></i>
-                                                  </a>
-                                              </td>  
-                                              </tr>
+                                            <?php foreach ($productos as $producto): ?>
+                                               <tr>
+                                                    <td><?php echo $producto['ID_Producto'];?></td>
+                                                    <td><?php echo $producto['Nombre_Producto'];?></td>
+                                                    <td><?php echo $producto['ValorProducto'];?></td>
+                                                    <td><?php echo $producto['ValorVenta'];?></td>
+                                                    <td><?php echo $producto['Nombre_Proveedor'];?></td>
+                                                    <td><?php echo $producto['Stock'];?></td>
+                                                    <td><?php echo $producto['Existencia'];?></td>
+                                                    <td><a href="modificar_ciudad.php?id=<?php echo $producto['ID_Producto']; ?>">
+                                                        <i class="fas fa-edit" style="font-size:30px; color: #d63384;"></i>
+                                                      </a></td>
+                                                    <td>
+                                                      <a href="Productos.php?id=<?php echo $producto['ID_Producto']; ?>" data-bs-toggle="modal" data-bs-target="#confirmar-delete">
+                                                        <i class="fas fa-trash-alt" style="font-size:30px; color:rgb(255, 70, 70)" ></i>
+                                                      </a>
+                                                  </td>  
+                                                </tr>
                                               <?php endforeach; ?>
                                         </tbody>
                                     </table>
