@@ -14,6 +14,11 @@ if (!empty($_POST)) {
 $sql = "SELECT * FROM PEDIDO $where";
 $resultado = $conexion->query($sql);
 ?>
+<?php
+session_start();
+if(isset($_SESSION['Prime_Nombre']));
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -31,8 +36,7 @@ $resultado = $conexion->query($sql);
 <body>
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
         <a class="navbar-brand ps-3" href="Dashboard.html">ADMINISTRACIÓN</a>
-        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
-                class="fas fa-bars"></i></button>
+        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><iclass="fas fa-bars"></i></button>
         <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
             <div class="input-group">
                 <input class="form-control" type="text" placeholder="Buscar..." aria-label="Search for..."
@@ -45,10 +49,10 @@ $resultado = $conexion->query($sql);
                 <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
                     aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" href="#!">Settings</a></li>
-                    <li><a class="dropdown-item" href="#!">Activity Log</a></li>
+                    <li><a class="dropdown-item" href="#!">Ajustes</a></li>
+                    <li><a class="dropdown-item" href="#!">Historial de Actividades</a></li>
                     <li><hr class="dropdown-divider" /></li>
-                    <li><a class="dropdown-item" href="pagina de inicio/index_1.html">Logout</a></li>
+                    <li><a class="dropdown-item" href="pagina de inicio/index_1.html">Cerrar sesión</a></li>
                 </ul>
             </li>
         </ul>
@@ -59,7 +63,7 @@ $resultado = $conexion->query($sql);
             <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                 <div class="sb-sidenav-menu">
                     <div class="nav">
-                        <div class="sb-sidenav-menu-heading">Core</div>
+                        <div class="sb-sidenav-menu-heading">Panel</div>
                         <a class="nav-link" href="DashboardVendedor.php"><div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>Dashboard</a>
                         <div class="sb-sidenav-menu-heading">Interface</div>
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts"><div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>Pedidos<div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div></a>
@@ -79,7 +83,7 @@ $resultado = $conexion->query($sql);
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#miModal">
                             Registrar Nuevo Pedido
                         </button>
-                        <a href="Reportes/DetallePed.php" class="btn btn-success">Generar Reporte</a>
+                        <a href="../administradorphp/Reportes/DetallePed.php" class="btn btn-success">Generar Reporte</a>
                         
                     </div>
                     <div class="sb-sidenav-footer">
@@ -117,7 +121,7 @@ $resultado = $conexion->query($sql);
                                             </a>
                                         </td>
                                         <td>
-                                            <a href="controllers/eliminarPed.php" data-href="controllers/eliminarPed.php?id=<?php echo $row['ID_Pedido']; ?>"
+                                            <a href="../administradorphp/controllers/eliminarPed.php" data-href="../administradorphp/controllers/eliminarPed?id=<?php echo $row['ID_Pedido']; ?>"
                                                 data-bs-toggle="modal" data-bs-target="#confirmar-delete">
                                                 <i class='fas fa-trash-alt' style='font-size:36px; color:red'></i>
                                             </a>
@@ -181,34 +185,37 @@ $resultado = $conexion->query($sql);
     </form>
 
     <!-- Modal de confirmación de eliminación -->
-    <div class="modal fade" id="confirmar-delete" tabindex="-1" role="dialog" aria-labelledby="confirmar-delete-label"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="confirmar-delete-label">Confirmar eliminación</h5>
-                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    ¿Estás seguro de que deseas eliminar este pedido?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <a id="btn-eliminar" class="btn btn-danger">Eliminar</a>
-                </div>
+<div class="modal fade" id="confirmar-delete" tabindex="-1" role="dialog" aria-labelledby="confirmar-delete-label"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmar-delete-label">Confirmar eliminación</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ¿Estás seguro de que deseas eliminar este pedido?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <!-- El enlace de eliminación se genera dinámicamente -->
+                <a id="btn-eliminar" class="btn btn-danger">Eliminar</a>
             </div>
         </div>
     </div>
+</div>
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script>
-        $('#confirmar-delete').on('show.bs.modal', function (event) {
-            var button = $(event.relatedTarget);
-            var href = button.data('href');
-            $('#btn-eliminar').attr('href', href);
-        });
-    </script>
+    $('#confirmar-delete').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget); // Botón que activa el modal
+        var href = button.data('href'); // Obtiene la URL para eliminar el pedido
+        $('#btn-eliminar').attr('href', href); // Actualiza el atributo href del botón de eliminación
+    });
+</script>
+
 </body>
 </html>

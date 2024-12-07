@@ -68,7 +68,7 @@ if(isset($_SESSION['Prime_Nombre']));
                         <li><a class="dropdown-item" href="#!">Ajustes</a></li>
                         <li><a class="dropdown-item" href="#!">Historial de Actividades</a></li>
                         <li><hr class="dropdown-divider" /></li>
-                        <li><a class="dropdown-item" href="../index_1.php">Cerrar sesión</a></li>
+                        <li><a class="dropdown-item" href="../index.php">Cerrar sesión</a></li>
                     </ul>
                 </li>
             </ul>

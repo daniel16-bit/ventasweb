@@ -13,6 +13,10 @@ if ($result->num_rows > 0) {
     echo "No se encontraron ciudades.";
 }
 ?>
+<?php
+session_start();
+if(isset($_SESSION['Prime_Nombre']));
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,10 +41,7 @@ if ($result->num_rows > 0) {
         <!-- Navbar Search-->
         <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
             <div class="input-group">
-                <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..."
-                    aria-describedby="btnNavbarSearch" />
-                <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i
-                        class="fas fa-search"></i></button>
+            <p class="text-light">Usted ingresó como:<?php echo $_SESSION['Prime_Nombre']; ?></p>
             </div>
         </form>
         <!-- Navbar-->
