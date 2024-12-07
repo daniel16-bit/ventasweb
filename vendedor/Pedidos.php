@@ -10,6 +10,7 @@ if (!empty($_POST)) {
     }
 }
 
+
 // Consulta para obtener los pedidos
 $sql = "SELECT * FROM PEDIDO $where";
 $resultado = $conexion->query($sql);
@@ -39,9 +40,7 @@ if(isset($_SESSION['Prime_Nombre']));
         <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><iclass="fas fa-bars"></i></button>
         <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
             <div class="input-group">
-                <input class="form-control" type="text" placeholder="Buscar..." aria-label="Search for..."
-                    aria-describedby="btnNavbarSearch" />
-                <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
+            <p class="text-light">Usted ingresó como:<?php echo $_SESSION['Prime_Nombre']; ?></p>
             </div>
         </form>
         <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
@@ -52,7 +51,7 @@ if(isset($_SESSION['Prime_Nombre']));
                     <li><a class="dropdown-item" href="#!">Ajustes</a></li>
                     <li><a class="dropdown-item" href="#!">Historial de Actividades</a></li>
                     <li><hr class="dropdown-divider" /></li>
-                    <li><a class="dropdown-item" href="pagina de inicio/index_1.html">Cerrar sesión</a></li>
+                    <li><a class="dropdown-item" href="../index.php">Cerrar sesión</a></li>
                 </ul>
             </li>
         </ul>
