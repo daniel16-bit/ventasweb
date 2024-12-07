@@ -23,9 +23,9 @@
     <ul class="nav_list">
       <li class="nav_item"><a href="index.php" class="nav_link">Inicio</a></li>
       <li class="nav_item"><a href="#SERVICIOS ESPECIALIZADOS" class="nav_link"></a></li>
-      <li class="nav_item"><a href="./colfar 2.5.5/index.html" class="nav_link">Productos</a></li>
+      <li class="nav_item"><a href="./medicamentos/index.html" class="nav_link">Productos</a></li>
       <li class="nav_item"><a href="contacto.html" class="nav_link">Contacto</a></li>
-      <li class="nav_item"><a href="./formularios/formulario.php" class="nav_btn link_button">Long in</a>
+      <li class="nav_item"><a href="./formularios/formulario.php" class="nav_btn link_button">Ingresar</a>
         <ul class="submenu">
     </ul>
       </li>
@@ -36,7 +36,7 @@
         <div class="content-banner">
             <p>Medicina alternativa 100% Natural</p>
             <h2>Conoce nuestros productos colfar, distribuidos en todo el territorio nacional <br />Medicamentos de alta calidad</h2>
-            <a class="compra" href="#">Comprar ahora</a>
+            <a class="compra" href="medicamentos/index.html">Comprar ahora</a>
         </div>
 
         
@@ -68,10 +68,7 @@
             </ul>
         </div>
     </div> 
-      <div class="botones">
-        <button type="button" class="btn_3">Ver Mas..</button>
-               
-      </div>
+      <div class="botones"><a href="medicamentos/index.html" class=" link_button2">Ver Mas..</a></div>
   </div> 
 </div>
 <section class="container2 top-categories">

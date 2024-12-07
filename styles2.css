@@ -9,14 +9,12 @@
 }
 
 html {
-	font-size: 62.5%;
-	font-family: 'Poppins', sans-serif;
+	font-size: 67%;
 }
 
 
 * {
 	margin: 0;
-	padding: 0;
 }
 
 
@@ -300,6 +298,10 @@ body{
 
 .compra{
 	font-size: 15px;
+}
+
+.compra:hover {
+	background-color: rgb(60, 60, 255);
 }
 
 /* ********************************** */
