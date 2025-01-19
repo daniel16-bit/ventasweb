@@ -16,6 +16,19 @@ nav {
     background:linear-gradient(to right,#eaeaea, #4b739b);
 }
 
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    background: linear-gradient(to right, #eaeaea, #4b739b);
+    display: flex;
+    align-items: center; /* Alinea los elementos verticalmente en el centro */
+    justify-content: space-between;
+    padding: 10px;
+    width: 100%;
+}
+
 
 a.nav_link{
     text-decoration: none;
