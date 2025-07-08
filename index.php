@@ -24,7 +24,7 @@
       <li class="nav_item"><a href="index.php" class="nav_link">Inicio</a></li>
       <li class="nav_item"><a href="#SERVICIOS ESPECIALIZADOS" class="nav_link"></a></li>
       <li class="nav_item"><a href="./medicamentos/index.html" class="nav_link">Productos</a></li>
-      <li class="nav_item"><a href="contacto.html" class="nav_link">Contacto</a></li>
+      <li class="nav_item"><a href="formulario.php" class="nav_link">Contacto</a></li>
       <li class="nav_item"><a href="./formularios/formulario.php" class="nav_btn link_button">Ingresar</a>
         <ul class="submenu">
     </ul>
@@ -37,9 +37,7 @@
             <p>Medicina alternativa 100% Natural</p>
             <h2>Conoce nuestros productos colfar, distribuidos en todo el territorio nacional <br />Medicamentos de alta calidad</h2>
             <a class="compra" href="medicamentos/index.html">Comprar ahora</a>
-        </div>
-
-        
+        </div> 
     </section>
   <!--informacion jenral de los productos con listado-->
 <div class="container1">
@@ -252,7 +250,7 @@
          <li class="lista_footer"><a class="lis_foo" href="index.php">Inicio</a></li>
          <li class="lista_footer"><a class="lis_foo" href="#SERVICIOS ESPECIALIZADOS">Sevicios</a></li>
          <li class="lista_footer"><a class="lis_foo" href="./colfar 2.5.5/index.php">productos</a></li>
-         <li class="lista_footer"><a class="lis_foo" href="./contacto.html">Contactenos</a></li>
+         <li class="lista_footer"><a class="lis_foo" href="../ventaswe/formulario.php">Contactenos</a></li>
       </ul>
     </div>
     <div class="copyright">

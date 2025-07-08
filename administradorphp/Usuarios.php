@@ -1,4 +1,5 @@
 <?php 
+session_start();
 include 'models/conexion.php';
 
 $sql = "SELECT * FROM USUARIO ";
@@ -10,12 +11,8 @@ if ($result->num_rows > 0) {
         $usuarios[] = $row;
     }
 } else {
-    echo "No se encontraron ciudades.";
+    echo "No se encontraron usuarios.";
 }
-?>
-<?php
-session_start();
-if(isset($_SESSION['Prime_Nombre']));
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -32,19 +29,16 @@ if(isset($_SESSION['Prime_Nombre']));
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 </head>
 <body>
+    <!-- Navbar y sidebar (igual a tu código) -->
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-        <!-- Navbar Brand-->
         <a class="navbar-brand ps-3" href="Dashboard.php">ADMINISTRACIÓN</a>
-        <!-- Sidebar Toggle-->
         <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
                 class="fas fa-bars"></i></button>
-        <!-- Navbar Search-->
         <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
             <div class="input-group">
-            <p class="text-light">Usted ingresó como:<?php echo $_SESSION['Prime_Nombre']; ?></p>
+                <p class="text-light">Usted ingresó como: <?php echo $_SESSION['Prime_Nombre']; ?></p>
             </div>
         </form>
-        <!-- Navbar-->
         <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
@@ -52,14 +46,13 @@ if(isset($_SESSION['Prime_Nombre']));
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                     <li><a class="dropdown-item" href="#!">Settings</a></li>
                     <li><a class="dropdown-item" href="#!">Activity Log</a></li>
-                    <li>
-                        <hr class="dropdown-divider" />
-                    </li>
+                    <li><hr class="dropdown-divider" /></li>
                     <li><a class="dropdown-item" href="../index.php">Cerrar sesión</a></li>
                 </ul>
             </li>
         </ul>
     </nav>
+
     <div id="layoutSidenav">
         <div id="layoutSidenav_nav">
             <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
@@ -92,11 +85,17 @@ if(isset($_SESSION['Prime_Nombre']));
                                 <a class="nav-link" href="Proveedores.php">proveedores</a>  
                                 <a class="nav-link" href="layout-static.html">Static Navigation</a>
                                 <a class="nav-link" href="layout-sidenav-light.html">Light Sidenav</a>
-
                             </nav>
                         </div>
+                    </div>
+                </div>
+                <div class="sb-sidenav-footer">
+                    <div class="small">Usted ingresó como:</div>
+                    Administrador
+                </div>
             </nav>
         </div>
+        
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
@@ -107,140 +106,133 @@ if(isset($_SESSION['Prime_Nombre']));
                     </button>
                     <a href="Reportes/usuarios_pdf.php" class="btn btn-primary">Generar Reporte</a>
 
-                   <!-- Modal -->
-<div class="modal fade" id="miModal" tabindex="-1" aria-labelledby="miModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="miModalLabel">
-                    <h2 class="text-center mb-4">DATOS DEL USUARIO</h2>
-                </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form action="controllers/registrar_usuario.php" method="POST">
-                    <label for="prime_nombre" class="form-label">Primer Nombre</label>
-                    <input type="text" class="form-control" name="prime_nombre" placeholder="Primer Nombre" required>
+                    <!-- Botón para enviar correos masivos -->
+                    <a href="enviar_correos_masivos.php" class="btn btn-success">Enviar correos a todos</a>
 
-                    <label for="segundo_nombre" class="form-label">Segundo Nombre</label>
-                    <input type="text" class="form-control" name="segundo_nombre" placeholder="Segundo Nombre">
+                    <!-- Modal Registrar Usuario -->
+                    <div class="modal fade" id="miModal" tabindex="-1" aria-labelledby="miModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="miModalLabel">DATOS DEL USUARIO</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="controllers/registrar_usuario.php" method="POST">
+                                        <label for="prime_nombre" class="form-label">Primer Nombre</label>
+                                        <input type="text" class="form-control" name="prime_nombre" placeholder="Primer Nombre" required>
 
-                    <label for="prime_apellido" class="form-label">Primer Apellido</label>
-                    <input type="text" class="form-control" name="prime_apellido" placeholder="Primer Apellido" required>
+                                        <label for="segundo_nombre" class="form-label">Segundo Nombre</label>
+                                        <input type="text" class="form-control" name="segundo_nombre" placeholder="Segundo Nombre">
 
-                    <label for="segundo_apellido" class="form-label">Segundo Apellido</label>
-                    <input type="text" class="form-control" name="segundo_apellido" placeholder="Segundo Apellido">
+                                        <label for="prime_apellido" class="form-label">Primer Apellido</label>
+                                        <input type="text" class="form-control" name="prime_apellido" placeholder="Primer Apellido" required>
 
-                    <label for="telefono" class="form-label">Teléfono</label>
-                    <input type="text" class="form-control" name="telefono" placeholder="Teléfono Cliente" required>
+                                        <label for="segundo_apellido" class="form-label">Segundo Apellido</label>
+                                        <input type="text" class="form-control" name="segundo_apellido" placeholder="Segundo Apellido">
 
-                    <label for="correo" class="form-label">Correo</label>
-                    <input type="email" class="form-control" name="correo" placeholder="Correo Cliente" required>
+                                        <label for="telefono" class="form-label">Teléfono</label>
+                                        <input type="text" class="form-control" name="telefono" placeholder="Teléfono Cliente" required>
 
-                    <label for="contraseña" class="form-label">Contraseña</label>
-                    <input type="password" class="form-control" name="contraseña" placeholder="Contraseña" required>
-                    
-                    <label for="rol" class="form-label">Rol</label>
-                    <select name="rol" class="form-control" required>
-                        <option value="administrador">Administrador</option>
-                        <option value="vendedor">Vendedor</option>
-                    </select>
+                                        <label for="correo" class="form-label">Correo</label>
+                                        <input type="email" class="form-control" name="correo" placeholder="Correo Cliente" required>
 
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                        <button type="submit" class="btn btn-primary">Registrar</button>
+                                        <label for="contraseña" class="form-label">Contraseña</label>
+                                        <input type="password" class="form-control" name="contraseña" placeholder="Contraseña" required>
+
+                                        <label for="rol" class="form-label">Rol</label>
+                                        <select name="rol" class="form-control" required>
+                                            <option value="administrador">Administrador</option>
+                                            <option value="vendedor">Vendedor</option>
+                                        </select>
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                            <button type="submit" class="btn btn-primary">Registrar</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </form>
-            </div>
+
+                    <!-- Tabla usuarios -->
+                    <div class="card mb-4 mt-4">
+                        <div class="card-header">
+                            <i class="fas fa-table me-1"></i>
+                            Tabla Usuarios
+                        </div>
+                        <div class="table-responsive">
+                            <table id="datatablesSimple" class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Primer Nombre</th>
+                                        <th>Segundo Nombre</th>
+                                        <th>Primer Apellido</th>
+                                        <th>Segundo Apellido</th>
+                                        <th>Teléfono</th>
+                                        <th>Contraseña</th>
+                                        <th>Correo</th>
+                                        <th>Rol</th>
+                                        <th>Editar</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                <?php foreach ($usuarios as $usuario): ?>
+                                    <tr>
+                                        <td><?php echo $usuario['ID_Usuario']; ?></td>
+                                        <td><?php echo $usuario['Prime_Nombre']; ?></td>
+                                        <td><?php echo $usuario['Segundo_Nombre']; ?></td>
+                                        <td><?php echo $usuario['Prime_Apellido']; ?></td>
+                                        <td><?php echo $usuario['Segundo_Apellido']; ?></td>
+                                        <td><?php echo $usuario['Telefono']; ?></td>
+                                        <td><?php echo $usuario['Contraseña']; ?></td>
+                                        <td><?php echo $usuario['Correo']; ?></td>
+                                        <td><?php echo $usuario['rol']; ?></td>
+                                        <td>
+                                            <a href="./modificar/modificar_usuario.php?id=<?php echo $usuario['ID_Usuario']; ?>">
+                                                <i class='fas fa-edit' style='font-size:25px; color: #d63384;'></i>
+                                            </a>
+                                            <a href="Usuarios.php?id=<?php echo $usuario['ID_Usuario']; ?>" data-bs-toggle="modal" data-bs-target="#confirmar-delete">
+                                                <i class="fas fa-trash-alt" style="font-size:30px; color:rgb(255, 70, 70)"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+            <!-- Footer -->
+            <footer class="py-4 bg-light mt-auto">
+                <div class="container-fluid px-4">
+                    <div class="d-flex align-items-center justify-content-between small">
+                        <div class="text-muted">Copyright &copy; Your Website 2023</div>
+                        <div>
+                            <a href="#">Privacy Policy</a>
+                            &middot;
+                            <a href="#">Terms &amp; Conditions</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
         </div>
     </div>
-</div>
 
-                    <!-- Modal -->
-                    <div class="sb-sidenav-footer">
-                        <div class="small">Usted ingreso como:</div>
-                        Administrador
-                    </div>
-                </nav>
-            </div>
-            <div id="layoutSidenav_content">
-                <main>
-                      <div class="card mb-4">
-                            <div class="card-header">
-                                <i class="fas fa-table me-1"></i>
-                                Tabla Clientes
-                            </div>
-                            <div class="table-striped">
-                                <table id="datatablesSimple">
-                                    <thead>
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>Prime_Nombre</th>
-                                            <th>Segundo_Nombre</th>
-                                            <th>Prime_Apellido</th>
-                                            <th>Segundo_Apellido</th>
-                                            <th>Telefono</th>
-                                            <th>Contraseña</th>
-                                            <th>correo</th>
-                                            <th>rol</th>
-                                            <th>Editar</th>
-                                        </tr>
-                                    </thead>
-                                   
-                                    <tbody>
-                                    <?php foreach ($usuarios as $usuario): ?>
-                                                <tr>
-                                                    <td><?php echo $usuario['ID_Usuario']; ?></td>
-                                                    <td><?php echo $usuario['Prime_Nombre']; ?></td>
-                                                    <td><?php echo $usuario['Segundo_Nombre']; ?></td>
-                                                    <td><?php echo $usuario['Prime_Apellido']; ?></td>
-                                                    <td><?php echo $usuario['Segundo_Apellido']; ?></td>
-                                                    <td><?php echo $usuario['Telefono']; ?></td>
-                                                    <td><?php echo $usuario['Contraseña']; ?></td>
-                                                    <td><?php echo $usuario['Correo']; ?></td>
-                                                    <td><?php echo $usuario['rol'];?> </td>
-                                                    <td>  <a href="./modificar/modificar_usuario.php?id=<?php echo $usuario['ID_Usuario']; ?>">
-    <i class='fas fa-edit' style='font-size:25px; color: #d63384;'></i>
-</a>
-
-                                                    <a href="Usuarios.php?id=<?php echo $usuario['ID_Usuario']; ?>" data-bs-toggle="modal" data-bs-target="#confirmar-delete">
-                                                    <i class="fas fa-trash-alt" style="font-size:30px; color:rgb(255, 70, 70)" ></i>
-                                                  </a></td>
-                                                </tr>
-                                    <?php endforeach; ?>
-                                    </tbody>                             
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </main>
-                <footer class="py-4 bg-light mt-auto">
-                    <div class="container-fluid px-4">
-                        <div class="d-flex align-items-center justify-content-between small">
-                            <div class="text-muted">Copyright &copy; Your Website 2023</div>
-                            <div>
-                                <a href="#">Privacy Policy</a>
-                                &middot;
-                                <a href="#">Terms &amp; Conditions</a>
-                            </div>
-                        </div>
-                    </div>
-                </footer>
-            </div>
-        </div>
-
-         <!-- Modal de Confirmación de Eliminación -->
+    <!-- Modal Confirmar eliminación -->
     <div class="modal fade" id="confirmar-delete" tabindex="-1" role="dialog" aria-labelledby="confirmar-delete-label" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="confirmar-delete-label">Confirmar eliminación</h5>
-                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>  
                 <div class="modal-body">
-                    ¿Estás seguro de que deseas eliminar este cliente?
+                    ¿Estás seguro de que deseas eliminar este usuario?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -248,9 +240,42 @@ if(isset($_SESSION['Prime_Nombre']));
                 </div>
             </div>
         </div>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-        <script src="js/scripts.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
-        <script src="js/datatables-simple-demo.js"></script>
+    </div>
+
+    <!-- Modal Éxito envío correos -->
+    <div class="modal fade" id="modalExito" tabindex="-1" aria-labelledby="modalExitoLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header bg-success text-white">
+            <h5 class="modal-title" id="modalExitoLabel">✅ Correos enviados</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+          </div>
+          <div class="modal-body">
+            Todos los correos fueron enviados exitosamente a los usuarios registrados.
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success" data-bs-dismiss="modal">Aceptar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script src="js/scripts.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
+    <script src="js/datatables-simple-demo.js"></script>
+
+    <?php if (isset($_SESSION['correos_enviados']) && $_SESSION['correos_enviados']): ?>
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            const modal = new bootstrap.Modal(document.getElementById('modalExito'));
+            modal.show();
+        });
+    </script>
+    <?php 
+    unset($_SESSION['correos_enviados']);
+    endif;
+    ?>
+
 </body>
 </html>
