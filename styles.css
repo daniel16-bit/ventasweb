@@ -1,632 +1,1034 @@
-
+/* General Resets and Base Styles */
 body {
     margin: 0;
     padding: 0;
+    font-family: 'Montserrat', sans-serif; /* Modern, clean font */
+    color: #333; /* Darker text for readability */
+    line-height: 1.6;
+    background-color: #f8f9fa; /* Light background for the whole page */
 }
 
-div, body, nav, ul, footer {
+div, body, nav, ul, footer, section {
     box-sizing: border-box;
 }
 
-nav {
-    Position: fixed; 
-    Top: 0;
-    Left: 0%; 
-    Z-index: 100;
-    background:linear-gradient(to right,#eaeaea, #4b739b);
-}
-
-nav {
+/* --- Navigation Bar --- */
+nav.barra { /* More specific selector for the main nav */
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 100;
-    background: linear-gradient(to right, #eaeaea, #4b739b);
-    display: flex;
-    align-items: center; /* Alinea los elementos verticalmente en el centro */
-    justify-content: space-between;
-    padding: 10px;
-    width: 100%;
-}
-
-
-a.nav_link{
-    text-decoration: none;
-    color: white;
-}
-
-.barra {
-    width: 100%;
-    background-color: rgb(163, 192, 235);
-    padding: 10px;
+    z-index: 1000; /* Increased z-index */
+    background: linear-gradient(to right, #eaeaea, #4b739b); /* Reverted to original gradient */
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding: 10px 4%; /* Horizontal padding for spacing */
+    width: 100%;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08); /* Subtle shadow for depth */
+    height: 80px; /* Fixed height for consistency */
 }
 
 .logo {
-    width: 25%;
-    height: 40%;
-    margin-right: 5px;
+    width: 180px; /* Adjust logo width */
+    height: auto; /* Maintain aspect ratio */
+    margin-right: 20px;
+    display: flex; /* To vertically align logo image */
+    align-items: center;
 }
 
 .logo img {
     width: 100%;
-    height: 100%;
+    height: auto; /* Ensure image scales correctly */
+    object-fit: contain; /* Prevent image distortion */
 }
 
-.nav_list  {
+.nav_list {
     list-style: none;
     margin: 0;
     padding: 0;
     display: flex;
-    font-size: 20px;
-    text-decoration: none;
-}
-
-.submenu {
-    display: none;
-    position: absolute;
-    padding: 10px;
-    border-radius: 3px;
-    z-index: 2;
-}
-
-a.desple {
-    text-decoration: none;
-    color: white;
-}
-
-a.desple:hover{
-    background-color: #666;
-    padding: 5px;
-    border-radius: 5px;
-}
-  
-.nav_item:hover .submenu {
-    background-color: #727272;
-    display: block;
-    list-style-type: none;
+    font-size: 1.4rem; /* Slightly larger font size */
+    font-weight: 500;
 }
 
 .nav_item {
-    margin-right: 25px;
+    margin-left: 30px; /* Adjusted spacing between nav items */
+    position: relative; /* For submenu positioning */
 }
-
-img {
-    width:20% ;
-    height:40px ;
-}
-
-<!--letra-->
 
 .nav_link {
-    color: #f10505;
+    color: #fff; /* White text for contrast on the darker gradient */
     text-decoration: none;
-    padding: 10px;
-    background-color: rgb(216, 36, 42);
-}
-
-.nav_link:hover {
-    background-color: #666;
-    padding: 10px;
+    padding: 10px 15px;
+    transition: all 0.3s ease; /* Smooth transition for hover effects */
     border-radius: 5px;
 }
 
-.link_button{
-    border: 1px solid #fff;
-    background-color: #fff;
-    padding: 4px 18px;
-    color: #48e;
-    border-radius: 3px;
-    margin-left: 20px;
+.nav_link:hover, .nav_link.active { /* Added active state */
+    background-color: rgba(255, 255, 255, 0.2); /* Subtle white background on hover */
+    color: #fff;
 }
 
-a.link_button {
-    text-decoration: none;
+.link_button {
+    border: 1px solid #fff; /* White border for contrast */
+    background-color: #fff;
+    padding: 8px 25px; /* Larger padding for a more prominent button */
+    color: #4b739b; /* Original blue for the button text */
+    border-radius: 50px; /* Pill-shaped button */
+    margin-left: 25px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    text-decoration: none; /* Ensure no underline */
 }
 
 .link_button:hover {
     background: transparent;
+    color: #fff; /* White text on hover */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Subtle shadow on hover */
+}
+
+/* Submenu styles (improved) */
+.submenu {
+    display: none;
+    position: absolute;
+    top: 100%; /* Position below the parent item */
+    left: 0;
+    background-color: #4b739b; /* Blue background for submenu */
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1); /* Clear shadow */
+    border-radius: 8px;
+    min-width: 180px; /* Minimum width for submenu */
+    padding: 10px 0; /* Vertical padding */
+    z-index: 1001; /* Above main nav */
+}
+
+.nav_item:hover .submenu {
+    display: block;
+}
+
+.submenu li {
+    padding: 0; /* Remove default list padding */
+}
+
+.submenu a {
+    color: #fff; /* White text */
+    padding: 10px 20px;
+    display: block; /* Make links block-level for full-width hover */
+    text-decoration: none;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.submenu a:hover {
+    background-color: rgba(255, 255, 255, 0.1); /* Subtle white background on hover */
     color: #fff;
 }
-.link_button2{
-    border: 1px solid #fff;
-    background-color: #fff;
-    padding: 5px 40px;
-    color: #48e;
-    border-radius: 10px;
-    margin-left: 20px;
-}
 
-a.link_button2 {
-    text-decoration: none;
-}
-
-.link_button2:hover {
-    background: transparent;
-    color: #fff;
-}
-
-.nav_list ul {
-    text-decoration: none;
-}
- /*botones*/
-
-.botones{
+/* --- Banner Section --- */
+.banner {
+    background: url('./img/carrusel05.jpg') center/cover no-repeat; /* Example background image */
+    min-height: 550px; /* Increased height for impact */
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-align: center;
-    font-family: sans-serif;
+    color: #fff;
+    padding-top: 80px; /* Account for fixed nav */
 }
 
-.btns_1{
-    width: 6cm;
-    height: 1cm;
-    font-size: 18px;
-    padding: 5px;
-    border-radius: 5px;
-    background-color: rgb(103, 103, 255);
-    margin-top: 30px;
-    margin-right: 30px;
-    margin-left: 0;
+.content-banner {
+    max-width: 800px;
+    padding: 5px 15px;
+    background: rgba(0, 0, 0, 0.4); /* Darker overlay for text readability */
+    border-radius: 10px;
+    border-left: 100%;
 }
 
-.btns_2{
-    width: 6cm;
-    height: 1cm;
-    font-size: 18px;
-    padding: 5px;
-    border-radius: 5px;
-    background-color: rgb(242, 249, 249);
-    margin-top: 30px;
-    margin-right: 30px;
-    margin-left: 0;
+.content-banner p {
+    font-size: 1rem;
+    margin-bottom: 15px;
+    font-weight: 300;
 }
 
-.button_nav{
+.content-banner h2 {
+    font-size: 1.8rem; /* Larger heading */
+    line-height: 1.2;
+    margin-bottom: 30px;
+    font-weight: 700;
+}
+
+.content-banner .compra {
     display: inline-block;
+    background-color: #28a745; /* Green call to action */
+    color: #fff;
+    padding: 12px 35px;
+    text-decoration: none;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-/*contenedor*/
+.content-banner .compra:hover {
+    background-color: #218838;
+    transform: translateY(-3px); /* Lift effect on hover */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* --- Container 1 (Company Info) --- */
+.container1 {
+    display: flex;
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    align-items: center;
+    padding: 80px 4%; /* More vertical padding */
+    background: linear-gradient(to right, #eaeaea, #4b739b); /* Reverted to original gradient */
+    gap: 40px; /* Space between flex items */
+}
+
+.container1 > div { /* Target the text content div */
+    flex: 1; /* Allow it to grow */
+    min-width: 300px; /* Minimum width before wrapping */
+}
 
 .file {
-    width: 30%;
-    height: 40%;
-   margin: 5%;
+    width: 350px; /* Fixed width for the image for better control */
+    height: auto;
+    object-fit: contain;
+    border-radius: 10px; /* Soften image corners */
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
 }
 
-.container1 {
-    max-width: 100%;
-    background:linear-gradient(to right,#eaeaea, #4b739b);  
+.h1 {
+    font-size: 2.2rem; /* Adjusted heading size */
+    color: #fff; /* White heading on darker gradient */
+    margin-bottom: 20px;
+    padding: 0; /* Remove extra padding */
+    text-align: left;
 }
 
-.container1 {
+.p {
+    font-size: 1.8rem;
+    margin-bottom: 30px;
+    padding: 0;
+    text-align: left;
+    color: #f8f9fa; /* Lighter text for contrast */
+}
+
+.listas {
     display: flex;
-    font-size: 18px; 
+    flex-wrap: wrap; /* Allow lists to wrap */
+    gap: 30px; /* Space between list columns */
+    margin-bottom: 40px;
 }
 
-.h1{
-    padding: 50px;
-}
-
-.p{
-    padding: 10px;
-    margin-right: 20px;
-}
-
-.listas{
-    display: flex;
-    justify-content: space;
+.list1, .list2 {
+    list-style: none; /* Remove default list bullets */
+    padding: 0;
+    margin: 0;
+    flex: 1; /* Allow lists to take equal space */
+    min-width: 250px; /* Minimum width before wrapping */
 }
 
 .listas_medi {
     text-decoration: none;
-    color: rgb(0, 0, 0);
-    font-weight:bolder
+    color: #fff; /* White text for links */
+    font-weight: 500;
+    display: block; /* Make links block-level */
+    padding: 10px 0;
+    transition: color 0.3s ease, transform 0.3s ease;
+    display: flex;
+    align-items: center;
+    font-size: 1.5rem; /* Slightly larger font size */
 }
 
-li::marker{
-    content: none;
+ i.fa-check {
+    color: #28a745; /* Green checkmark (can be adjusted if needed) */
+    margin-right: 10px;
+    font-size: 2rem;
 }
 
-.list1.list2{
-    width: 100%;  
+.listas_medi:hover {
+    color: #f0f0f0; /* Slightly lighter white on hover */
+    transform: translateX(5px); /* Slight slide effect */
 }
 
-.sty.sty_2 {
+.sty, .sty_2 {
+    list-style: none; /* Ensure no default bullets */
     padding: 0;
     margin: 0;
 }
-
 .sty_2 {
-    margin-left: 70px;
+    margin-left: 0; /* Reset margin */
 }
 
-.li{
-    padding: 10px;
-    border-bottom: 1px solid #ccc;
-}
-
-.botones{
-    text-align: center;
-    font-family: sans-serif;
+.link_button2 {
     display: inline-block;
-    margin-bottom: 40px;
-}
-
-.btn_3  {
-    width: 6cm;
-    height: 1cm;
-    font-size: 18px;
-    padding: 5px;
-    border-radius: 20px;
-    background-color: rgb(129, 129, 230);
-    margin-top: 30px;
-    margin-right: 30px;
-    margin-left: 0;
-    color: white;
-}
-
-.btn_4 {
-    width: 6cm;
-    height: 1cm;
-    font-size: 18px;
-    padding: 5px;
-    border-radius: 5px;
-    background-color: rgb(14, 11, 220);
-    margin-top: 30px;
-    margin-right: 30px;
-    margin-left: 0;
-}
-
-
-/*servicios especializados*/
-
-.server{
-    text-align: center;
-    padding: 30px;
-}
-
-.contenedor_3 {
-	display: flex;
-    flex-wrap: wrap;
-	flex-direction:row;
-	justify-content: space-between;
-    padding: 10px;
-    font-size: 18px;
-    margin: 0;
-}
-
-.columna_3 {
-	width: 30%;
-	margin: 10px;
-	padding: 20px;
-	background-color: #b5b5b5;
-    border: 5px solid transparent;
-    border-radius: 10px;
-    transition: border-color 0.3s ease, transform 0.3s ease;
-}
-
-.columna_3:hover {
-    background-color: #b5b5b5 ;
-    padding: 10px;
-    border-radius: 5px;
-    
-    transform: scale(1.05);
-}
-
-i.material-icons {
-    font-size:60px
-}
-
-.server {
-    background:linear-gradient(to right,#eaeaea, #4b739b); ;
-}
-
-/*nuestro trabajo*/
-.contenedor_2 {
-	display: flex;
-    flex-wrap: wrap;
-	flex-direction:row;
-	justify-content: space-between;
-    padding: 20px;
-    font-size: 18px;
-}
-
-.columna {
-	width: 15%;
-	margin: 10px;
-	padding: 20px;
-	background-color: #b5b5b5;	
-}
-.columna:hover {
-    background-color: #b5b5b5 ;
-    padding: 10px;
-    border-radius: 5px;
-    transform: scale(1.05);
-}
-
-.nuestro {
-    text-align: center;
-}
-
-
-/*logo de whasshapp*/
-
-.whatsapp-button {
-    width: 60px;
-    height: 60px;
-    border: none; /* Quita el borde del enlace */
-    border-radius: 50%; /* Da forma circular al botón */
-    cursor: pointer; /* Cambia el cursor a una mano para indicar que es un botón */
-}
-
-.whatsapp-button {
-    position: fixed;
-    right: 20px; /* Posiciona el botón a 20px de la izquierda */
-    top: 90%; /* Posiciona el botón en el medio vertical de la página */
-    transform: translateY(-50%); /* Ajusta la posición vertical para que esté centrado */
-    z-index: 1000; /* Asegura que el botón esté por encima de otros elementos */
-    cursor: pointer; /* Cambia el cursor a una mano para indicar que es un botón */
-  }
-
-/*footer*/
-
-.logo_2{
-    display: block;
-    margin: 10px auto;
-    width: 150px;
-}
-
-footer {
-   text-align: center;
-   background:linear-gradient(to right,#eaeaea, #4b739b);
-   padding: 10px;
-}
-
-.lis_stile{
-    margin: 10px;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-}
-
-a.lis_foo{
+    background-color: #fff; /* White background for button */
+    color: #4b739b; /* Original blue for button text */
+    padding: 12px 40px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
     text-decoration: none;
-    color: black;
+    margin-left: 0; /* Reset margin */
 }
 
-.lista_footer{
-    margin-right: 20px;
-    font-size: 18px;
+.link_button2:hover {
+    background: transparent;
+    border: 1px solid #fff; /* White border on hover */
+    color: #fff; /* White text on hover */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
-.lista_footer:last-child {
-    margin-right: 0;
-}
-/*error 404*/
-
-.error404 {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
-
-.container7 {
+/* --- Top Categories Section --- */
+.top-categories {
+    padding: 80px 4%;
     text-align: center;
-    background-color: #fff;
-    padding: 50px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: #f0f2f5;
 }
 
-.error-code {
-    font-size: 100px;
-    margin: 0;
-    color: #e74c3c;
-}
-
-.error-message {
-    font-size: 24px;
-    color: #333;
-}
-
-.home-link {
+.heading-1 {
+    font-size: 2.5rem;
+    color: #4b739b; /* Primary blue for main headings */
+    margin-bottom: 50px;
+    position: relative;
     display: inline-block;
-    margin-top: 20px;
-    font-size: 18px;
-    color: #edf2f6;
-    text-decoration: none;
 }
 
-.home-link:hover {
-    text-decoration: underline;
+.heading-1::after { /* Underline effect */
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background-color: #4b739b; /* Blue underline */
+    border-radius: 2px;
 }
 
-/*error 500*/
-
-/* Estilos básicos para la página de error 500 */
-
-.error500 {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    color: #333;
-    display: flex;
+.container-categories {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Responsive grid */
+    gap: 30px;
     justify-content: center;
-    align-items: center;
-    height: 100vh;
 }
 
-.error-container {
-    text-align: center;
-    background: #fff;
-    padding: 20px;
+.card-category {
+    position: relative;
+    height: 200px;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.error-code {
-    font-size: 100px;
-    margin: 0;
-    color: #e74c3c;
-}
-
-.error-message {
-    font-size: 24px;
-    margin: 10px 0;
-}
-
-.error-description {
-    font-size: 16px;
-    margin-bottom: 20px;
-}
-
-.home-link {
-    font-size: 16px;
-    color: #3498db;
-    text-decoration: none;
-}
-
-.home-link:hover {
-    text-decoration: underline;
-}
-
-
-/*contactos*/
-
-/* styles.css */
-
-/* Estilos generales para el body y html */
-body, html {
-    margin: 0;
-    height: 100%;
-    font-family: Arial, sans-serif;
-}
-
-/* Contenedor del formulario con fondo */
-.login-container {
-    background: url('../img/carrusel05.jpg') center/cover no-repeat;
+    overflow: hidden;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
-
-/* Formulario con fondo blanco semitransparente */
-.login-form {
-    background: rgba(255, 255, 255, 0.8);
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
     padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    width: 300px;
-}
-
-/* Estilos de los inputs dentro del formulario */
-.login-form input, .login-form textarea {
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    width: 100%;
-    font-size: 16px;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Estilo de los campos de entrada al enfocarse */
-.login-form input:focus, .login-form textarea:focus {
-    transform: scale(1.1);
-    border-color: #007bff;
-    outline: none;
-    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.4);
+.card-category::before { /* Overlay for text readability */
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0.2));
+    z-index: 1;
 }
 
-/* Estilos del botón */
+.card-category p, .card-category span {
+    position: relative;
+    z-index: 2;
+    margin: 0;
+}
+
+.card-category p {
+    font-size: 1.8rem;
+    margin-bottom: 5px;
+}
+
+.card-category span {
+    font-size: 1rem;
+    text-transform: uppercase;
+    opacity: 0.8;
+}
+
+.card-category:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* Specific background images for categories (replace with actual image paths) */
+.category-moca { background: url('./assets/category-antiacids.jpg') center/cover no-repeat; }
+.category-expreso { background: url('./assets/category-antiinflammatory.jpg') center/cover no-repeat; }
+.category-capuchino { background: url('./assets/category-cholagogues.jpg') center/cover no-repeat; }
+
+/* --- Top Products Section --- */
+.top-products {
+    padding: 80px 4%;
+    text-align: center;
+    background-color: #fff;
+}
+
+.container-options {
+    margin-bottom: 40px;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}
+
+.container-options span {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #777;
+    cursor: pointer;
+    padding: 8px 15px;
+    border-bottom: 3px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.container-options span:hover, .container-options span.active {
+    color: #4b739b; /* Primary blue for active/hover state */
+    border-color: #4b739b;
+}
+
+.container-products {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive product grid */
+    gap: 30px;
+    justify-content: center;
+}
+
+.card-product {
+    background-color: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: left; /* Align text within card */
+}
+
+.card-product:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}
+
+.container-img {
+    position: relative;
+    height: 220px; /* Fixed height for product images */
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f8f9fa; /* Light background for image area */
+}
+
+.container-img img {
+    width: 80%; /* Adjust image size within container */
+    height: 80%;
+    object-fit: contain; /* Ensure image fits without cropping */
+    transition: transform 0.3s ease;
+}
+
+.card-product:hover .container-img img {
+    transform: scale(1.05);
+}
+
+.discount {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background-color: #e74c3c; /* Red discount badge */
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.button-group {
+    position: absolute;
+    top: 50%;
+    right: -50px; /* Start off-screen */
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    opacity: 0; /* Hidden by default */
+    transition: all 0.3s ease;
+}
+
+.card-product:hover .button-group {
+    right: 15px; /* Slide in */
+    opacity: 1;
+}
+
+.button-group span {
+    background-color: #fff;
+    color: #4b739b; /* Primary blue for icon buttons */
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.button-group span:hover {
+    background-color: #4b739b;
+    color: #fff;
+    transform: scale(1.1);
+}
+
+.content-card-product {
+    padding: 20px;
+    position: relative;
+}
+
+.stars {
+    color: #f39c12; /* Golden stars */
+    margin-bottom: 10px;
+}
+
+.content-card-product h3 {
+    font-size: 1.3rem;
+    color: #333;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.add-cart {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    background-color: #28a745; /* Green add to cart */
+    color: #fff;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1.2rem;
+}
+
+.add-cart:hover {
+    background-color: #218838;
+    transform: scale(1.1);
+}
+
+.price {
+    font-size: 1.4rem;
+    color: #4b739b; /* Primary blue for price */
+    font-weight: 700;
+}
+
+.price span {
+    color: #999;
+    font-size: 1rem;
+    text-decoration: line-through;
+    margin-left: 10px;
+    font-weight: 400;
+}
+
+/* --- Specialized Services Section (Server) --- */
+.server {
+    padding: 80px 4%;
+    text-align: center;
+    background: linear-gradient(to right, #eaeaea, #4b739b); /* Reverted to original gradient */
+}
+
+.server h2 {
+    font-size: 2.5rem;
+    color: #fff; /* White heading on darker gradient */
+    margin-bottom: 50px;
+    position: relative;
+    display: inline-block;
+}
+.server h2::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background-color: #fff; /* White underline */
+    border-radius: 2px;
+}
+
+.contenedor_3 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+.columna_3 {
+    background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent white for service cards */
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+}
+
+.columna_3:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}
+
+.columna_3 i.material-icons {
+    font-size: 65px; /* Larger icon size */
+    color: #4b739b; /* Primary blue for icons */
+    margin-bottom: 20px;
+}
+
+.columna_3 h2 {
+    font-size: 1.6rem;
+    color: #333;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.columna_3 p {
+    font-size: 1rem;
+    color: #555;
+}
+
+/* --- Our Work Section (Nuestro) --- */
+.nuestro {
+    padding: 80px 4%;
+    text-align: center;
+    background-color: #f8f9fa;
+}
+
+.nuestro h2 {
+    font-size: 2.5rem;
+    color: #4b739b; /* Primary blue for heading */
+    margin-bottom: 50px;
+    position: relative;
+    display: inline-block;
+}
+.nuestro h2::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background-color: #4b739b; /* Primary blue underline */
+    border-radius: 2px;
+}
+
+.contenedor_2 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); /* Smaller grid items */
+    gap: 15px;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.columna {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 25px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+}
+
+.columna:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.columna i.material-icons {
+    font-size: 55px; /* Icon size */
+    color: #4b739b; /* Primary blue for icons */
+    margin-bottom: 15px;
+}
+
+.columna p {
+    font-size: 1rem;
+    color: #555;
+    font-weight: 500;
+}
+
+/* --- WhatsApp Button --- */
+.whatsapp-button {
+    width: 65px; /* Slightly larger */
+    height: 65px;
+    bottom: 30px; /* Position from bottom */
+    right: 30px; /* Position from right */
+    top: auto; /* Reset top */
+    transform: none; /* Reset transform */
+    z-index: 1000;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.whatsapp-button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 20px rgba(0, 123, 255, 0.4);
+}
+
+/* --- Footer --- */
+footer {
+    background: linear-gradient(to right, #eaeaea, #4b739b); /* Reverted to original gradient */
+    padding: 40px 4%;
+    color: #fff; /* White text for contrast */
+    text-align: center;
+}
+
+.logo_2 {
+    width: 180px; /* Consistent logo size */
+    margin-bottom: 25px;
+}
+
+.lis_stile {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 30px 0;
+    display: flex;
+    justify-content: center;
+    gap: 30px; /* Space between footer links */
+}
+
+.lista_footer {
+    margin-right: 0; /* Reset margin */
+}
+
+.lis_foo {
+    text-decoration: none;
+    color: #fff; /* White text for links */
+    font-size: 1.1rem;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.lis_foo:hover {
+    color: rgba(255, 255, 255, 0.8); /* Slightly faded white on hover */
+    text-decoration: underline;
+}
+
+.copyright {
+    margin-top: 20px;
+    font-size: 0.9rem;
+    color: #f0f0f0; /* Lighter white */
+}
+
+.copyright img {
+    width: auto; /* Reset width from previous img selector */
+    height: 30px; /* Adjust height for payment icons */
+    margin-top: 15px;
+    filter: brightness(0) invert(1) brightness(0.8); /* Make payment icons white/light gray */
+}
+
+/* --- Error Pages (Assuming separate files for these) --- */
+.error404, .error500 {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #f0f2f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    text-align: center;
+    color: #333;
+}
+
+.container7, .error-container {
+    background-color: #fff;
+    padding: 60px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    width: 90%;
+}
+
+.error-code {
+    font-size: 120px; /* Larger error code */
+    margin: 0;
+    color: #e74c3c;
+    font-weight: 800;
+}
+
+.error-message {
+    font-size: 28px; /* Larger message */
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.error-description {
+    font-size: 1.1rem;
+    color: #666;
+    margin-bottom: 30px;
+}
+
+.home-link {
+    display: inline-block;
+    background-color: #4b739b; /* Primary blue for button */
+    color: #fff;
+    padding: 12px 30px;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.home-link:hover {
+    background-color: #3a5f8a;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* --- Contact Form (Login Container) --- */
+.login-container {
+    background: url('../img/carrusel05.jpg') center/cover no-repeat fixed; /* Fixed background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px; /* Ensure padding on small screens */
+}
+
+.login-form {
+    background: rgba(255, 255, 255, 0.95); /* Less transparent for better readability */
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 450px; /* Max width for larger screens */
+}
+
+.login-form input, .login-form textarea {
+    padding: 14px;
+    margin-bottom: 18px;
+    border: 1px solid #ddd;
+    border-radius: 8px; /* Softer edges */
+    width: 100%;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background-color: #f9f9f9; /* Slightly off-white background */
+}
+
+.login-form input:focus, .login-form textarea:focus {
+    transform: none; /* Remove scaling on focus for more subtle effect */
+    border-color: #4b739b;
+    outline: none;
+    box-shadow: 0 0 10px rgba(75, 115, 155, 0.2); /* Shadow with brand color */
+    background-color: #fff;
+}
+
 .login-form button {
     width: 100%;
     border: none;
-    background: #3498db;
+    background: #4b739b; /* Primary blue for button */
     color: #fff;
     padding: 15px;
-    font-size: 18px;
-    border-radius: 4px;
+    font-size: 1.2rem;
+    border-radius: 8px;
     cursor: pointer;
-    transition: background 0.3s ease;
+    transition: background 0.3s ease, transform 0.3s ease;
+    font-weight: 600;
+    letter-spacing: 0.5px;
 }
 
-/* Estilo del botón al pasar el mouse por encima */
 .login-form button:hover {
-    background: #2980b9;
+    background: #3a5f8a;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
 }
 
-/* Enlace para volver al inicio */
 a.for {
     text-decoration: none;
-    color: rgb(21, 21, 21);
-    display: inline-block;
-    margin-top: 10px;
-    font-size: 20px;
-    padding: 10px;
+    color: #4b739b; /* Primary blue for link */
+    display: block; /* Make it a block element for better centering/spacing */
+    margin-top: 25px;
+    font-size: 1.1rem;
+    padding: 0;
+    transition: color 0.3s ease;
+    font-weight: 500;
 }
 
 a.for:hover {
-    color: #3498db;
+    color: #28a745; /* Green for subtle contrast */
+    text-decoration: underline;
 }
 
-/* Estilos del título del formulario */
-h1 {
+h1 { /* Form title */
     text-align: center;
-    margin: 0 0 10px;
-    font-size: 25px;
+    margin: 0 0 30px; /* Increased bottom margin */
+    font-size: 2rem;
+    color: #4b739b; /* Primary blue for heading */
     text-transform: capitalize;
+    font-weight: 700;
 }
 
-/* Estilo de los campos de entrada dentro del formulario */
-.form-user {
-    width: 100%;
-    box-sizing: border-box;
+/* Specific image path for categories - assuming these are placeholder */
+/* Make sure these image paths are correct for your project */
+.category-moca { background-image: url('./assets/category-antiacids.jpg'); }
+.category-expreso { background-image: url('./assets/category-antiinflammatory.jpg'); }
+.category-capuchino { background-image: url('./assets/category-cholagogues.jpg'); }
+
+
+/* Responsive Adjustments */
+@media (max-width: 992px) {
+    nav.barra {
+        padding: 10px 2%;
+        height: auto; /* Allow nav to adjust height */
+        flex-wrap: wrap; /* Allow items to wrap */
+        justify-content: center;
+    }
+
+    .logo {
+        width: 150px;
+        margin: 0 auto 10px auto; /* Center logo and add bottom margin */
+    }
+
+    .nav_list {
+        width: 100%;
+        justify-content: center;
+        margin-top: 10px;
+        flex-wrap: wrap; /* Allow nav items to wrap */
+    }
+
+    .nav_item {
+        margin: 0 15px 10px 15px; /* Adjust spacing */
+    }
+
+    .link_button {
+        margin: 10px 0 0 0; /* Center button below nav items */
+        width: 80%; /* Make button wider */
+    }
+
+    .banner {
+        min-height: 450px;
+        padding-top: 120px; /* More padding to account for wrapped nav */
+    }
+
+    .content-banner h2 {
+        font-size: 1rem;
+    }
+
+    .content-banner p {
+        font-size: 1.1rem;
+    }
+
+    .content-banner .compra {
+        padding: 10px 25px;
+        font-size: 1rem;
+    }
+
+    .container1 {
+        flex-direction: column; /* Stack image and text vertically */
+        padding: 50px 4%;
+        text-align: center;
+    }
+
+    .file {
+        width: 80%;
+        margin-bottom: 30px;
+    }
+
+    .h1, .p {
+        text-align: center;
+    }
+
+    .listas {
+        flex-direction: column; /* Stack lists vertically */
+        gap: 20px;
+    }
+    .sty_2 {
+        margin-left: 0; /* Reset margin */
+    }
+
+    .link_button2 {
+        width: 80%;
+        max-width: 300px;
+        margin: 0 auto;
+    }
+
+    .top-categories, .top-products, .server, .nuestro {
+        padding: 60px 4%;
+    }
+
+    .heading-1, .server h2, .nuestro h2 {
+        font-size: 2rem;
+        margin-bottom: 40px;
+    }
+
+    .columna_3, .columna {
+        width: 100%; /* Full width for smaller screens */
+        max-width: 400px; /* Limit max width */
+        margin: 15px auto; /* Center items */
+    }
+
+    .contenedor_3, .contenedor_2 {
+        grid-template-columns: 1fr; /* Single column */
+    }
+    
+    .whatsapp-button {
+        width: 55px;
+        height: 55px;
+        bottom: 20px;
+        right: 20px;
+    }
+
+    footer {
+        padding: 30px 4%;
+    }
+
+    .logo_2 {
+        width: 120px;
+    }
+
+    .lis_stile {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .lista_footer {
+        margin: 0;
+    }
 }
 
-/* Navbar moderna y sticky */
-.navbar {
-  transition: box-shadow 0.3s;
-  z-index: 1030;
-}
-/* Ajuste de tamaño para logo y texto de la marca en la navbar */
-.navbar-brand img {
-  height: 60px !important;
-  max-height: 60px;
-}
-.navbar-brand span {
-  font-size: 2.5rem;
-  font-weight: 900;
-  letter-spacing: 2px;
-}
-.navbar .btn-primary {
-  border-radius: 20px;
-  font-weight: 500;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  transition: background 0.2s, color 0.2s;
-}
-.navbar .btn-primary:hover {
-  background: #0056b3;
-  color: #fff;
-}
-@media (max-width: 991.98px) {
-  .navbar .btn-primary {
-    width: 100%;
-    margin-top: 10px;
-  }
-}
-
-.navbar-nav .nav-link {
-  font-size: 1.5rem;
-  font-weight: 600;
-  padding-left: 1.2rem;
-  padding-right: 1.2rem;
+@media (max-width: 576px) {
+    .content-banner h2 {
+        font-size: 1.8rem;
+    }
+    .content-banner p {
+        font-size: 1rem;
+    }
+    .content-banner .compra {
+        padding: 10px 25px;
+        font-size: 1rem;
+    }
+    .card-product {
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .login-form {
+        padding: 30px 20px;
+    }
+    h1 {
+        font-size: 1.8rem;
+    }
+    .error-code {
+        font-size: 80px;
+    }
+    .error-message {
+        font-size: 22px;
+    }
 }
