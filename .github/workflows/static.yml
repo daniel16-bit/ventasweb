@@ -16,7 +16,8 @@ jobs:
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
         with:
-          app-name: colfar  # Cambia por el nombre de tu App Service si es diferente
+          app-name: colfar-hda8gyhpbzf0cnhf
+  # Cambia por el nombre de tu App Service si es diferente
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE }}
           package: .
 
