@@ -29,14 +29,14 @@ if ($result->num_rows > 0) {
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <!-- Navbar y sidebar (igual a tu código) -->
+    <!-- Navbar y sidebar -->
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
         <a class="navbar-brand ps-3" href="Dashboard.php">ADMINISTRACIÓN</a>
         <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
                 class="fas fa-bars"></i></button>
         <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
             <div class="input-group">
-                <p class="text-light">Usted ingresó como: <?php echo $_SESSION['Prime_Nombre']; ?></p>
+                <p class="text-light">Usted ingresó como: <?php echo $_SESSION['Prime_Nombre'] ?? 'Invitado'; ?></p>
             </div>
         </form>
         <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
@@ -82,7 +82,7 @@ if ($result->num_rows > 0) {
                                 <a class="nav-link" href="Ventas.php">Ventas</a>
                                 <a class="nav-link" href="Usuarios.php">Usuarios</a>
                                 <a class="nav-link" href="Productos.php">Productos</a>
-                                <a class="nav-link" href="Proveedores.php">proveedores</a>  
+                                <a class="nav-link" href="Proveedores.php">Proveedores</a>  
                                 <a class="nav-link" href="layout-static.html">Static Navigation</a>
                                 <a class="nav-link" href="layout-sidenav-light.html">Light Sidenav</a>
                             </nav>
@@ -108,6 +108,61 @@ if ($result->num_rows > 0) {
 
                     <!-- Botón para enviar correos masivos -->
                     <a href="enviar_correos_masivos.php" class="btn btn-success">Enviar correos a todos</a>
+
+                    <!-- Formulario para enviar correos a usuarios seleccionados -->
+                    <form action="enviar_correos_seleccionados.php" method="POST" id="formEnviarCorreos">
+                        <button type="submit" class="btn btn-success mb-3">Enviar correos seleccionados</button>
+
+                        <div class="card mb-4 mt-4">
+                            <div class="card-header">
+                                <i class="fas fa-table me-1"></i>
+                                Tabla Usuarios
+                            </div>
+                            <div class="table-responsive">
+                                <table id="datatablesSimple" class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th><input type="checkbox" id="selectTodos"></th> <!-- Checkbox para seleccionar todos -->
+                                            <th>ID</th>
+                                            <th>Primer Nombre</th>
+                                            <th>Segundo Nombre</th>
+                                            <th>Primer Apellido</th>
+                                            <th>Segundo Apellido</th>
+                                            <th>Teléfono</th>
+                                            <th>Contraseña</th>
+                                            <th>Correo</th>
+                                            <th>Rol</th>
+                                            <th>Editar</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    <?php foreach ($usuarios as $usuario): ?>
+                                        <tr>
+                                            <td><input type="checkbox" name="usuarios_seleccionados[]" value="<?php echo $usuario['ID_Usuario']; ?>"></td>
+                                            <td><?php echo $usuario['ID_Usuario']; ?></td>
+                                            <td><?php echo $usuario['Prime_Nombre']; ?></td>
+                                            <td><?php echo $usuario['Segundo_Nombre']; ?></td>
+                                            <td><?php echo $usuario['Prime_Apellido']; ?></td>
+                                            <td><?php echo $usuario['Segundo_Apellido']; ?></td>
+                                            <td><?php echo $usuario['Telefono']; ?></td>
+                                            <td><?php echo $usuario['Contraseña']; ?></td>
+                                            <td><?php echo $usuario['Correo']; ?></td>
+                                            <td><?php echo $usuario['rol']; ?></td>
+                                            <td>
+                                                <a href="./modificar/modificar_usuario.php?id=<?php echo $usuario['ID_Usuario']; ?>">
+                                                    <i class='fas fa-edit' style='font-size:25px; color: #d63384;'></i>
+                                                </a>
+                                                <a href="Usuarios.php?id=<?php echo $usuario['ID_Usuario']; ?>" data-bs-toggle="modal" data-bs-target="#confirmar-delete">
+                                                    <i class="fas fa-trash-alt" style="font-size:30px; color:rgb(255, 70, 70)"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </form>
 
                     <!-- Modal Registrar Usuario -->
                     <div class="modal fade" id="miModal" tabindex="-1" aria-labelledby="miModalLabel" aria-hidden="true">
@@ -156,54 +211,6 @@ if ($result->num_rows > 0) {
                         </div>
                     </div>
 
-                    <!-- Tabla usuarios -->
-                    <div class="card mb-4 mt-4">
-                        <div class="card-header">
-                            <i class="fas fa-table me-1"></i>
-                            Tabla Usuarios
-                        </div>
-                        <div class="table-responsive">
-                            <table id="datatablesSimple" class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Primer Nombre</th>
-                                        <th>Segundo Nombre</th>
-                                        <th>Primer Apellido</th>
-                                        <th>Segundo Apellido</th>
-                                        <th>Teléfono</th>
-                                        <th>Contraseña</th>
-                                        <th>Correo</th>
-                                        <th>Rol</th>
-                                        <th>Editar</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                <?php foreach ($usuarios as $usuario): ?>
-                                    <tr>
-                                        <td><?php echo $usuario['ID_Usuario']; ?></td>
-                                        <td><?php echo $usuario['Prime_Nombre']; ?></td>
-                                        <td><?php echo $usuario['Segundo_Nombre']; ?></td>
-                                        <td><?php echo $usuario['Prime_Apellido']; ?></td>
-                                        <td><?php echo $usuario['Segundo_Apellido']; ?></td>
-                                        <td><?php echo $usuario['Telefono']; ?></td>
-                                        <td><?php echo $usuario['Contraseña']; ?></td>
-                                        <td><?php echo $usuario['Correo']; ?></td>
-                                        <td><?php echo $usuario['rol']; ?></td>
-                                        <td>
-                                            <a href="./modificar/modificar_usuario.php?id=<?php echo $usuario['ID_Usuario']; ?>">
-                                                <i class='fas fa-edit' style='font-size:25px; color: #d63384;'></i>
-                                            </a>
-                                            <a href="Usuarios.php?id=<?php echo $usuario['ID_Usuario']; ?>" data-bs-toggle="modal" data-bs-target="#confirmar-delete">
-                                                <i class="fas fa-trash-alt" style="font-size:30px; color:rgb(255, 70, 70)"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                <?php endforeach; ?>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
                 </div>
             </main>
 
@@ -242,40 +249,18 @@ if ($result->num_rows > 0) {
         </div>
     </div>
 
-    <!-- Modal Éxito envío correos -->
-    <div class="modal fade" id="modalExito" tabindex="-1" aria-labelledby="modalExitoLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header bg-success text-white">
-            <h5 class="modal-title" id="modalExitoLabel">✅ Correos enviados</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-          </div>
-          <div class="modal-body">
-            Todos los correos fueron enviados exitosamente a los usuarios registrados.
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-success" data-bs-dismiss="modal">Aceptar</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="js/scripts.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
     <script src="js/datatables-simple-demo.js"></script>
 
-    <?php if (isset($_SESSION['correos_enviados']) && $_SESSION['correos_enviados']): ?>
     <script>
-        window.addEventListener('DOMContentLoaded', () => {
-            const modal = new bootstrap.Modal(document.getElementById('modalExito'));
-            modal.show();
+        // Script para seleccionar/deseleccionar todos los checkboxes
+        document.getElementById('selectTodos').addEventListener('change', function(){
+            const checkboxes = document.querySelectorAll('input[name="usuarios_seleccionados[]"]');
+            checkboxes.forEach(cb => cb.checked = this.checked);
         });
     </script>
-    <?php 
-    unset($_SESSION['correos_enviados']);
-    endif;
-    ?>
 
 </body>
 </html>
