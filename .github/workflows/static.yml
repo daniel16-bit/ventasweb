@@ -1,4 +1,4 @@
-.0name: Build and deploy PHP app to Azure Web App
+name: Build and deploy PHP app to Azure Web App
 
 on:
   push:
