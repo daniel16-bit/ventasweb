@@ -1,4 +1,4 @@
-name: Build and deploy PHP app to Azure Web App
+.0name: Build and deploy PHP app to Azure Web App
 
 on:
   push:
@@ -21,7 +21,7 @@ jobs:
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
         with:
-          app-name: 'colfar'  # tu nombre de app en Azure
+          app-name: 'colfar-hda8gyhpbzf0cnhf' # ¡Usa el nombre exacto de tu App Service!
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE }}
           package: '.'
 
