@@ -1,11 +1,10 @@
 <?php
-    include_once '../models/conexion.php';
+    include_once '../models/conexion.php'; // Aquí tu conexión con PDO
+
     session_start();
 
-    // Verificamos si los campos de usuario y contraseña fueron enviados por POST
     if(isset($_POST['user']) && isset($_POST['password'])){
 
-        // Función para limpiar los datos de entrada
         function validar($data){
             $data = trim($data);
             $data = stripslashes($data);
@@ -13,8 +12,7 @@
             return $data;
         }
 
-        // Asignamos y limpiamos las variables de entrada
-        $usuario = validar($_POST['user']); // Este $usuario se usará para Correo o Telefono
+        $usuario = validar($_POST['user']);
         $password = validar($_POST['password']);
 
         if(empty($usuario)){
@@ -25,70 +23,47 @@
             exit();
         }
 
-        // La consulta SQL
-        // Asumiendo que 'user' puede ser Correo O Telefono
-        $sql = "SELECT ID_Usuario, Prime_Nombre, Segundo_Nombre, Prime_Apellido, Segundo_Apellido, Contraseña, Correo, rol FROM USUARIO WHERE Correo = ? OR Telefono = ?";
+        // Consulta SQL para SQL Server
+        $sql = "SELECT ID_Usuario, Prime_Nombre, Segundo_Nombre, Prime_Apellido, Segundo_Apellido, Contraseña, Correo, rol 
+                FROM USUARIO 
+                WHERE Correo = :usuario OR Telefono = :usuario";
 
-        // --- COMIENZO DEL CÓDIGO FALTANTE ---
+        $stmt = $conexion->prepare($sql);
+        $stmt->bindParam(':usuario', $usuario, PDO::PARAM_STR);
+        $stmt->execute();
 
-        // Asumiendo que $conexion es tu objeto mysqli desde conexion.php
-        if ($stmt = $conexion->prepare($sql)) {
-            // Unir el parámetro dos veces porque se usa para Correo Y Telefono
-            $stmt->bind_param("ss", $usuario, $usuario);
-            $stmt->execute();
-            $resultado = $stmt->get_result();
+        if ($stmt->rowCount() === 1) {
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            // Verificamos si encontramos exactamente un usuario
-            if ($resultado->num_rows === 1) {
-                $row = $resultado->fetch_assoc();
+            // Verificar contraseña (si usas HASH en la BD)
+            if(password_verify($password, $row['Contraseña'])){
+                $_SESSION['ID_Usuario'] = $row['ID_Usuario'];
+                $_SESSION['Prime_Nombre'] = $row['Prime_Nombre'];
+                $_SESSION['Prime_Apellido'] = $row['Prime_Apellido'];
+                $_SESSION['rol'] = $row['rol'];
 
-                // Aquí, el código de verificación de contraseña, sesiones y redirección
-                // Lo que tenías después del comentario "--- La corrección va aquí: validación con strtolower() ---"
+                $rol_usuario = strtolower($row['rol']);
 
-                // Verificamos si la contraseña ingresada coincide con la de la base de datos
-                // OJO: Si la contraseña en la BD es HASH, NO la compares directamente así.
-                // Usar password_verify() si las contraseñas están hasheadas.
-                if(password_verify($password, $row['Contraseña'])){ // CAMBIO AQUÍ: USAR password_verify si usas hash
-                    $_SESSION['ID_Usuario'] = $row['ID_Usuario'];
-                    $_SESSION['Prime_Nombre'] = $row['Prime_Nombre'];
-                    $_SESSION['Prime_Apellido'] = $row['Prime_Apellido'];
-                    $_SESSION['rol'] = $row['rol'];
-
-                    $rol_usuario = strtolower($row['rol']);
-
-                    if($rol_usuario == 'vendedor'){
-                        header('Location: ../../vendedor/DashboardVendedor.php');
-                        exit(); // Siempre usa exit() después de un header Location
-                    } elseif($rol_usuario == 'administrador'){
-                        header('Location: ../Dashboard.php');
-                        exit(); // Siempre usa exit() después de un header Location
-                    } else {
-                         // Rol no reconocido o algo inesperado
-                         header('Location: ../../formularios/formulario.php?error=Rol de usuario no válido');
-                         exit();
-                    }
+                if($rol_usuario == 'vendedor'){
+                    header('Location: ../../vendedor/DashboardVendedor.php');
+                    exit();
+                } elseif($rol_usuario == 'administrador'){
+                    header('Location: ../Dashboard.php');
+                    exit();
                 } else {
-                    // Contraseña incorrecta
-                    header('Location: ../../formularios/formulario.php?error=Usuario o contraseña incorrectos');
+                    header('Location: ../../formularios/formulario.php?error=Rol de usuario no válido');
                     exit();
                 }
             } else {
-                // Usuario no encontrado o múltiples usuarios (lo cual sería un problema)
-                header('Location: ../../formularios/formulario.php?error=Usuario no registrado');
+                header('Location: ../../formularios/formulario.php?error=Usuario o contraseña incorrectos');
                 exit();
             }
-            $stmt->close(); // Cerrar la declaración preparada
         } else {
-            // Error en la preparación de la consulta SQL
-            error_log("Error al preparar la consulta SQL: " . $conexion->error);
-            header('Location: ../../formularios/formulario.php?error=Error interno del servidor');
+            header('Location: ../../formularios/formulario.php?error=Usuario no registrado');
             exit();
         }
 
-        // --- FIN DEL CÓDIGO FALTANTE ---
-
     } else {
-        // Si no se enviaron usuario y contraseña por POST
         header('Location:../../formularios/formulario.php?error=Acceso no autorizado');
         exit();
     }
