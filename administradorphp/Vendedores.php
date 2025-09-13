@@ -77,35 +77,55 @@ while ($z = sqlsrv_fetch_array($stmt_zonas, SQLSRV_FETCH_ASSOC)) {
 </nav>
 
 <div id="layoutSidenav">
+<!-- Navbar superior -->
+
+
+<div id="layoutSidenav">
     <div id="layoutSidenav_nav">
-        <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
-            <div class="sb-sidenav-menu">
-                <div class="nav">
-                    <div class="sb-sidenav-menu-heading">Navegación</div>
-                    <a class="nav-link" href="Dashboard.php"><div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>Panel</a>
-                    <div class="sb-sidenav-menu-heading">Registros</div>
-                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-                        <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>Registros
-                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                    </a>
-                    <div class="collapse" id="collapseLayouts" data-bs-parent="#sidenavAccordion">
-                        <nav class="sb-sidenav-menu-nested nav">
-                            <a class="nav-link" href="Departamentos.php">Departamentos</a>
-                            <a class="nav-link" href="Ciudades.php">Ciudades</a>
-                            <a class="nav-link" href="Zonas.php">Zonas</a>
-                            <a class="nav-link" href="Clientes.php">Clientes</a>
-                            <a class="nav-link" href="Vendedores.php">Vendedores</a>
-                            <a class="nav-link" href="Compras.php">Compras</a>
-                            <a class="nav-link" href="Ventas.php">Ventas</a>
-                            <a class="nav-link" href="Usuarios.php">Usuarios</a>
-                            <a class="nav-link" href="Productos.php">Productos</a>
-                            <a class="nav-link" href="Proveedores.php">Proveedores</a>  
-                        </nav>
-                    </div>
+    <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+        <div class="sb-sidenav-menu">
+            <div class="nav">
+                <!-- Panel -->
+                <div class="sb-sidenav-menu-heading">Panel</div>
+                <a class="nav-link" href="Dashboard.php">
+                    <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                    Panel
+                </a>
+
+                <!-- Registros -->
+                <div class="sb-sidenav-menu-heading">Registros</div>
+                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseRegistros" aria-expanded="false" aria-controls="collapseRegistros">
+                    <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                    Registros
+                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                </a>
+                <div class="collapse" id="collapseRegistros" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                    <nav class="sb-sidenav-menu-nested nav">
+                        <a class="nav-link" href="Departamentos.php">Departamentos</a>
+                        <a class="nav-link" href="Ciudades.php">Ciudades</a>
+                        <a class="nav-link" href="Zonas.php">Zonas</a>
+                        <a class="nav-link" href="Clientes.php">Clientes</a>
+                        <a class="nav-link" href="Vendedores.php">Vendedores</a>
+                        <a class="nav-link" href="Compras.php">Compras</a>
+                        <a class="nav-link" href="Ventas.php">Ventas</a>
+                        <a class="nav-link" href="Usuarios.php">Usuarios</a>
+                        <a class="nav-link" href="Productos.php">Productos</a>
+                        <a class="nav-link" href="Proveedores.php">Proveedores</a>
+                    </nav>
                 </div>
-            </div>                   
-        </nav>
-    </div>
+
+                <!-- Facturas -->
+                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseFacturas" aria-expanded="false" aria-controls="collapseFacturas">
+                    <div class="sb-nav-link-icon"><i class="fas fa-file-invoice"></i></div>
+                    Facturas
+                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                </a>
+                <div class="collapse" id="collapseFacturas" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+                    <nav class="sb-sidenav-menu-nested nav">
+                        <a class="nav-link" href="FacturasEmitidas.php">Emitidas</a>
+                        <a class="nav-link" href="FacturasRecibidas.php">Recibidas</a>
+                    </nav>
+                </div>
 
     <div id="layoutSidenav_content">
         <main class="container-fluid px-4 mt-4">
