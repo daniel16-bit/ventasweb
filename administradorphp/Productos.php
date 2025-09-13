@@ -1,5 +1,5 @@
 <?php 
-include 'models/conexion.php'; // conexión con Azure SQL
+include '../models/conexion.php'; // conexión con Azure SQL
 session_start();
 
 // Verificar sesión
@@ -17,8 +17,8 @@ $sql = "SELECT
             PR.Nombre AS Nombre_Proveedor, 
             P.Stock, 
             P.Existencia
-        FROM PRODUCTO P
-        JOIN PROVEEDOR PR ON P.ID_Proveedor = PR.ID_Proveedor";
+        FROM colfar.PRODUCTO P
+        JOIN colfar.PROVEEDOR PR ON P.ID_Proveedor = PR.ID_Proveedor";
 
 $stmt = sqlsrv_query($conn, $sql);
 
