@@ -1,8 +1,8 @@
 <?php 
 session_start();
-include 'models/conexion.php';
+include '../models/conexion.php';
 
-$sql = "SELECT * FROM USUARIO ";
+$sql = "SELECT * FROM colfar.USUARIO ";
 $result = $conexion->query($sql);
 
 $usuarios = [];

@@ -20,7 +20,7 @@ $sql = "SELECT
             Z.NombreZona AS Nombre_Zona,
             D.Nombre AS Nombre_Departamento,
             P.Nombre AS Nombre_Producto
-        FROM VENTA V
+        FROM colfar.VENTA V
         INNER JOIN CLIENTE C ON V.ID_Cliente = C.ID_Cliente
         INNER JOIN VENDEDOR VE ON V.ID_Vendedor = VE.ID_Vendedor
         INNER JOIN USUARIO U ON VE.ID_Usuario = U.ID_Usuario
