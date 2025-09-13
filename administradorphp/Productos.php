@@ -146,12 +146,19 @@ if ($stmt === false) {
                                             <td><?= $prod['Stock'] ?></td>
                                             <td><?= $prod['Existencia'] ?></td>
                                             <td>
-                                                <a href="controllers/eliminar_producto.php?id=<?= $prod['ID_Producto'] ?>" 
-                                                   class="btn btn-danger btn-sm"
-                                                   onclick="return confirm('¿Estás seguro de eliminar este producto?')">
-                                                   Eliminar
-                                                </a>
-                                            </td>
+    <a href="modificar/modificar_producto.php?id=<?= $prod['ID_Producto'] ?>" 
+       class="btn btn-primary btn-sm me-1"
+       title="Editar">
+       <i class="fas fa-edit"></i>
+    </a>
+    <a href="controllers/eliminar_producto.php?id=<?= $prod['ID_Producto'] ?>" 
+       class="btn btn-danger btn-sm"
+       onclick="return confirm('¿Estás seguro de eliminar este producto?')"
+       title="Eliminar">
+       <i class="fas fa-trash-alt"></i>
+    </a>
+</td>
+
                                         </tr>
                                     <?php endforeach; ?>
                                 <?php else: ?>
