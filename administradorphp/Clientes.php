@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'models/conexion.php'; // conexión PDO para SQL Server
+include '../models/conexion.php'; // conexión PDO para SQL Server
 
 // Obtener clientes desde SQL Server
 try {

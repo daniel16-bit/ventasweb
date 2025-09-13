@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'models/conexion.php'; // Asegúrate de tener la conexión PDO correcta
+include '../models/conexion.php'; // Asegúrate de tener la conexión PDO correcta
 
 // Obtener ciudades desde SQL Server
 try {
