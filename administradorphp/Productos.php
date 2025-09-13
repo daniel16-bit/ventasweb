@@ -14,7 +14,7 @@ $sql = "SELECT
             P.Nombre AS Nombre_Producto, 
             P.ValorProducto, 
             P.ValorVenta, 
-            PR.Nombre AS Nombre_Proveedor, 
+            PR.Nombe  AS Nombre_Proveedor, 
             P.Stock, 
             P.Existencia
         FROM colfar.PRODUCTO P
