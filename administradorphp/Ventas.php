@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'models/conexion.php'; // Conexión a SQL Server
+include '../models/conexion.php'; // Conexión a SQL Server
 
 // Verificar sesión
 if (!isset($_SESSION['Prime_Nombre'])) {
