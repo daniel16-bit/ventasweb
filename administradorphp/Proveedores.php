@@ -2,7 +2,7 @@
 include 'models/conexion.php'; // aquí ya debe estar $conn con sqlsrv_connect()
 
 // Consulta para traer proveedores
-$sql = "SELECT * FROM PROVEEDOR";
+$sql = "SELECT * FROM colfar.PROVEEDOR";
 $stmt = sqlsrv_query($conn, $sql);
 
 $provedores = [];

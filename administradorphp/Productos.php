@@ -17,8 +17,8 @@ $sql = "SELECT
             PR.Nombre AS Nombre_Proveedor, 
             P.Stock, 
             P.Existencia
-        FROM dbo.PRODUCTO P
-        JOIN dbo.PROVEEDOR PR ON P.ID_Proveedor = PR.ID_Proveedor";
+        FROM colfar.PRODUCTO P
+        JOIN colfar.PROVEEDOR PR ON P.ID_Proveedor = PR.ID_Proveedor";
 
 $stmt = sqlsrv_query($conn, $sql);
 
