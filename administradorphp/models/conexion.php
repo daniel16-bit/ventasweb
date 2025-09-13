@@ -1,22 +1,17 @@
 <?php
-    // Datos de la base de datos de Azure SQL
-    $serverName = "colfar-db1.database.windows.net";
-    $databaseName = "colfar";
-    $uid = "colfardb";
-    $pwd = "Daniel2005"; // <-- IMPORTANTE: Reemplaza esto con tu contraseña real
+    $servidor = "127.0.0.1";
+    $usuario = "root";
+    $contrasena ="";
+    $db = "colfar";
 
-    // Define las opciones de conexión para sqlsrv
-    $connectionOptions = array(
-        "Database" => $databaseName,
-        "Uid" => $uid,
-        "PWD" => $pwd
-    );
+    // Crear conexión
+    $conexion = new mysqli($servidor, $usuario, $contrasena, $db);
     
-    // Conectar a la base de datos de Azure SQL
-    $conn = sqlsrv_connect($serverName, $connectionOptions);
-    
-    // Verificar si la conexión falló
-    if ($conn === false) {
-        die(print_r(sqlsrv_errors(), true));
+
+    // Verificar conexión
+    if ($conexion->connect_error){
+        die("falla en la conexión". $conexion->connect_error);
     }
+    
+    $conexion->set_charset('UTF-8');
 ?>
