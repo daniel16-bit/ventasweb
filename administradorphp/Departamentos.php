@@ -1,79 +1,61 @@
-<?php 
-include 'models/conexion.php';
-
-$sql = "SELECT * FROM DEPARTAMENTO";
-$result = $conexion->query($sql);
-
-$departamentos = [];
-if ($result->num_rows > 0) {    
-    while ($row = $result->fetch_assoc()) { 
-        $departamentos[] = $row;
-    }
-} else {
-    echo "No se encontraron departamentos.";
-}
-?>
 <?php
 session_start();
-if(isset($_SESSION['Prime_Nombre']));
+if(!isset($_SESSION['Prime_Nombre'])){
+    header("Location: ../index.php");
+    exit;
+}
+
+// Conexión a SQL Server usando PDO
+$serverName = "localhost"; // o nombre del servidor
+$database = "COLFAR";      // nombre de tu base de datos
+$username = "sa";           // usuario SQL Server
+$password = "tu_password";  // contraseña
+
+try {
+    $conexion = new PDO("sqlsrv:Server=$serverName;Database=$database", $username, $password);
+    $conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    // Consulta
+    $stmt = $conexion->query("SELECT * FROM DEPARTAMENTO");
+    $departamentos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+} catch (PDOException $e) {
+    die("Error de conexión: " . $e->getMessage());
+}
 ?>
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="es">
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
     <title>Departamentos - Admin</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
-    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js"></script>
 </head>
-
 <body>
+    <!-- Navbar -->
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-        <!-- Navbar Brand-->
         <a class="navbar-brand ps-3" href="Dashboard.php">ADMINISTRACIÓN</a>
-        <!-- Sidebar Toggle-->
         <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle"><i class="fas fa-bars"></i></button>
-        <!-- Navbar Search-->
-        <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
-            <div class="input-group">
-                <p class="text-light">Usted ingresó como: <?php echo $_SESSION['Prime_Nombre']; ?></p>
-            </div>
-        </form>
-        <!-- Navbar-->
-        <ul class="navbar-nav ms-auto me-3 me-lg-4">
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
-                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" href="#">Ajustes</a></li>
-                    <li><a class="dropdown-item" href="#">Historial de Actividades</a></li>
-                    <li><hr class="dropdown-divider" /></li>
-                    <li><a class="dropdown-item" href="../index.php">Cerrar sesión</a></li>
-                </ul>
-            </li>
-        </ul>
+        <div class="ms-auto text-light">Usted ingresó como: <?php echo $_SESSION['Prime_Nombre']; ?></div>
     </nav>
 
     <div id="layoutSidenav">
+        <!-- Sidebar -->
         <div id="layoutSidenav_nav">
-            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+            <nav class="sb-sidenav accordion sb-sidenav-dark">
                 <div class="sb-sidenav-menu">
                     <div class="nav">
-                        <div class="sb-sidenav-menu-heading">Navegacion</div>
-                        <a class="nav-link" href="Dashboard.php"><div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div> Panel</a>
+                        <div class="sb-sidenav-menu-heading">Navegación</div>
+                        <a class="nav-link" href="Dashboard.php"><i class="fas fa-tachometer-alt me-2"></i>Panel</a>
                         <div class="sb-sidenav-menu-heading">Registros</div>
-                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
-                            data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-                            <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                            Registros
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseRegistros">
+                            <i class="fas fa-columns me-2"></i>Registros
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
-                        <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne"
-                            data-bs-parent="#sidenavAccordion">
+                        <div class="collapse" id="collapseRegistros">
                             <nav class="sb-sidenav-menu-nested nav">
                                 <a class="nav-link" href="Departamentos.php">Departamentos</a>
                                 <a class="nav-link" href="Ciudades.php">Ciudades</a>
@@ -84,7 +66,7 @@ if(isset($_SESSION['Prime_Nombre']));
                                 <a class="nav-link" href="Ventas.php">Ventas</a>
                                 <a class="nav-link" href="Usuarios.php">Usuarios</a>
                                 <a class="nav-link" href="Productos.php">Productos</a>
-                                <a class="nav-link" href="Proveedores.php">Proveedores</a>  
+                                <a class="nav-link" href="Proveedores.php">Proveedores</a>
                             </nav>
                         </div>
                     </div>
@@ -92,29 +74,27 @@ if(isset($_SESSION['Prime_Nombre']));
             </nav>
         </div>
 
+        <!-- Contenido -->
         <div id="layoutSidenav_content">
             <main class="container-fluid px-4 mt-4">
                 <h1 class="mb-4">DEPARTAMENTOS</h1>
-                <!-- Botón extra arriba para registrar -->
                 <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#miModal">
-                    <i class="fas fa-plus"></i> Registrar Departamento nuevo
+                    <i class="fas fa-plus"></i> Registrar Departamento
                 </button>
-                <a href="Reportes/Departamentospdf.php" class="btn btn-success mb-3">Generar Reporte PDF</a>
 
-                <!-- Modal de registro -->
-                <div class="modal fade" id="miModal" tabindex="-1" aria-labelledby="miModalLabel" aria-hidden="true">
+                <!-- Modal Registrar -->
+                <div class="modal fade" id="miModal" tabindex="-1">
                     <div class="modal-dialog">
                         <div class="modal-content">
-                            <form action="controllers/registrar_departamento.php" method="POST" class="was-validated">
+                            <form action="controllers/registrar_departamento_sqlserver.php" method="POST">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="miModalLabel">Registrar Departamento</h5>
+                                    <h5 class="modal-title">Registrar Departamento</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                 </div>
                                 <div class="modal-body">
                                     <div class="mb-3">
-                                        <label for="nombreDepartamento" class="form-label">Nombre del Departamento</label>
-                                        <input type="text" class="form-control" id="nombreDepartamento" name="nombreDepartamento" required>
-                                        <div class="invalid-feedback">Este campo es obligatorio</div>
+                                        <label>Nombre del Departamento</label>
+                                        <input type="text" name="nombreDepartamento" class="form-control" required>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
@@ -126,50 +106,44 @@ if(isset($_SESSION['Prime_Nombre']));
                     </div>
                 </div>
 
-                <!-- Tabla mejorada -->
+                <!-- Tabla -->
                 <div class="card shadow-sm rounded mb-4">
-                    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
-                        <h5 class="mb-0"><i class="fas fa-table me-2"></i>Tabla Departamentos</h5>
+                    <div class="card-header bg-primary text-white">
+                        <i class="fas fa-table me-2"></i>Tabla Departamentos
                     </div>
                     <div class="card-body p-0">
-                        <table id="datatablesSimple" class="table table-striped table-hover table-bordered mb-0 text-center align-middle">
+                        <table id="datatablesSimple" class="table table-striped table-hover table-bordered text-center align-middle mb-0">
                             <thead class="table-dark">
                                 <tr>
-                                    <th scope="col"><i class="fas fa-hashtag"></i> ID</th>
-                                    <th scope="col"><i class="fas fa-building"></i> Nombre Departamento</th>
-                                    <th scope="col"><i class="fas fa-cogs"></i> Acciones</th>
+                                    <th>ID</th>
+                                    <th>Nombre Departamento</th>
+                                    <th>Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach ($departamentos as $departamento): ?>
+                                <?php foreach($departamentos as $dep): ?>
                                     <tr>
-                                        <td><?php echo $departamento['ID_Departamento']; ?></td>
-                                        <td><?php echo htmlspecialchars($departamento['Nombre']); ?></td>
+                                        <td><?= $dep['ID_Departamento'] ?></td>
+                                        <td><?= htmlspecialchars($dep['Nombre']) ?></td>
                                         <td>
-                                            <a href="./modificar/modificar_departamento.php?id=<?php echo $departamento['ID_Departamento']; ?>" class="text-primary me-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar">
-                                                <i class="fas fa-edit fs-5"></i>
-                                            </a>
-                                            <a href="#" data-href="controllers/eliminar.php?id=<?php echo $departamento['ID_Departamento']; ?>" data-bs-toggle="modal" data-bs-target="#confirmar-delete" class="text-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="Eliminar">
-                                                <i class="fas fa-trash-alt fs-5"></i>
-                                            </a>
+                                            <a href="modificar/modificar_departamento.php?id=<?= $dep['ID_Departamento'] ?>" class="text-primary me-2"><i class="fas fa-edit"></i></a>
+                                            <a href="#" data-href="controllers/eliminar_departamento_sqlserver.php?id=<?= $dep['ID_Departamento'] ?>" data-bs-toggle="modal" data-bs-target="#confirmar-delete" class="text-danger"><i class="fas fa-trash-alt"></i></a>
                                         </td>
                                     </tr>
-                                <?php endforeach; ?> 
+                                <?php endforeach; ?>
                             </tbody>
                         </table>
                     </div>
                 </div>
-
             </main>
 
+            <!-- Footer -->
             <footer class="py-4 bg-light mt-auto">
                 <div class="container-fluid px-4">
-                    <div class="d-flex align-items-center justify-content-between small">
-                        <div class="text-muted">Copyright &copy; Your Website 2023</div>
+                    <div class="d-flex justify-content-between small">
+                        <div class="text-muted">&copy; 2023 COLFAR</div>
                         <div>
-                            <a href="#">Privacy Policy</a>
-                            &middot;
-                            <a href="#">Terms &amp; Conditions</a>
+                            <a href="#">Privacy Policy</a> &middot; <a href="#">Terms & Conditions</a>
                         </div>
                     </div>
                 </div>
@@ -177,17 +151,15 @@ if(isset($_SESSION['Prime_Nombre']));
         </div>
     </div>
 
-    <!-- Modal de confirmación de eliminación -->
-    <div class="modal fade" id="confirmar-delete" tabindex="-1" role="dialog" aria-labelledby="confirmar-delete-label" aria-hidden="true">
-        <div class="modal-dialog" role="document">
+    <!-- Modal Eliminar -->
+    <div class="modal fade" id="confirmar-delete" tabindex="-1">
+        <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="confirmar-delete-label">Confirmar eliminación</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>  
-                <div class="modal-body">
-                    ¿Estás seguro de que deseas eliminar este Departamento?
+                    <h5>Confirmar eliminación</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
+                <div class="modal-body">¿Seguro que deseas eliminar este departamento?</div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                     <a href="#" id="btn-eliminar" class="btn btn-danger">Eliminar</a>
@@ -199,22 +171,17 @@ if(isset($_SESSION['Prime_Nombre']));
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"></script>
-    <script src="js/datatables-simple-demo.js"></script>
     <script>
-        // Configurar enlace dinámico en el modal de eliminación
-        var confirmarModal = document.getElementById('confirmar-delete');
-        confirmarModal.addEventListener('show.bs.modal', function (event) {
-            var button = event.relatedTarget;
-            var href = button.getAttribute('data-href');
-            var confirmBtn = confirmarModal.querySelector('#btn-eliminar');
-            confirmBtn.setAttribute('href', href);
-        });
+        // DataTable
+        const dataTable = new simpleDatatables.DataTable("#datatablesSimple");
 
-        // Inicializar tooltips de Bootstrap
-        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-            return new bootstrap.Tooltip(tooltipTriggerEl)
-        })
+        // Modal eliminar dinámico
+        const confirmarModal = document.getElementById('confirmar-delete');
+        confirmarModal.addEventListener('show.bs.modal', event => {
+            const button = event.relatedTarget;
+            const href = button.getAttribute('data-href');
+            confirmarModal.querySelector('#btn-eliminar').setAttribute('href', href);
+        });
     </script>
 </body>
 </html>

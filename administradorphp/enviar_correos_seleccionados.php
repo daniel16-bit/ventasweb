@@ -1,48 +1,30 @@
 <?php
 session_start();
-include 'models/conexion.php';
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require '../PHPMailer-master/src/Exception.php';
+require '../PHPMailer-master/src/PHPMailer.php';
+require '../PHPMailer-master/src/SMTP.php';
+
+// Conexión a SQL Server con PDO
+$serverName = "localhost"; // Cambia por tu servidor
+$database   = "COLFAR";    // Tu base de datos
+$username   = "sa";         // Usuario SQL Server
+$password   = "tu_password"; // Contraseña
+
+try {
+    $conexion = new PDO("sqlsrv:Server=$serverName;Database=$database", $username, $password);
+    $conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    die("Error de conexión: " . $e->getMessage());
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!empty($_POST['usuarios_seleccionados'])) {
         $ids = $_POST['usuarios_seleccionados'];
+        $ids_sanitizados = array_map('intval', $ids);
+        $placeholders = implode(',', array_fill(0, count($ids_sanitizados), '?'));
 
-        // Obtener correos de los usuarios seleccionados
-        $ids_sanitizados = array_map('intval', $ids); // sanitizar IDs para evitar SQL Injection
-        $ids_str = implode(',', $ids_sanitizados);
+        $stmt = $conexion->prepare("SELECT Correo, Prime_Nombre FROM USUARIO WHERE ID_
 
-        $sql = "SELECT Correo, Prime_Nombre FROM USUARIO WHERE ID_Usuario IN ($ids_str)";
-        $result = $conexion->query($sql);
-
-        if ($result->num_rows > 0) {
-            $correos_enviados = 0;
-            while ($usuario = $result->fetch_assoc()) {
-                $correo = $usuario['Correo'];
-                $nombre = $usuario['Prime_Nombre'];
-
-                // Aquí deberías usar tu función de envío de correo, por ejemplo:
-                $asunto = "Mensaje desde tu sistema";
-                $mensaje = "Hola $nombre,\n\nEste es un mensaje de prueba enviado desde el sistema.";
-                $headers = "From: tu_correo@dominio.com";
-
-                // mail() es la función nativa de PHP para enviar correos, puede requerir configuración en tu servidor
-                if (mail($correo, $asunto, $mensaje, $headers)) {
-                    $correos_enviados++;
-                }
-            }
-
-            $_SESSION['correos_enviados'] = $correos_enviados > 0;
-            header("Location: Usuarios.php");
-            exit;
-        } else {
-            $_SESSION['correos_enviados'] = false;
-            header("Location: Usuarios.php");
-            exit;
-        }
-    } else {
-        // No se seleccionaron usuarios
-        $_SESSION['correos_enviados'] = false;
-        header("Location: Usuarios.php");
-        exit;
-    }
-}
-?>

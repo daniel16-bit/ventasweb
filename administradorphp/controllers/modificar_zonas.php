@@ -1,25 +1,34 @@
 <?php
-include_once '../models/conexion.php';
+include_once '../models/conexion.php'; // conexión con PDO
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['modificar'])) {
-    $id_zona = $_POST['id'];
-    $nombreZona = $_POST['nombre'];
-    $id_departamento = $_POST['departamento'];
+    $id_zona         = $_POST['id'] ?? null;
+    $nombreZona      = $_POST['nombre'] ?? null;
+    $id_departamento = $_POST['departamento'] ?? null;
 
-    // Preparar la consulta para actualizar los datos de la zona
-    $sql = "UPDATE ZONA SET NombreZona = ?, ID_Departamento = ? WHERE ID_Zona = ?";
-    $stmt = $conexion->prepare($sql);
-    $stmt->bind_param("sii", $nombreZona, $id_departamento, $id_zona);
+    if (!empty($id_zona) && !empty($nombreZona) && !empty($id_departamento)) {
+        try {
+            // Preparar consulta
+            $sql = "UPDATE ZONA 
+                    SET NombreZona = ?, ID_Departamento = ? 
+                    WHERE ID_Zona = ?";
+            $stmt = $conexion->prepare($sql);
 
-    if ($stmt->execute()) {
-        // Redirigir a la página de zonas después de la actualización
-        header("Location: ../Zonas.php");
-        exit();
+            // Ejecutar con parámetros
+            $resultado = $stmt->execute([$nombreZona, $id_departamento, $id_zona]);
+
+            if ($resultado) {
+                header("Location: ../Zonas.php");
+                exit();
+            } else {
+                echo "Error al actualizar la zona.";
+            }
+        } catch (PDOException $e) {
+            echo "Error en la base de datos: " . $e->getMessage();
+        }
     } else {
-        echo "Error al actualizar la zona: " . $stmt->error;
+        echo "Por favor, complete todos los campos.";
     }
-
-    $stmt->close();
-    $conexion->close();
 }
 ?>
+

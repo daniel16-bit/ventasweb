@@ -1,47 +1,58 @@
 <?php
-include_once '../models/conexion.php';
+include_once '../models/conexion.php'; // Aquí ya deberías tener la conexión con PDO
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Obtener los datos del formulario
-    $id_usuario = $_POST['id'];  // ID del usuario a modificar
-    $prime_nombre = $_POST['prime_nombre'];
-    $segundo_nombre = $_POST['segundo_nombre'];
-    $prime_apellido = $_POST['prime_apellido'];
-    $segundo_apellido = $_POST['segundo_apellido'];
-    $telefono = $_POST['telefono'];
-    $correo = $_POST['correo'];
-    $contraseña = $_POST['contraseña'];
-    $rol = $_POST['rol'];  // ID del rol a asignar al usuario
+    $id_usuario      = $_POST['id'] ?? null;
+    $prime_nombre    = $_POST['prime_nombre'] ?? null;
+    $segundo_nombre  = $_POST['segundo_nombre'] ?? null;
+    $prime_apellido  = $_POST['prime_apellido'] ?? null;
+    $segundo_apellido= $_POST['segundo_apellido'] ?? null;
+    $telefono        = $_POST['telefono'] ?? null;
+    $correo          = $_POST['correo'] ?? null;
+    $contraseña      = $_POST['contraseña'] ?? null;
+    $rol             = $_POST['rol'] ?? null;  // ID del rol
 
-    // Consulta para actualizar los datos
-    $sql = "UPDATE USUARIO 
-            SET Prime_Nombre = ?, Segundo_Nombre = ?, Prime_Apellido = ?, Segundo_Apellido = ?, 
-                Telefono = ?, Correo = ?, Contraseña = ?, rol = ?
-            WHERE ID_Usuario = ?";
-    
-    $stmt = $conexion->prepare($sql);
-    
-    if ($stmt === false) {
-        die("Error en la preparación: " . $conexion->error);
-    }
+    if ($id_usuario) {
+        try {
+            // Consulta con parámetros
+            $sql = "UPDATE USUARIO 
+                    SET Prime_Nombre = ?, 
+                        Segundo_Nombre = ?, 
+                        Prime_Apellido = ?, 
+                        Segundo_Apellido = ?, 
+                        Telefono = ?, 
+                        Correo = ?, 
+                        Contraseña = ?, 
+                        rol = ?
+                    WHERE ID_Usuario = ?";
 
-    // Vincula los parámetros
-    $stmt->bind_param("ssssssssi", $prime_nombre, $segundo_nombre, $prime_apellido, $segundo_apellido, $telefono, $correo, $contraseña, $rol, $id_usuario);
+            $stmt = $conexion->prepare($sql);
+            $stmt->execute([
+                $prime_nombre,
+                $segundo_nombre,
+                $prime_apellido,
+                $segundo_apellido,
+                $telefono,
+                $correo,
+                $contraseña,
+                $rol,
+                $id_usuario
+            ]);
 
-    // Ejecuta la consulta
-    if ($stmt->execute()) {
-        // Redirige a la página de usuarios
-        header("Location: ../Usuarios.php");
-        exit();
+            // Redirigir a la página de usuarios
+            header("Location: ../Usuarios.php");
+            exit();
+
+        } catch (PDOException $e) {
+            echo "Error al actualizar el usuario: " . $e->getMessage();
+        }
     } else {
-        echo "Error: " . $stmt->error;
+        echo "Falta el ID de usuario.";
     }
-
-    // Cierra la sentencia y la conexión
-    $stmt->close();
-    $conexion->close();
 } else {
     echo "Método de solicitud no válido.";
 }
 ?>
+
 

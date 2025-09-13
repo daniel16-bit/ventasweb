@@ -1,25 +1,31 @@
 <?php
-include '../models/conexion.php';
+include '../models/conexion.php'; // conexión PDO a Azure SQL
 
-// Verificar si el formulario fue enviado
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Recibir los datos del formulario
-    $id_zona = $_POST['id_zona'];
-    $id_usuario = $_POST['id_usuario'];
+    try {
+        // Recibir datos del formulario
+        $id_zona    = $_POST['id_zona'] ?? null;
+        $id_usuario = $_POST['id_usuario'] ?? null;
 
-    // Validar que los campos no estén vacíos
-    if (!empty($id_zona) && !empty($id_usuario)) {
-        // Insertar el nuevo vendedor en la base de datos
-        $sql = "INSERT INTO VENDEDOR (ID_Zona, ID_Usuario) VALUES ('$id_zona', '$id_usuario')";
+        // Validar
+        if (!empty($id_zona) && !empty($id_usuario)) {
+            // Consulta con parámetros para evitar SQL Injection
+            $sql = "INSERT INTO VENDEDOR (ID_Zona, ID_Usuario) VALUES (?, ?)";
+            $stmt = $conexion->prepare($sql);
+            $resultado = $stmt->execute([$id_zona, $id_usuario]);
 
-        if ($conexion->query($sql) === TRUE) {
-            // Redirigir a la página de vendedores después de registrar
-            header("Location: ../Vendedores.php");
+            if ($resultado) {
+                header("Location: ../Vendedores.php");
+                exit();
+            } else {
+                echo "Error al registrar el vendedor.";
+            }
         } else {
-            echo "Error al registrar el vendedor: " . $conexion->error;
+            echo "Por favor, complete todos los campos.";
         }
-    } else {
-        echo "Por favor, complete todos los campos.";
+    } catch (PDOException $e) {
+        echo "Error en la base de datos: " . $e->getMessage();
     }
 }
 ?>
+

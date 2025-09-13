@@ -1,26 +1,43 @@
 <?php
-include 'models/conexion.php';
-$sql = " SELECT 
-    Z.ID_Zona, 
-    Z.NombreZona, 
-    D.Nombre AS NombreDepartamento
-FROM 
-    ZONA Z
-JOIN 
-    DEPARTAMENTO D ON Z.ID_Departamento = D.ID_Departamento;";
-$result = $conexion->query($sql);
+// Conexión a SQL Server
+$serverName = "TU_SERVIDOR_SQL"; // Ej: localhost\SQLEXPRESS
+$connectionOptions = [
+    "Database" => "COLFAR",
+    "Uid" => "tu_usuario",
+    "PWD" => "tu_contraseña"
+];
 
-$zonas = [];
-if ($result->num_rows > 0) {    
-    while ($row = $result->fetch_assoc()) { 
-        $zonas[] = $row;
-    }
-} else {
-    echo "No se encontraron zonas.";
+$conexion = sqlsrv_connect($serverName, $connectionOptions);
+
+if (!$conexion) {
+    die(print_r(sqlsrv_errors(), true));
 }
 
+// Consulta Zonas con SQL Server
+$sql = "SELECT 
+            Z.ID_Zona, 
+            Z.NombreZona, 
+            D.Nombre AS NombreDepartamento
+        FROM ZONA Z
+        JOIN DEPARTAMENTO D ON Z.ID_Departamento = D.ID_Departamento";
+
+$result = sqlsrv_query($conexion, $sql);
+
+$zonas = [];
+if ($result === false) {
+    die(print_r(sqlsrv_errors(), true));
+}
+
+while ($row = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC)) {
+    // Convertir objetos datetime a string si es necesario
+    $zonas[] = $row;
+}
+
+// Iniciar sesión
 session_start();
-if(isset($_SESSION['Prime_Nombre']));
+if(!isset($_SESSION['Prime_Nombre'])){
+    $_SESSION['Prime_Nombre'] = 'Invitado';
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -115,9 +132,18 @@ if(isset($_SESSION['Prime_Nombre']));
                                     <div class="invalid-feedback">Este campo es obligatorio</div>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="nombreDepartamento" class="form-label">Nombre del Departamento</label>
-                                    <input type="text" class="form-control" id="nombreDepartamento" name="nombre_departamento" required>
-                                    <div class="invalid-feedback">Este campo es obligatorio</div>
+                                    <label for="idDepartamento" class="form-label">Departamento</label>
+                                    <select name="idDepartamento" id="idDepartamento" class="form-select" required>
+                                        <option value="">Seleccione un Departamento</option>
+                                        <?php
+                                        $sqlDept = "SELECT ID_Departamento, Nombre FROM DEPARTAMENTO";
+                                        $resultDept = sqlsrv_query($conexion, $sqlDept);
+                                        while($dept = sqlsrv_fetch_array($resultDept, SQLSRV_FETCH_ASSOC)){
+                                            echo "<option value='".$dept['ID_Departamento']."'>".htmlspecialchars($dept['Nombre'])."</option>";
+                                        }
+                                        ?>
+                                    </select>
+                                    <div class="invalid-feedback">Seleccione un departamento</div>
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -140,7 +166,7 @@ if(isset($_SESSION['Prime_Nombre']));
                             <tr>
                                 <th>ID Zona</th>
                                 <th>Nombre Zona</th>
-                                <th>Nombre Departamento</th>
+                                <th>Departamento</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
@@ -204,10 +230,8 @@ if(isset($_SESSION['Prime_Nombre']));
 <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
 
 <script>
-    // Inicializar DataTable
     const dataTable = new simpleDatatables.DataTable("#datatablesSimple");
 
-    // Modal eliminar: actualizar href dinámicamente
     var confirmarModal = document.getElementById('confirmar-delete');
     confirmarModal.addEventListener('show.bs.modal', function (event) {
         var button = event.relatedTarget;
@@ -216,7 +240,6 @@ if(isset($_SESSION['Prime_Nombre']));
         confirmBtn.setAttribute('href', href);
     });
 
-    // Inicializar tooltips Bootstrap
     var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
     tooltipTriggerList.map(function (tooltipTriggerEl) {
         return new bootstrap.Tooltip(tooltipTriggerEl);
@@ -225,3 +248,4 @@ if(isset($_SESSION['Prime_Nombre']));
 
 </body>
 </html>
+

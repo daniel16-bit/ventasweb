@@ -1,31 +1,36 @@
 <?php
 include_once '../models/conexion.php';
 
-
 if (!empty($_POST['modificar'])) {
-
-    // Verificar si los campos no están vacíos
+    // Validar que todos los campos estén presentes
     if (!empty($_POST['nombre']) && !empty($_POST['pais']) && !empty($_POST['codigo_postal'])) {
 
-        // Recoger los datos del formulario y escapar los valores
-        $idCiudad = $_POST['id'];
-        $nombreCiudad = mysqli_real_escape_string($conexion, $_POST['nombre']);
-        $pais = mysqli_real_escape_string($conexion, $_POST['pais']);
-        $codigoPostal = mysqli_real_escape_string($conexion, $_POST['codigo_postal']);
+        // Recoger los datos del formulario
+        $idCiudad      = $_POST['id'];
+        $nombreCiudad  = $_POST['nombre'];
+        $pais          = $_POST['pais'];
+        $codigoPostal  = $_POST['codigo_postal'];
 
-        // Comprobar que la conexión esté activa
-        if ($conexion) {
-            // Preparar la consulta SQL para actualizar los datos
-            $sql = "UPDATE CIUDAD SET Nombre_ciudad = '$nombreCiudad', Pais = '$pais', Codigo_postal = '$codigoPostal' WHERE ID_Ciudad = '$idCiudad'";
+        try {
+            // Preparar la consulta con parámetros
+            $sql = "UPDATE CIUDAD 
+                    SET Nombre_ciudad = ?, Pais = ?, Codigo_postal = ? 
+                    WHERE ID_Ciudad = ?";
+            $stmt = $conexion->prepare($sql);
 
-            // Ejecutar la consulta
-            if (mysqli_query($conexion, $sql)) {
-                echo '<div class="alert alert-danger">Ciudad actualizada exitosamente.</div>';;
-            }
-            header("Location:../Ciudades.php"); 
-        } 
+            // Ejecutar la consulta con los valores
+            $stmt->execute([$nombreCiudad, $pais, $codigoPostal, $idCiudad]);
+
+            // Redirigir a la lista de ciudades
+            header("Location: ../Ciudades.php");
+            exit();
+
+        } catch (PDOException $e) {
+            echo "❌ Error al actualizar la ciudad: " . $e->getMessage();
+        }
     } else {
-        echo "Todos los campos son obligatorios.";
+        echo "⚠️ Todos los campos son obligatorios.";
     }
 }
 ?>
+

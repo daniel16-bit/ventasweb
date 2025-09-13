@@ -1,36 +1,42 @@
 <?php
-// Incluir la conexión a la base de datos
+// Incluir la conexión a la base de datos (PDO con Azure SQL)
 include '../models/conexion.php';
 
-// Comprobar si los datos fueron enviados via POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Recibir los datos del formulario
-    $fecha = $_POST['fecha'];
-    $cantidad = $_POST['cantidad'];
-    $id_producto = $_POST['id_producto'];
-    $id_proveedor = $_POST['id_proveedor'];
+    try {
+        // Recibir los datos del formulario
+        $fecha        = $_POST['fecha'];
+        $cantidad     = $_POST['cantidad'];
+        $id_producto  = $_POST['id_producto'];
+        $id_proveedor = $_POST['id_proveedor'];
 
-    // Validar que los campos no estén vacíos (puedes agregar más validaciones si es necesario)
-    if (empty($fecha) || empty($cantidad) || empty($id_producto) || empty($id_proveedor)) {
-        die("Por favor complete todos los campos.");
-    }
+        // Validación básica
+        if (empty($fecha) || empty($cantidad) || empty($id_producto) || empty($id_proveedor)) {
+            die("Por favor complete todos los campos.");
+        }
 
-    // Preparar la consulta SQL para insertar los datos
-    $sql = "INSERT INTO COMPRA (Fecha, Cantidad, ID_Producto, ID_Proveedor) 
-            VALUES ('$fecha', '$cantidad', '$id_producto', '$id_proveedor')";
+        // Preparar la consulta con parámetros
+        $sql = "INSERT INTO COMPRA (Fecha, Cantidad, ID_Producto, ID_Proveedor) 
+                VALUES (?, ?, ?, ?)";
 
-    // Ejecutar la consulta
-    if ($conexion->query($sql) === TRUE) {
-        echo "Compra registrada con éxito.";
-        // Redirigir al listado de compras (o a donde prefieras)
-        header("Location:../Compras.php"); // Asegúrate de que la ruta sea correcta
-        exit();
-    } else {
-        echo "Error al registrar la compra: " . $conexion->error;
+        $stmt = $conexion->prepare($sql);
+
+        // Ejecutar con los valores
+        $resultado = $stmt->execute([$fecha, $cantidad, $id_producto, $id_proveedor]);
+
+        if ($resultado) {
+            header("Location: ../Compras.php");
+            exit();
+        } else {
+            echo "Error al registrar la compra.";
+        }
+
+    } catch (PDOException $e) {
+        echo "Error en la base de datos: " . $e->getMessage();
     }
 } else {
-    // Si no se hizo una solicitud POST, redirigir a la página de compras
-    header("Location: Compras.php");
+    // Si no viene por POST, redirigir a Compras
+    header("Location: ../Compras.php");
     exit();
 }
-?>
+

@@ -1,25 +1,35 @@
 <?php
 include_once '../models/conexion.php';
 
-if (isset($_POST['modificar']) && $_POST['modificar'] == 'ok') {
+if (isset($_POST['modificar']) && $_POST['modificar'] === 'ok') {
     // Obtener los datos del formulario
-    $id_compra = $_POST['id'];
-    $fecha = $_POST['fecha'];
-    $cantidad = $_POST['cantidad'];
-    $id_producto = $_POST['id_producto'];
-    $id_proveedor = $_POST['id_proveedor'];
+    $id_compra   = $_POST['id'] ?? null;
+    $fecha       = $_POST['fecha'] ?? null;
+    $cantidad    = $_POST['cantidad'] ?? null;
+    $id_producto = $_POST['id_producto'] ?? null;
+    $id_proveedor = $_POST['id_proveedor'] ?? null;
 
-    // Validar los datos si es necesario
+    // Validar datos obligatorios
+    if ($id_compra && $fecha && $cantidad && $id_producto && $id_proveedor) {
+        try {
+            // Consulta con parámetros preparados
+            $sql = "UPDATE COMPRA 
+                    SET Fecha = ?, Cantidad = ?, ID_Producto = ?, ID_Proveedor = ? 
+                    WHERE ID_Compra = ?";
 
-    // Actualizar la base de datos
-    $sql = "UPDATE COMPRA SET Fecha = '$fecha', Cantidad = '$cantidad', ID_Producto = '$id_producto', ID_Proveedor = '$id_proveedor' WHERE ID_Compra = '$id_compra'";
+            $stmt = $conexion->prepare($sql);
+            $stmt->execute([$fecha, $cantidad, $id_producto, $id_proveedor, $id_compra]);
 
-    if ($conexion->query($sql)) {
-        echo "Compra actualizada exitosamente.";
-        // Redirigir a otra página si es necesario
-        
+            // Mensaje de éxito o redirección
+            header("Location: ../Compras.php");
+            exit;
+
+        } catch (PDOException $e) {
+            echo "Error al actualizar la compra: " . $e->getMessage();
+        }
     } else {
-        echo "Error al actualizar la compra: " . $conexion->error;
+        echo "Todos los campos son obligatorios.";
     }
 }
 ?>
+

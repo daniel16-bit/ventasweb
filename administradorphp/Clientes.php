@@ -1,20 +1,15 @@
-<?php 
-include 'models/conexion.php';
-
-$sql = "SELECT * FROM CLIENTE";
-$result = $conexion->query($sql);
-
-$clientes = [];
-if ($result->num_rows > 0) {    
-    while ($row = $result->fetch_assoc()) { 
-        $clientes[] = $row;
-    }
-} else {
-    // No hay clientes, pero no es recomendable hacer echo aquí, mejor manejarlo en la tabla
-}
-
+<?php
 session_start();
-if(isset($_SESSION['Prime_Nombre']));
+include 'models/conexion.php'; // conexión PDO para SQL Server
+
+// Obtener clientes desde SQL Server
+try {
+    $sql = "SELECT * FROM CLIENTE";
+    $stmt = $conexion->query($sql);
+    $clientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    die("Error al obtener clientes: " . $e->getMessage());
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -23,7 +18,7 @@ if(isset($_SESSION['Prime_Nombre']));
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <title>Clientes - Administración</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="css/styles.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
@@ -32,14 +27,14 @@ if(isset($_SESSION['Prime_Nombre']));
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
     <a class="navbar-brand ps-3" href="Dashboard.php">ADMINISTRACIÓN</a>
     <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle"><i class="fas fa-bars"></i></button>
-    <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
-        <div class="input-group">
-            <p class="text-light">Usted ingresó como: <?php echo $_SESSION['Prime_Nombre']; ?></p>
-        </div>
-    </form>
+    <div class="ms-auto me-3">
+        <p class="text-light mb-0">Usted ingresó como: <?php echo htmlspecialchars($_SESSION['Prime_Nombre'] ?? 'Invitado'); ?></p>
+    </div>
     <ul class="navbar-nav ms-auto me-3 me-lg-4">
         <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown">
+                <i class="fas fa-user fa-fw"></i>
+            </a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                 <li><a class="dropdown-item" href="#">Ajustes</a></li>
                 <li><a class="dropdown-item" href="#">Historial de Actividades</a></li>
@@ -58,7 +53,7 @@ if(isset($_SESSION['Prime_Nombre']));
                     <div class="sb-sidenav-menu-heading">Navegación</div>
                     <a class="nav-link" href="Dashboard.php"><div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>Panel</a>
                     <div class="sb-sidenav-menu-heading">Registros</div>
-                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts">
                         <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>Registros
                         <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                     </a>
@@ -73,7 +68,7 @@ if(isset($_SESSION['Prime_Nombre']));
                             <a class="nav-link" href="Ventas.php">Ventas</a>
                             <a class="nav-link" href="Usuarios.php">Usuarios</a>
                             <a class="nav-link" href="Productos.php">Productos</a>
-                            <a class="nav-link" href="Proveedores.php">Proveedores</a>  
+                            <a class="nav-link" href="Proveedores.php">Proveedores</a>
                         </nav>
                     </div>
                 </div>
@@ -88,7 +83,7 @@ if(isset($_SESSION['Prime_Nombre']));
             <a href="Reportes/Clientes_pdf.php" class="btn btn-success mb-3">Generar Reporte</a>
 
             <!-- Modal Registrar Cliente -->
-            <div class="modal fade" id="miModal" tabindex="-1" aria-labelledby="miModalLabel" aria-hidden="true">
+            <div class="modal fade" id="miModal" tabindex="-1" aria-labelledby="miModalLabel">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <form action="controllers/registrar_cliente.php" method="POST" class="was-validated">
@@ -98,22 +93,22 @@ if(isset($_SESSION['Prime_Nombre']));
                             </div>
                             <div class="modal-body">
                                 <div class="mb-3">
-                                    <label for="tipo" class="form-label">Tipo</label>
+                                    <label class="form-label">Tipo</label>
                                     <input type="text" class="form-control" name="tipo" required>
                                     <div class="invalid-feedback">El campo tipo es obligatorio.</div>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="nombre" class="form-label">Nombre</label>
+                                    <label class="form-label">Nombre</label>
                                     <input type="text" class="form-control" name="nombre" required>
                                     <div class="invalid-feedback">El campo nombre es obligatorio.</div>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="telefono" class="form-label">Teléfono</label>
+                                    <label class="form-label">Teléfono</label>
                                     <input type="text" class="form-control" name="telefono" required>
                                     <div class="invalid-feedback">El campo teléfono es obligatorio.</div>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="direccion" class="form-label">Dirección</label>
+                                    <label class="form-label">Dirección</label>
                                     <input type="text" class="form-control" name="direccion" required>
                                     <div class="invalid-feedback">El campo dirección es obligatorio.</div>
                                 </div>
@@ -148,38 +143,31 @@ if(isset($_SESSION['Prime_Nombre']));
                         <?php if (count($clientes) > 0): ?>
                             <?php foreach ($clientes as $cliente): ?>
                                 <tr>
-                                    <td><?php echo $cliente['ID_Cliente']; ?></td>
-                                    <td><?php echo htmlspecialchars($cliente['Tipo']); ?></td>
-                                    <td><?php echo htmlspecialchars($cliente['Nombre']); ?></td>
-                                    <td><?php echo htmlspecialchars($cliente['Telefono']); ?></td>
-                                    <td><?php echo htmlspecialchars($cliente['Direccion']); ?></td>
+                                    <td><?= $cliente['ID_Cliente']; ?></td>
+                                    <td><?= htmlspecialchars($cliente['Tipo']); ?></td>
+                                    <td><?= htmlspecialchars($cliente['Nombre']); ?></td>
+                                    <td><?= htmlspecialchars($cliente['Telefono']); ?></td>
+                                    <td><?= htmlspecialchars($cliente['Direccion']); ?></td>
                                     <td>
-                                        <a href="./modificar/modificar_cliente.php?id=<?php echo $cliente['ID_Cliente']; ?>" class="text-primary me-3" data-bs-toggle="tooltip" title="Editar">
-                                            <i class="fas fa-edit fs-5"></i>
-                                        </a>
-                                        <a href="#" class="text-danger" data-href="controllers/eliminar_cliente.php?id=<?php echo $cliente['ID_Cliente']; ?>" data-bs-toggle="modal" data-bs-target="#confirmar-delete" data-bs-toggle="tooltip" title="Eliminar">
-                                            <i class="fas fa-trash-alt fs-5"></i>
-                                        </a>
+                                        <a href="./modificar/modificar_cliente.php?id=<?= $cliente['ID_Cliente']; ?>" class="text-primary me-3" data-bs-toggle="tooltip" title="Editar"><i class="fas fa-edit fs-5"></i></a>
+                                        <a href="#" class="text-danger" data-href="controllers/eliminar_cliente.php?id=<?= $cliente['ID_Cliente']; ?>" data-bs-toggle="modal" data-bs-target="#confirmar-delete" title="Eliminar"><i class="fas fa-trash-alt fs-5"></i></a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
                         <?php else: ?>
-                            <tr>
-                                <td colspan="6" class="text-center">No hay clientes registrados.</td>
-                            </tr>
+                            <tr><td colspan="6" class="text-center">No hay clientes registrados.</td></tr>
                         <?php endif; ?>
                         </tbody>
                     </table>
                 </div>
             </div>
-
         </main>
 
         <!-- Footer -->
         <footer class="py-4 bg-light mt-auto">
             <div class="container-fluid px-4">
                 <div class="d-flex align-items-center justify-content-between small">
-                    <div class="text-muted">&copy; 2023 Administración</div>
+                    <div class="text-muted">&copy; 2025 Administración</div>
                     <div>
                         <a href="#">Política de Privacidad</a> &middot;
                         <a href="#">Términos y Condiciones</a>
@@ -196,11 +184,9 @@ if(isset($_SESSION['Prime_Nombre']));
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="confirmar-delete-label">Confirmar eliminación</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <div class="modal-body">
-                ¿Estás seguro de que deseas eliminar este cliente?
-            </div>
+            <div class="modal-body">¿Estás seguro de que deseas eliminar este cliente?</div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                 <a href="#" id="btn-eliminar" class="btn btn-danger">Eliminar</a>
@@ -209,23 +195,18 @@ if(isset($_SESSION['Prime_Nombre']));
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"></script>
 <script>
-    // Inicializar Simple DataTables
     const dataTable = new simpleDatatables.DataTable("#datatablesSimple");
 
-    // Modal eliminar: actualizar enlace dinámicamente
     const confirmarModal = document.getElementById('confirmar-delete');
     confirmarModal.addEventListener('show.bs.modal', event => {
         const button = event.relatedTarget;
         const href = button.getAttribute('data-href');
-        const btnEliminar = confirmarModal.querySelector('#btn-eliminar');
-        btnEliminar.setAttribute('href', href);
+        confirmarModal.querySelector('#btn-eliminar').setAttribute('href', href);
     });
 
-    // Inicializar tooltips Bootstrap
     const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
     tooltipTriggerList.map(el => new bootstrap.Tooltip(el));
 </script>

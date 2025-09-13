@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
@@ -7,34 +8,42 @@ require '../PHPMailer-master/src/Exception.php';
 require '../PHPMailer-master/src/PHPMailer.php';
 require '../PHPMailer-master/src/SMTP.php';
 
-include '../models/conexion.php';
+// Conexión a SQL Server con PDO
+$serverName = "localhost"; // tu servidor
+$database = "COLFAR";      // tu base de datos
+$username = "sa";           // usuario
+$password = "tu_password";  // contraseña
+
+try {
+    $conexion = new PDO("sqlsrv:Server=$serverName;Database=$database", $username, $password);
+    $conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    // Obtener todos los correos y nombres
+    $stmt = $conexion->query("SELECT Correo, Prime_Nombre FROM USUARIO");
+    $correos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    if (empty($correos)) {
+        $_SESSION['correos_enviados'] = false;
+        header('Location: ./Usuarios.php');
+        exit;
+    }
+
+} catch (PDOException $e) {
+    die("Error de conexión: " . $e->getMessage());
+}
 
 // Aumentar tiempo de ejecución
 ini_set('max_execution_time', 300);
 
-$sql = "SELECT Correo, Prime_Nombre FROM USUARIO";
-$result = $conexion->query($sql);
-
-$correos = [];
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        $correos[] = $row;
-    }
-} else {
-    $_SESSION['correos_enviados'] = false;
-    header('Location: ./Usuarios.php');
-    exit;
-}
-
+// Enviar correos
 foreach ($correos as $usuario) {
     $mail = new PHPMailer(true);
-
     try {
         $mail->isSMTP();
         $mail->Host       = 'smtp.gmail.com';
         $mail->SMTPAuth   = true;
         $mail->Username   = 'camargocamargodaniel0@gmail.com';
-        $mail->Password   = 'pzwq prdw volx iobo'; // tu clave de aplicación
+        $mail->Password   = 'pzwq prdw volx iobo'; // clave de aplicación
         $mail->SMTPSecure = 'tls';
         $mail->Port       = 587;
 
@@ -43,7 +52,6 @@ foreach ($correos as $usuario) {
 
         $mail->isHTML(true);
         $mail->Subject = 'Notificación para todos los usuarios';
-
         $mail->Body = '
         <table style="max-width:600px; margin:auto; font-family: Arial, sans-serif; border:1px solid #ddd; border-radius:8px; padding:20px; background-color:#f9f9f9;">
             <tr>
@@ -72,12 +80,13 @@ foreach ($correos as $usuario) {
 
         $mail->send();
     } catch (Exception $e) {
-        // Aquí puedes guardar logs de errores si quieres
+        // Opcional: log de errores
     }
 }
 
 $_SESSION['correos_enviados'] = true;
 header('Location: ./Usuarios.php');
 exit;
+
 
 
