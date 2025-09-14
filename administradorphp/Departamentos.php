@@ -5,6 +5,11 @@ if(!isset($_SESSION['Prime_Nombre'])){
     exit;
 }
 
+    // Datos de la base de datos de Azure SQL
+    $serverName = "colfar-db1.database.windows.net";
+    $databaseName = "colfar";
+    $uid = "colfardb";
+    $pwd = "Daniel2005"; // <-- IMPORTANTE: Reemplaza esto con tu contraseña real
 
 try {
     $conexion = new PDO("sqlsrv:Server=$serverName;Database=$database", $username, $password);
