@@ -49,10 +49,10 @@ function fetchAll($conn, $query) {
 }
 
 $clientes = fetchAll($conn, "SELECT ID_Cliente, Nombre FROM CLIENTE");
-$vendedores = fetchAll($conn, "SELECT VE.ID_Vendedor, U.Prime_Nombre, U.Segundo_Nombre, U.Prime_Apellido, U.Segundo_Apellido FROM VENDEDOR VE INNER JOIN USUARIO U ON VE.ID_Usuario = U.ID_Usuario");
-$zonas = fetchAll($conn, "SELECT ID_Zona, NombreZona FROM ZONA");
-$departamentos = fetchAll($conn, "SELECT ID_Departamento, Nombre FROM DEPARTAMENTO");
-$productos = fetchAll($conn, "SELECT ID_Producto, Nombre FROM PRODUCTO");
+$vendedores = fetchAll($conn, "SELECT VE.ID_Vendedor, U.Prime_Nombre, U.Segundo_Nombre, U.Prime_Apellido, U.Segundo_Apellido FROM colfar.+++++VENDEDOR VE INNER JOIN USUARIO U ON VE.ID_Usuario = U.ID_Usuario");
+$zonas = fetchAll($conn, "SELECT ID_Zona, NombreZona FROM colfar.ZONA");
+$departamentos = fetchAll($conn, "SELECT ID_Departamento, Nombre FROM colfar.DEPARTAMENTO");
+$productos = fetchAll($conn, "SELECT ID_Producto, Nombre FROM colfar.PRODUCTO");
 ?>
 <!DOCTYPE html>
 <html lang="es">
