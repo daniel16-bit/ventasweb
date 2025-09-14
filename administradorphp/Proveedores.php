@@ -1,6 +1,6 @@
 <?php 
-include '../models/conexion.php'; // aquí ya debe estar $conn con sqlsrv_connect()
 session_start();
+include '../models/conexion.php'; // aquí ya debe estar $conn con sqlsrv_connect()
 
 // Verificar sesión
 if (!isset($_SESSION['Prime_Nombre'])) {

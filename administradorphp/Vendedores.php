@@ -4,7 +4,7 @@ include '../models/conexion.php'; // Conexión a SQL Server
 
 // Verificar sesión
 if (!isset($_SESSION['Prime_Nombre'])) {
-    header("Location: formulario.php?error=Debe iniciar sesión");
+    header("Location: ../index.php");
     exit();
 }
 
