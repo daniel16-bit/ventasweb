@@ -1,14 +1,17 @@
 <?php
 session_start();
 include '../models/conexion.php'; // Asegúrate de tener la conexión PDO correcta
-
-// Obtener ciudades desde SQL Server
 try {
     $sql = "SELECT * FROM colfar.CIUDAD";
     $stmt = $conexion->query($sql);
-    $cities = $stmt->fetchAll(PDO::FETCH_ASSOC);
-} catch (PDOException $e) {
-    die("Error al obtener ciudades: " . $e->getMessage());
+  
+    if ($stmt === false) {
+    die(print_r(sqlsrv_errors(), true)); // Si la consulta falla, muestra el error
+} else {
+    $ciudades = [];
+    while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
+        $ciudadess[] = $row; // Guardar los departamentos en un array
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -250,4 +253,3 @@ try {
 </script>
 </body>
 </html>
-

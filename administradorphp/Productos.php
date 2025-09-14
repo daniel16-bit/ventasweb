@@ -8,7 +8,6 @@ if (!isset($_SESSION['Prime_Nombre'])) {
     exit();
 }
 
-// Consulta productos con su proveedor
 $sql = "SELECT 
             P.ID_Producto, 
             P.Nombre AS Nombre_Producto, 
@@ -192,4 +191,3 @@ if ($stmt === false) {
 
 </body>
 </html>
-
