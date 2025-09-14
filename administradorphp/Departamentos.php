@@ -5,11 +5,6 @@ if(!isset($_SESSION['Prime_Nombre'])){
     exit;
 }
 
-// Conexión a SQL Server usando PDO
-$serverName = "localhost"; // o nombre del servidor
-$database = "COLFAR";      // nombre de tu base de datos
-$username = "sa";           // usuario SQL Server
-$password = "tu_password";  // contraseña
 
 try {
     $conexion = new PDO("sqlsrv:Server=$serverName;Database=$database", $username, $password);
