@@ -1,26 +1,24 @@
-<?php
+<?php 
 session_start();
-if(!isset($_SESSION['Prime_Nombre'])){
+if (!isset($_SESSION['Prime_Nombre'])) {
     header("Location: ../index.php");
     exit;
 }
 
-    // Datos de la base de datos de Azure SQL
-    $serverName = "colfar-db1.database.windows.net";
-    $databaseName = "colfar";
-    $uid = "colfardb";
-    $pwd = "Daniel2005"; // <-- IMPORTANTE: Reemplaza esto con tu contraseña real
+// Incluir la conexión a la base de datos
+include '../models/conexion.php'; // Este archivo debe contener tu conexión con la base de datos
 
-try {
-    $conexion = new PDO("sqlsrv:Server=$serverName;Database=$database", $username, $password);
-    $conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+// Consulta para obtener los departamentos
+$sql = "SELECT * FROM colfar.DEPARTAMENTO";
+$stmt = sqlsrv_query($conn, $sql);
 
-    // Consulta
-    $stmt = $conexion->query("SELECT * FROM colfar.DEPARTAMENTO");
-    $departamentos = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-} catch (PDOException $e) {
-    die("Error de conexión: " . $e->getMessage());
+if ($stmt === false) {
+    die(print_r(sqlsrv_errors(), true)); // Si la consulta falla, muestra el error
+} else {
+    $departamentos = [];
+    while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
+        $departamentos[] = $row; // Guardar los departamentos en un array
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -121,7 +119,7 @@ try {
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach($departamentos as $dep): ?>
+                                <?php foreach ($departamentos as $dep): ?>
                                     <tr>
                                         <td><?= $dep['ID_Departamento'] ?></td>
                                         <td><?= htmlspecialchars($dep['Nombre']) ?></td>
@@ -185,3 +183,4 @@ try {
     </script>
 </body>
 </html>
+
