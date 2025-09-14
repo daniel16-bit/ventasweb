@@ -1,35 +1,33 @@
 <?php
 session_start();
+require_once '../models/conexion.php';  // Conexión con PDO
 
-// 1. CONEXIÓN A LA BASE DE DATOS
-// Usamos require_once para incluir el archivo que crea la variable $conexion con PDO.
-// Asegúrate de que la ruta '../models/conexion.php' sea correcta.
-require_once '../models/conexion.php';
-
-// 2. VERIFICACIÓN DE SESIÓN DE USUARIO
+// Verificar sesión
 if (!isset($_SESSION['Prime_Nombre'])) {
-    header("Location: ../index.php"); // Redirige al login si no ha iniciado sesión
+    header("Location: ../index.php");  // Redirige al login si no ha iniciado sesión
     exit;
 }
 
-// 3. OBTENCIÓN DE DATOS (CÓDIGO CORREGIDO USANDO PDO)
-$usuarios = []; // Se inicializa el array para evitar errores
+// Obtención de datos (con PDO)
+$usuarios = [];  // Inicializamos el array para evitar errores
 
 try {
-    // CONSULTA SEGURA: Nunca seleccionamos la columna de la contraseña para mostrarla.
+    // Consulta
     $sql = "SELECT ID_Usuario, Prime_Nombre, Segundo_Nombre, Prime_Apellido, Segundo_Apellido, Telefono, Correo, rol FROM USUARIO";
     
     // Ejecutamos la consulta usando el objeto PDO
     $stmt = $conexion->query($sql);
 
-    // Obtenemos todos los resultados en un array asociativo
-    $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    // Iteramos fila por fila como en el código con sqlsrv_query()
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $usuarios[] = $row;
+    }
 
 } catch (PDOException $e) {
-    // Si hay un error en la consulta, el programa se detendrá y mostrará un mensaje.
+    // Si hay un error en la consulta, lo mostramos
     die("Error al consultar los datos de los usuarios: " . $e->getMessage());
 }
-?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
