@@ -1,14 +1,24 @@
-<?php
+<?php 
+include '../models/conexion.php'; // conexión con Azure SQL
 session_start();
-include '../models/conexion.php'; // conexión PDO para SQL Server
 
-// Obtener clientes desde SQL Server
-try {
-    $sql = "SELECT * FROM colfar.CLIENTE";
-    $stmt = $conexion->query($sql);
-    $clientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
-} catch (PDOException $e) {
-    die("Error al obtener clientes: " . $e->getMessage());
+// Verificar sesión
+if (!isset($_SESSION['Prime_Nombre'])) {
+    header("Location: ../index.php");
+    exit();
+}
+
+$sql = "SELECT * FROM colfar.CLIENTE";
+
+$stmt = sqlsrv_query($conn, $sql);
+
+$clientes = [];
+if ($stmt === false) {
+    die(print_r(sqlsrv_errors(), true));
+} else {
+    while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
+        $clientes[] = $row;
+    }
 }
 ?>
 <!DOCTYPE html>
