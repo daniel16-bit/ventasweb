@@ -21,12 +21,12 @@ $sql = "SELECT
             D.Nombre AS Nombre_Departamento,
             P.Nombre AS Nombre_Producto
         FROM colfar.VENTA V
-        INNER JOIN CLIENTE C ON V.ID_Cliente = C.ID_Cliente
-        INNER JOIN VENDEDOR VE ON V.ID_Vendedor = VE.ID_Vendedor
-        INNER JOIN USUARIO U ON VE.ID_Usuario = U.ID_Usuario
-        INNER JOIN ZONA Z ON V.ID_Zona = Z.ID_Zona
-        INNER JOIN DEPARTAMENTO D ON V.ID_Departamento = D.ID_Departamento
-        INNER JOIN PRODUCTO P ON V.ID_Producto = P.ID_Producto";
+        INNER JOIN colfar.CLIENTE C ON V.ID_Cliente = C.ID_Cliente
+        INNER JOIN colfar.VENDEDOR VE ON V.ID_Vendedor = VE.ID_Vendedor
+        INNER JOIN colfar.USUARIO U ON VE.ID_Usuario = U.ID_Usuario
+        INNER JOIN colfar.ZONA Z ON V.ID_Zona = Z.ID_Zona
+        INNER JOIN colfar.DEPARTAMENTO D ON V.ID_Departamento = D.ID_Departamento
+        INNER JOIN colfar.PRODUCTO P ON V.ID_Producto = P.ID_Producto";
 
 $stmt = sqlsrv_query($conn, $sql);
 $ventas = [];
