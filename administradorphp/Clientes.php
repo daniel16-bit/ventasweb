@@ -4,7 +4,7 @@ include '../models/conexion.php'; // conexión PDO para SQL Server
 
 // Obtener clientes desde SQL Server
 try {
-    $sql = "SELECT * FROM CLIENTE";
+    $sql = "SELECT * FROM colfar.CLIENTE";
     $stmt = $conexion->query($sql);
     $clientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {

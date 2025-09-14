@@ -16,7 +16,7 @@ try {
     $conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     // Consulta
-    $stmt = $conexion->query("SELECT * FROM DEPARTAMENTO");
+    $stmt = $conexion->query("SELECT * FROM colfar.DEPARTAMENTO");
     $departamentos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 } catch (PDOException $e) {

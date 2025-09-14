@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'models/conexion.php'; // conexión PDO a SQL Server
+include '../models/conexion.php'; // conexión PDO a SQL Server
 
 // Obtener compras
 try {
@@ -11,11 +11,11 @@ try {
                 p.Nombre AS Nombre_Producto,
                 u.Prime_Nombre AS Nombre_Vendedor,
                 u.Prime_Apellido AS Apellido_Vendedor
-            FROM COMPRA c
-            JOIN PRODUCTO p ON c.ID_Producto = p.ID_Producto
-            JOIN VENTA v ON c.ID_Compra = v.ID_Venta
-            JOIN VENDEDOR vd ON v.ID_Vendedor = vd.ID_Vendedor
-            JOIN USUARIO u ON vd.ID_Usuario = u.ID_Usuario";
+            FROM colfar.COMPRA c
+            JOIN colfar.PRODUCTO p ON c.ID_Producto = p.ID_Producto
+            JOIN colfar.VENTA v ON c.ID_Compra = v.ID_Venta
+            JOIN colfar.VENDEDOR vd ON v.ID_Vendedor = vd.ID_Vendedor
+            JOIN colfar.USUARIO u ON vd.ID_Usuario = u.ID_Usuario";
 
     $stmt = $conexion->query($sql);
     $compras = $stmt->fetchAll(PDO::FETCH_ASSOC);

@@ -13,7 +13,7 @@ $usuarios = [];  // Inicializamos el array para evitar errores
 
 try {
     // Consulta
-    $sql = "SELECT ID_Usuario, Prime_Nombre, Segundo_Nombre, Prime_Apellido, Segundo_Apellido, Telefono, Correo, rol FROM USUARIO";
+    $sql = "SELECT ID_Usuario, Prime_Nombre, Segundo_Nombre, Prime_Apellido, Segundo_Apellido, Telefono, Correo, rol FROM colfar.USUARIO";
     
     // Ejecutamos la consulta usando el objeto PDO
     $stmt = $conexion->query($sql);
