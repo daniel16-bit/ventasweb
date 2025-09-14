@@ -1,18 +1,30 @@
 <?php
 session_start();
 include '../models/conexion.php'; // Asegúrate de tener la conexión PDO correcta
-try {
-    $sql = "SELECT * FROM colfar.CIUDAD";
-    $stmt = $conexion->query($sql);
-  
-    if ($stmt === false) {
+
+// Verificar sesión
+if (!isset($_SESSION['Prime_Nombre'])) {
+    header("Location: ../index.php");
+    exit();
+}
+
+$sql = "SELECT * FROM colfar.CIUDAD";
+$stmt = sqlsrv_query($conn, $sql);
+
+// Verificar si la consulta fue exitosa
+$ciudades = [];
+if ($stmt === false) {
     die(print_r(sqlsrv_errors(), true)); // Si la consulta falla, muestra el error
 } else {
-    $ciudades = [];
+    // Si la consulta fue exitosa, guardar los resultados en el array $ciudades
     while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
-        $ciudadess[] = $row; // Guardar los departamentos en un array
+        $ciudades[] = $row;
     }
 }
+
+// En este punto, $ciudades ya contiene los resultados de la consulta
+?>
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
