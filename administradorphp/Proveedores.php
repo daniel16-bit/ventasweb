@@ -1,26 +1,30 @@
 <?php 
 include '../models/conexion.php'; // aquí ya debe estar $conn con sqlsrv_connect()
+session_start();
+
+// Verificar sesión
+if (!isset($_SESSION['Prime_Nombre'])) {
+    header("Location: ../index.php");
+    exit();
+}
 
 // Consulta para traer proveedores
 $sql = "SELECT * FROM colfar.PROVEEDOR";
 $stmt = sqlsrv_query($conn, $sql);
 
 $provedores = [];
-if ($stmt !== false) {
+if ($stmt === false) {
+    echo "Error al consultar proveedores: ";
+    die(print_r(sqlsrv_errors(), true));
+} else {
     while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
         $provedores[] = $row;
     }
-} else {
-    echo "Error al consultar proveedores: ";
-    die(print_r(sqlsrv_errors(), true));
 }
 
 sqlsrv_free_stmt($stmt);
 ?>
-<?php
-session_start();
-if(isset($_SESSION['Prime_Nombre']));
-?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
