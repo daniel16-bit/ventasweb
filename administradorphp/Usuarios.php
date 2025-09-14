@@ -27,7 +27,7 @@ try {
     // Si hay un error en la consulta, lo mostramos
     die("Error al consultar los datos de los usuarios: " . $e->getMessage());
 }
-
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
