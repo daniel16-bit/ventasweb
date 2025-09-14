@@ -29,22 +29,6 @@ if ($stmt === false) {
 }
 ?>
 
-// Consultar usuarios para el modal
-$sql_usuarios = "SELECT ID_Usuario, Prime_Nombre, Segundo_Nombre, Prime_Apellido, Segundo_Apellido FROM USUARIO";
-$stmt_usuarios = sqlsrv_query($conn, $sql_usuarios);
-$usuarios = [];
-while ($u = sqlsrv_fetch_array($stmt_usuarios, SQLSRV_FETCH_ASSOC)) {
-    $usuarios[] = $u;
-}
-
-// Consultar zonas para el modal
-$sql_zonas = "SELECT ID_Zona, NombreZona FROM ZONA";
-$stmt_zonas = sqlsrv_query($conn, $sql_zonas);
-$zonas = [];
-while ($z = sqlsrv_fetch_array($stmt_zonas, SQLSRV_FETCH_ASSOC)) {
-    $zonas[] = $z;
-}
-?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
