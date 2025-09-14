@@ -14,7 +14,7 @@ $sql = "SELECT
             U.Prime_Nombre, U.Segundo_Nombre, 
             U.Prime_Apellido, U.Segundo_Apellido,
             Z.NombreZona
-        FROM VENDEDOR VE
+        FROM colfar.VENDEDOR VE
         JOIN USUARIO U ON VE.ID_Usuario = U.ID_Usuario
         JOIN ZONA Z ON VE.ID_Zona = Z.ID_Zona";
 
