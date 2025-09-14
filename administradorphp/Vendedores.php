@@ -1,6 +1,6 @@
-<?php
+<?php 
+include '../models/conexion.php'; // conexión con Azure SQL
 session_start();
-include '../models/conexion.php'; // Conexión a SQL Server
 
 // Verificar sesión
 if (!isset($_SESSION['Prime_Nombre'])) {
@@ -8,7 +8,6 @@ if (!isset($_SESSION['Prime_Nombre'])) {
     exit();
 }
 
-// Consultar vendedores con usuario y zona
 $sql = "SELECT 
             VE.ID_Vendedor, 
             U.Prime_Nombre, U.Segundo_Nombre, 
@@ -19,6 +18,7 @@ $sql = "SELECT
         JOIN colfar.ZONA Z ON VE.ID_Zona = Z.ID_Zona";
 
 $stmt = sqlsrv_query($conn, $sql);
+
 $vendedores = [];
 if ($stmt === false) {
     die(print_r(sqlsrv_errors(), true));
@@ -27,6 +27,7 @@ if ($stmt === false) {
         $vendedores[] = $row;
     }
 }
+?>
 
 // Consultar usuarios para el modal
 $sql_usuarios = "SELECT ID_Usuario, Prime_Nombre, Segundo_Nombre, Prime_Apellido, Segundo_Apellido FROM USUARIO";
