@@ -15,8 +15,8 @@ $sql = "SELECT
             U.Prime_Apellido, U.Segundo_Apellido,
             Z.NombreZona
         FROM colfar.VENDEDOR VE
-        JOIN USUARIO U ON VE.ID_Usuario = U.ID_Usuario
-        JOIN ZONA Z ON VE.ID_Zona = Z.ID_Zona";
+        JOIN colfar.USUARIO U ON VE.ID_Usuario = U.ID_Usuario
+        JOIN colfar.ZONA Z ON VE.ID_Zona = Z.ID_Zona";
 
 $stmt = sqlsrv_query($conn, $sql);
 $vendedores = [];
