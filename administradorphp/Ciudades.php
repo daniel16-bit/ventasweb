@@ -21,13 +21,9 @@ if ($stmt === false) {
         $ciudades[] = $row;
     }
 }
-
-// En este punto, $ciudades ya contiene los resultados de la consulta
-?>
-
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -41,6 +37,7 @@ if ($stmt === false) {
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.css" rel="stylesheet" />
 </head>
 <body>
+<!-- Barra superior -->
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
     <a class="navbar-brand ps-3" href="Dashboard.php">ADMINISTRACIÓN</a>
     <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle"><i class="fas fa-bars"></i></button>
@@ -63,75 +60,58 @@ if ($stmt === false) {
 </nav>
 
 <div id="layoutSidenav">
-<!-- Navbar superior -->
-<nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-    <a class="navbar-brand ps-3" href="Dashboard.php">ADMINISTRADOR</a>
-    <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle"><i class="fas fa-bars"></i></button>
-    <div class="ms-auto me-3 my-2 my-md-0 text-light">
-        Bienvenido, <?php echo htmlspecialchars($_SESSION['Prime_Nombre']); ?>
-    </div>
-    <ul class="navbar-nav ms-auto me-3 me-lg-4">
-        <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown">
-                <i class="fas fa-user fa-fw"></i>
-            </a>
-            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="#">Ajustes</a></li>
-                <li><a class="dropdown-item" href="#">Historial de Actividades</a></li>
-                <li><hr class="dropdown-divider" /></li>
-                <li><a class="dropdown-item" href="cerrar_sesion.php">Cerrar sesión</a></li>
-            </ul>
-        </li>
-    </ul>
-</nav>
-
-<div id="layoutSidenav">
+    <!-- Barra lateral -->
     <div id="layoutSidenav_nav">
-    <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
-        <div class="sb-sidenav-menu">
-            <div class="nav">
-                <!-- Panel -->
-                <div class="sb-sidenav-menu-heading">Panel</div>
-                <a class="nav-link" href="Dashboard.php">
-                    <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                    Panel
-                </a>
+        <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+            <div class="sb-sidenav-menu">
+                <div class="nav">
+                    <!-- Panel -->
+                    <div class="sb-sidenav-menu-heading">Panel</div>
+                    <a class="nav-link" href="Dashboard.php">
+                        <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                        Panel
+                    </a>
 
-                <!-- Registros -->
-                <div class="sb-sidenav-menu-heading">Registros</div>
-                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseRegistros" aria-expanded="false" aria-controls="collapseRegistros">
-                    <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                    Registros
-                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                </a>
-                <div class="collapse" id="collapseRegistros" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                    <nav class="sb-sidenav-menu-nested nav">
-                        <a class="nav-link" href="Departamentos.php">Departamentos</a>
-                        <a class="nav-link" href="Ciudades.php">Ciudades</a>
-                        <a class="nav-link" href="Zonas.php">Zonas</a>
-                        <a class="nav-link" href="Clientes.php">Clientes</a>
-                        <a class="nav-link" href="Vendedores.php">Vendedores</a>
-                        <a class="nav-link" href="Compras.php">Compras</a>
-                        <a class="nav-link" href="Ventas.php">Ventas</a>
-                        <a class="nav-link" href="Usuarios.php">Usuarios</a>
-                        <a class="nav-link" href="Productos.php">Productos</a>
-                        <a class="nav-link" href="Proveedores.php">Proveedores</a>
-                    </nav>
+                    <!-- Registros -->
+                    <div class="sb-sidenav-menu-heading">Registros</div>
+                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseRegistros" aria-expanded="false" aria-controls="collapseRegistros">
+                        <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                        Registros
+                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    </a>
+                    <div class="collapse" id="collapseRegistros" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                        <nav class="sb-sidenav-menu-nested nav">
+                            <a class="nav-link" href="Departamentos.php">Departamentos</a>
+                            <a class="nav-link" href="Ciudades.php">Ciudades</a>
+                            <a class="nav-link" href="Zonas.php">Zonas</a>
+                            <a class="nav-link" href="Clientes.php">Clientes</a>
+                            <a class="nav-link" href="Vendedores.php">Vendedores</a>
+                            <a class="nav-link" href="Compras.php">Compras</a>
+                            <a class="nav-link" href="Ventas.php">Ventas</a>
+                            <a class="nav-link" href="Usuarios.php">Usuarios</a>
+                            <a class="nav-link" href="Productos.php">Productos</a>
+                            <a class="nav-link" href="Proveedores.php">Proveedores</a>
+                        </nav>
+                    </div>
+
+                    <!-- Facturas -->
+                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseFacturas" aria-expanded="false" aria-controls="collapseFacturas">
+                        <div class="sb-nav-link-icon"><i class="fas fa-file-invoice"></i></div>
+                        Facturas
+                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    </a>
+                    <div class="collapse" id="collapseFacturas" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+                        <nav class="sb-sidenav-menu-nested nav">
+                            <a class="nav-link" href="FacturasEmitidas.php">Emitidas</a>
+                            <a class="nav-link" href="FacturasRecibidas.php">Recibidas</a>
+                        </nav>
+                    </div>
                 </div>
+            </div>
+        </nav>
+    </div>
 
-                <!-- Facturas -->
-                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseFacturas" aria-expanded="false" aria-controls="collapseFacturas">
-                    <div class="sb-nav-link-icon"><i class="fas fa-file-invoice"></i></div>
-                    Facturas
-                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                </a>
-                <div class="collapse" id="collapseFacturas" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
-                    <nav class="sb-sidenav-menu-nested nav">
-                        <a class="nav-link" href="FacturasEmitidas.php">Emitidas</a>
-                        <a class="nav-link" href="FacturasRecibidas.php">Recibidas</a>
-                    </nav>
-                </div>
-
+    <!-- Contenido principal -->
     <div id="layoutSidenav_content">
         <main class="container-fluid px-4 mt-4">
             <h1>CIUDADES</h1>
@@ -192,19 +172,15 @@ if ($stmt === false) {
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach ($cities as $city): ?>
+                            <?php foreach ($ciudades as $ciudad): ?>
                                 <tr>
-                                    <td><?php echo $city['ID_Ciudad']; ?></td>
-                                    <td><?php echo htmlspecialchars($city['Nombre_ciudad']); ?></td>
-                                    <td><?php echo htmlspecialchars($city['Pais']); ?></td>
-                                    <td><?php echo htmlspecialchars($city['Codigo_postal']); ?></td>
+                                    <td><?php echo htmlspecialchars($ciudad['ID']); ?></td>
+                                    <td><?php echo htmlspecialchars($ciudad['Nombre']); ?></td>
+                                    <td><?php echo htmlspecialchars($ciudad['Pais']); ?></td>
+                                    <td><?php echo htmlspecialchars($ciudad['Codigo_Postal']); ?></td>
                                     <td>
-                                        <a href="./modificar/modificar_ciudad.php?id=<?php echo $city['ID_Ciudad']; ?>" class="text-primary me-3" data-bs-toggle="tooltip" title="Editar">
-                                            <i class="fas fa-edit fs-5"></i>
-                                        </a>
-                                        <a href="#" class="text-danger" data-href="controllers/eliminar_ciudad.php?id=<?php echo $city['ID_Ciudad']; ?>" data-bs-toggle="modal" data-bs-target="#confirmar-delete" title="Eliminar">
-                                            <i class="fas fa-trash-alt fs-5"></i>
-                                        </a>
+                                        <a href="editar_ciudad.php?id=<?php echo $ciudad['ID']; ?>" class="btn btn-warning btn-sm">Editar</a>
+                                        <a href="controllers/eliminar_ciudad.php?id=<?php echo $ciudad['ID']; ?>" class="btn btn-danger btn-sm">Eliminar</a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -213,55 +189,13 @@ if ($stmt === false) {
                 </div>
             </div>
         </main>
-
-        <footer class="py-4 bg-light mt-auto">
-            <div class="container-fluid px-4">
-                <div class="d-flex align-items-center justify-content-between small">
-                    <div class="text-muted">Copyright &copy; Your Website 2024</div>
-                    <div>
-                        <a href="#">Privacy Policy</a> &middot;
-                        <a href="#">Terms &amp; Conditions</a>
-                    </div>
-                </div>
-            </div>
-        </footer>
-    </div>
-</div>
-
-<!-- Modal Confirmar Eliminación -->
-<div class="modal fade" id="confirmar-delete" tabindex="-1" aria-labelledby="confirmar-delete-label" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="confirmar-delete-label">Confirmar eliminación</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">¿Estás seguro de que deseas eliminar esta ciudad?</div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <a href="#" id="btn-eliminar" class="btn btn-danger">Eliminar</a>
-            </div>
-        </div>
     </div>
 </div>
 
 <!-- Scripts -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"></script>
-<script>
-    const dataTable = new simpleDatatables.DataTable("#datatablesSimple");
-
-    var confirmarModal = document.getElementById('confirmar-delete');
-    confirmarModal.addEventListener('show.bs.modal', function (event) {
-        var button = event.relatedTarget;
-        var href = button.getAttribute('data-href');
-        confirmarModal.querySelector('#btn-eliminar').setAttribute('href', href);
-    });
-
-    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-    tooltipTriggerList.map(function (tooltipTriggerEl) {
-        return new bootstrap.Tooltip(tooltipTriggerEl);
-    });
-</script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/simple-datatables.js"></script>
+<script src="js/scripts.js"></script>
 </body>
 </html>
