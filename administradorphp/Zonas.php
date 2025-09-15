@@ -114,7 +114,33 @@ if ($stmt === false) {
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                         data-bs-target="#miModal">Registrar Nueva Zona </button>
                     <a href="Reportes/zonas_pdf.php" class="btn btn-primary">Generar Reporte</a>
-                    
+                    <!-- Modal -->
+                    <div class="modal fade" id="miModal" tabindex="-1" aria-labelledby="miModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="miModalLabel">Registrar Zona</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="controllers/registrar_zonas.php" method="POST">
+                                        <div class="mb-3">
+                                            <label for="nombreZona" class="form-label">Nombre de la Zona</label>
+                                            <input type="text" class="form-control" id="nombreZona" name="nombreZona" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="nombreDepartamento" class="form-label">Nombre del Departamento</label>
+                                            <input type="text" class="form-control" id="nombreDepartamento" name="nombre_departamento" required>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                            <button type="submit" class="btn btn-primary">Registrar</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 <div class="card mb-4">
                     <div class="card-header bg-primary text-white">
                         <i class="fas fa-table me-1"></i>
