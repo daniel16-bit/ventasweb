@@ -8,6 +8,19 @@ if (!isset($_SESSION['Prime_Nombre'])) {
     exit();
 }
 
+// Consulta para obtener los departamentos
+$sql_departamentos = "SELECT ID_Departamento, Nombre FROM colfar.DEPARTAMENTO";
+$result_departamentos = sqlsrv_query($conn, $sql_departamentos);
+
+$departamentos = [];
+if ($result_departamentos === false) {
+    die(print_r(sqlsrv_errors(), true));
+} else {
+    while ($row = sqlsrv_fetch_array($result_departamentos, SQLSRV_FETCH_ASSOC)) {
+        $departamentos[] = $row;
+    }
+}
+
 // Consulta zonas con su departamento
 $sql = "SELECT 
             Z.ID_Zona, 
@@ -81,18 +94,18 @@ if ($stmt === false) {
                         <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                     </a>
                     <div class="collapse" id="collapseRegistros" data-bs-parent="#sidenavAccordion">
- <nav class="sb-sidenav-menu-nested nav">
-                        <a class="nav-link" href="Departamentos.php">Departamentos</a>
-                        <a class="nav-link" href="Ciudades.php">Ciudades</a>
-                        <a class="nav-link" href="Zonas.php">Zonas</a>
-                        <a class="nav-link" href="Clientes.php">Clientes</a>
-                        <a class="nav-link" href="Vendedores.php">Vendedores</a>
-                        <a class="nav-link" href="Compras.php">Compras</a>
-                        <a class="nav-link" href="Ventas.php">Ventas</a>
-                        <a class="nav-link" href="Usuarios.php">Usuarios</a>
-                        <a class="nav-link" href="Productos.php">Productos</a>
-                        <a class="nav-link" href="Proveedores.php">Proveedores</a>
-                    </nav>
+                        <nav class="sb-sidenav-menu-nested nav">
+                            <a class="nav-link" href="Departamentos.php">Departamentos</a>
+                            <a class="nav-link" href="Ciudades.php">Ciudades</a>
+                            <a class="nav-link" href="Zonas.php">Zonas</a>
+                            <a class="nav-link" href="Clientes.php">Clientes</a>
+                            <a class="nav-link" href="Vendedores.php">Vendedores</a>
+                            <a class="nav-link" href="Compras.php">Compras</a>
+                            <a class="nav-link" href="Ventas.php">Ventas</a>
+                            <a class="nav-link" href="Usuarios.php">Usuarios</a>
+                            <a class="nav-link" href="Productos.php">Productos</a>
+                            <a class="nav-link" href="Proveedores.php">Proveedores</a>
+                        </nav>
                     </div>
                 </div>
             </div>
@@ -111,40 +124,45 @@ if ($stmt === false) {
                     <li class="breadcrumb-item active">COLFAR DE COLOMBIA S.A.S.</li>
                 </ol>
 
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                        data-bs-target="#miModal">Registrar Nueva Zona </button>
-                    <a href="Reportes/zonas_pdf.php" class="btn btn-primary">Generar Reporte</a>
-                    <!-- Modal -->
-                    <div class="modal fade" id="miModal" tabindex="-1" aria-labelledby="miModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="miModalLabel">Registrar Zona</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <form action="controllers/registrar_zonas.php" method="POST">
-                                        <div class="mb-3">
-                                            <label for="nombreZona" class="form-label">Nombre de la Zona</label>
-                                            <input type="text" class="form-control" id="nombreZona" name="nombreZona" required>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="nombreDepartamento" class="form-label">Nombre del Departamento</label>
-                                            <input type="text" class="form-control" id="nombreDepartamento" name="nombre_departamento" required>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                                            <button type="submit" class="btn btn-primary">Registrar</button>
-                                        </div>
-                                    </form>
-                                </div>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#miModal">Registrar Nueva Zona</button>
+                <a href="Reportes/zonas_pdf.php" class="btn btn-primary">Generar Reporte</a>
+
+                <!-- Modal -->
+                <div class="modal fade" id="miModal" tabindex="-1" aria-labelledby="miModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="miModalLabel">Registrar Zona</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="controllers/registrar_zonas.php" method="POST">
+                                    <div class="mb-3">
+                                        <label for="nombreZona" class="form-label">Nombre de la Zona</label>
+                                        <input type="text" class="form-control" id="nombreZona" name="nombreZona" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="departamento" class="form-label">Departamento</label>
+                                        <select class="form-control" id="departamento" name="departamento" required>
+                                            <?php foreach ($departamentos as $departamento): ?>
+                                                <option value="<?= $departamento['ID_Departamento'] ?>"><?= htmlspecialchars($departamento['Nombre']) ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                        <button type="submit" class="btn btn-primary">Registrar</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
+                </div>
+
+                <!-- Tabla de Zonas -->
                 <div class="card mb-4">
                     <div class="card-header bg-primary text-white">
-                        <i class="fas fa-table me-1"></i>
-                        Lista de Zonas
+                        <i class="fas fa-table me-1"></i> Lista de Zonas
                     </div>
                     <div class="card-body">
                         <table id="datatablesSimple" class="table table-bordered table-striped text-center align-middle">
@@ -164,16 +182,8 @@ if ($stmt === false) {
                                             <td><?= htmlspecialchars($zona['NombreZona']) ?></td>
                                             <td><?= htmlspecialchars($zona['NombreDepartamento']) ?></td>
                                             <td>
-                                                <a href="modificar/modificar_zona.php?id=<?= $zona['ID_Zona'] ?>" 
-                                                   class="btn btn-primary btn-sm me-1"
-                                                   title="Editar">
-                                                   <i class="fas fa-edit"></i>
-                                                </a>
-                                                <a href="controllers/eliminar_zona.php?id=<?= $zona['ID_Zona'] ?>" class="btn btn-danger btn-sm"
-                                                   onclick="return confirm('¿Estás seguro de eliminar esta zona?')"
-                                                   title="Eliminar">
-                                                   <i class="fas fa-trash-alt"></i>
-                                                </a>
+                                                <a href="modificar/modificar_zona.php?id=<?= $zona['ID_Zona'] ?>" class="btn btn-primary btn-sm me-1" title="Editar"><i class="fas fa-edit"></i></a>
+                                                <a href="controllers/eliminar_zona.php?id=<?= $zona['ID_Zona'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de eliminar esta zona?')" title="Eliminar"><i class="fas fa-trash-alt"></i></a>
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>
@@ -208,3 +218,4 @@ if ($stmt === false) {
 
 </body>
 </html>
+

@@ -7,9 +7,9 @@ $sql = "SELECT
             D.Nombre AS NombreDepartamento,
             Z.ID_Departamento
         FROM 
-            ZONA Z
+            colfae.ZONA Z
         JOIN 
-            DEPARTAMENTO D ON Z.ID_Departamento = D.ID_Departamento
+            colfar.DEPARTAMENTO D ON Z.ID_Departamento = D.ID_Departamento
         WHERE
             Z.ID_Zona = ?";
 $stmt = $conexion->prepare($sql);
@@ -19,7 +19,7 @@ $result = $stmt->get_result();
 $zona = $result->fetch_array(MYSQLI_ASSOC);
 
 // Obtener todos los departamentos disponibles para el select
-$sql_departamentos = "SELECT ID_Departamento, Nombre FROM DEPARTAMENTO";
+$sql_departamentos = "SELECT ID_Departamento, Nombre FROM colfar.DEPARTAMENTO";
 $result_departamentos = $conexion->query($sql_departamentos);
 ?>
 <!DOCTYPE html>
