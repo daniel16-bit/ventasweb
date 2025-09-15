@@ -260,6 +260,3 @@ if ($stmt === false) {
     </script>
 </body>
 </html>
-
-
-
