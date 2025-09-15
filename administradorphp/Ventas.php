@@ -1,14 +1,13 @@
-<?php
+<?php 
+include '../models/conexion.php'; // conexión con Azure SQL
 session_start();
-include '../models/conexion.php'; // Conexión a SQL Server
 
 // Verificar sesión
 if (!isset($_SESSION['Prime_Nombre'])) {
-    header("Location: formulario.php?error=Debe iniciar sesión");
+    header("Location: ../index.php");
     exit();
 }
 
-// Consultar ventas con todos los datos relacionados
 $sql = "SELECT 
             V.ID_Venta,
             V.Fecha,
@@ -29,31 +28,17 @@ $sql = "SELECT
         INNER JOIN colfar.PRODUCTO P ON V.ID_Producto = P.ID_Producto";
 
 $stmt = sqlsrv_query($conn, $sql);
-$ventas = [];
+
+$vendedores = [];
 if ($stmt === false) {
     die(print_r(sqlsrv_errors(), true));
 } else {
     while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
-        $ventas[] = $row;
+        $vendedores[] = $row;
     }
 }
-
-// Consultar clientes, vendedores, zonas, departamentos y productos para el modal
-function fetchAll($conn, $query) {
-    $stmt = sqlsrv_query($conn, $query);
-    $arr = [];
-    while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
-        $arr[] = $row;
-    }
-    return $arr;
-}
-
-$clientes = fetchAll($conn, "SELECT ID_Cliente, Nombre FROM CLIENTE");
-$vendedores = fetchAll($conn, "SELECT VE.ID_Vendedor, U.Prime_Nombre, U.Segundo_Nombre, U.Prime_Apellido, U.Segundo_Apellido FROM colfar.VENDEDOR VE INNER JOIN USUARIO U ON VE.ID_Usuario = U.ID_Usuario");
-$zonas = fetchAll($conn, "SELECT ID_Zona, NombreZona FROM colfar.ZONA");
-$departamentos = fetchAll($conn, "SELECT ID_Departamento, Nombre FROM colfar.DEPARTAMENTO");
-$productos = fetchAll($conn, "SELECT ID_Producto, Nombre FROM colfar.PRODUCTO");
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
