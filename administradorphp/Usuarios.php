@@ -1,31 +1,25 @@
-<?php
+<?php 
+include '../models/conexion.php'; // conexión con Azure SQL
 session_start();
-require_once '../models/conexion.php';  // Conexión con PDO
 
 // Verificar sesión
 if (!isset($_SESSION['Prime_Nombre'])) {
-    header("Location: ../index.php");  // Redirige al login si no ha iniciado sesión
-    exit;
+    header("Location: ../index.php");
+    exit();
 }
 
-// Obtención de datos (con PDO)
-$usuarios = [];  // Inicializamos el array para evitar errores
-
-try {
-    // Consulta
-    $sql = "SELECT ID_Usuario, Prime_Nombre, Segundo_Nombre, Prime_Apellido, Segundo_Apellido, Telefono, Correo, rol FROM colfar.USUARIO";
+$sql = "SELECT ID_Usuario, Prime_Nombre, Segundo_Nombre, Prime_Apellido, Segundo_Apellido, Telefono, Correo, rol FROM colfar.USUARIO";
     
-    // Ejecutamos la consulta usando el objeto PDO
-    $stmt = $conexion->query($sql);
 
-    // Iteramos fila por fila como en el código con sqlsrv_query()
-    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+$stmt = sqlsrv_query($conn, $sql);
+
+$usuarios = [];
+if ($stmt === false) {
+    die(print_r(sqlsrv_errors(), true));
+} else {
+    while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
         $usuarios[] = $row;
     }
-
-} catch (PDOException $e) {
-    // Si hay un error en la consulta, lo mostramos
-    die("Error al consultar los datos de los usuarios: " . $e->getMessage());
 }
 ?>
 <!DOCTYPE html>
