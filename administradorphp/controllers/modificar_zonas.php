@@ -39,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['modificar'])) {
         } catch (Exception $e) {
             echo "Error en la base de datos: " . $e->getMessage();
         }
-    } else {
+    } else { 
         echo "Por favor, complete todos los campos.";
     }
 }
