@@ -111,6 +111,10 @@ if ($stmt === false) {
                     <li class="breadcrumb-item active">COLFAR DE COLOMBIA S.A.S.</li>
                 </ol>
 
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#miModal">Registrar Nueva Zona </button>
+                    <a href="Reportes/zonas_pdf.php" class="btn btn-primary">Generar Reporte</a>
+                    
                 <div class="card mb-4">
                     <div class="card-header bg-primary text-white">
                         <i class="fas fa-table me-1"></i>
