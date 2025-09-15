@@ -139,13 +139,13 @@ if ($stmt === false) {
                                                    title="Editar">
                                                    <i class="fas fa-edit"></i>
                                                 </a>
-                                                <a href="#" class="text-danger" data-href="controllers/eliminar_zona.php?id=<?php echo $zona['ID_Zona']; ?>" data-bs-toggle="modal" data-bs-target="#confirmar-delete" data-bs-toggle="tooltip"
-                                                 onclick="return confirm('¿Estás seguro de eliminar esta zona?')"
+                                                <a href="controllers/eliminar_zona.php?id=<?= $zona['ID_Zona'] ?>" class="btn btn-danger btn-sm"
+                                                   onclick="return confirm('¿Estás seguro de eliminar esta zona?')"
                                                    title="Eliminar">
                                                    <i class="fas fa-trash-alt"></i>
                                                 </a>
                                             </td>
-                                        </tr
+                                        </tr>
                                     <?php endforeach; ?>
                                 <?php else: ?>
                                     <tr><td colspan="4" class="text-center">No hay zonas registradas.</td></tr>
