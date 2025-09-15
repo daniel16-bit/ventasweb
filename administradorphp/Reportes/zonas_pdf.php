@@ -55,7 +55,7 @@ if ($resultado === false) {
             <div class="container mb-3">
                 <a href="../Zonas.php" class="btn btn-dark r">Regresar</a>        
                 <a href="GenerarExcel_zona.php" class="btn btn-success">Generar Excel</a>       
-                <a href="#" class="btn btn-warning botimpr" onclick="window.print()">Imprimir/Descargar PDF</a>                
+                <a href="#" class="btn btn-warning botimpr" onclick="window.print()">Imprimir/PDF</a>                
             </div>
 
             <div class="card-header mb-3">
