@@ -31,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['modificar'])) {
             // Verificar si la ejecución fue exitosa
             if ($resultado) {
                 // Redirigir después de la actualización exitosa
-                header("Location: ../Zonas.php");
+                header("Location: ../../Zonas.php");
                 exit(); // Asegúrate de llamar a exit() después de la redirección.
             } else {
                 echo "Error al actualizar la zona.";
@@ -39,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['modificar'])) {
         } catch (Exception $e) {
             echo "Error en la base de datos: " . $e->getMessage();
         }
-    } else { 
+    } else {
         echo "Por favor, complete todos los campos.";
     }
 }
