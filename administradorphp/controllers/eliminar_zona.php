@@ -9,7 +9,7 @@ if (isset($_GET['id'])) {
     if (is_numeric($id)) {
         
         // Consulta para eliminar la zona según el ID proporcionado
-        $sql = "DELETE FROM ZONA WHERE ID_Zona = ?";
+        $sql = "DELETE FROM colfar.ZONA WHERE ID_Zona = ?";
         
         // Preparamos la consulta
         $stmt = sqlsrv_prepare($conn, $sql, array(&$id));
