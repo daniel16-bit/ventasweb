@@ -1,22 +1,29 @@
 <?php  
-include "../models/conexion.php"; // Conexión SQL Server
+include "../models/conexion.php"; // Asegúrate de que el path es correcto
 
-$where = "";
-if (!empty($_POST['nom'])) {
-    $valor = $_POST['nom'];
-    $where = "WHERE Z.NombreZona LIKE '%$valor%' OR D.Nombre LIKE '%$valor%'";
+if (!$conn) {
+    die("Fallo la conexión a la base de datos.");
 }
 
-$sql = "SELECT 
-    Z.ID_Zona, 
-    Z.NombreZona, 
-    D.Nombre AS NombreDepartamento
-FROM colfar.ZONA Z
-INNER JOIN colfar.DEPARTAMENTO D ON Z.ID_Departamento = D.ID_Departamento
-$where
-ORDER BY Z.ID_Zona";
+$sql = "SELECT Z.ID_Zona, Z.NombreZona, D.Nombre AS NombreDepartamento
+        FROM colfar.ZONA Z
+        INNER JOIN colfar.DEPARTAMENTO D ON Z.ID_Departamento = D.ID_Departamento
+        WHERE Z.NombreZona LIKE ? OR D.Nombre LIKE ?
+        ORDER BY Z.ID_Zona";
 
-$resultado = sqlsrv_query($conexion, $sql);
+$params = ["%valor_a_buscar%", "%valor_a_buscar%"];
+
+$stmt = sqlsrv_query($conn, $sql, $params);
+
+if ($stmt === false) {
+    die("Error en la consulta: " . print_r(sqlsrv_errors(), true));
+}
+
+// Procesar resultados
+while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
+    echo $row['NombreZona'] . " - " . $row['NombreDepartamento'] . "<br>";
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -59,9 +66,8 @@ $resultado = sqlsrv_query($conexion, $sql);
                 </thead>
                 <tbody>
                     <?php 
-                    if ($resultado) {
-                        while ($row = sqlsrv_fetch_array($resultado, SQLSRV_FETCH_ASSOC)) { ?>
-                            <tr>
+                    if ($stmt) {
+while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) { ?>                            <tr>
                                 <td><?php echo $row['ID_Zona']; ?></td>
                                 <td><?php echo $row['NombreZona']; ?></td>
                                 <td><?php echo $row['NombreDepartamento']; ?></td>

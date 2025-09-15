@@ -3,10 +3,7 @@ include '../models/conexion.php'; // Conexión con SQL Server
 session_start();
 
 // Verificar sesión
-if (!isset($_SESSION['Prime_Nombre'])) {
-    header("Location: ../index.php");
-    exit();
-}
+
 
 // Consulta zonas con su departamento
 $sql = "SELECT 
