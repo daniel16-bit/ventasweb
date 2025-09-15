@@ -6,10 +6,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['modificar'])) {
     $nombreZona      = $_POST['nombre'] ?? null;
     $id_departamento = $_POST['departamento'] ?? null;
 
+    // Validación de campos no vacíos y asegurarnos de que ID es numérico
     if (!empty($id_zona) && !empty($nombreZona) && !empty($id_departamento)) {
+        if (!is_numeric($id_zona) || !is_numeric($id_departamento)) {
+            echo "El ID de zona y el ID de departamento deben ser numéricos.";
+            exit();
+        }
+
         try {
             // Preparar consulta
-            $sql = "UPDATE ZONA 
+            $sql = "UPDATE colfar.ZONA 
                     SET NombreZona = ?, ID_Departamento = ? 
                     WHERE ID_Zona = ?";
             $stmt = $conexion->prepare($sql);
@@ -18,6 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['modificar'])) {
             $resultado = $stmt->execute([$nombreZona, $id_departamento, $id_zona]);
 
             if ($resultado) {
+                // Redirigir después de la actualización exitosa
                 header("Location: ../Zonas.php");
                 exit();
             } else {
@@ -31,4 +38,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['modificar'])) {
     }
 }
 ?>
+
 
