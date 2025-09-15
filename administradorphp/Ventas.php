@@ -50,144 +50,207 @@ if ($stmt === false) {
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 </head>
 <body>
-<nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-    <a class="navbar-brand ps-3" href="Dashboard.php">ADMINISTRACIÓN</a>
-    <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle"><i class="fas fa-bars"></i></button>
-    <div class="ms-auto text-light">Usted ingresó como: <?= htmlspecialchars($_SESSION['Prime_Nombre']) ?></div>
-</nav>
+    <!-- Barra de navegación superior -->
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+        <a class="navbar-brand ps-3" href="Dashboard.php">ADMINISTRACIÓN</a>
+        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle"><i class="fas fa-bars"></i></button>
+        <div class="ms-auto text-light">Usted ingresó como: <?= htmlspecialchars($_SESSION['Prime_Nombre']) ?></div>
+    </nav>
 
-<div id="layoutSidenav">
-    <div id="layoutSidenav_nav">
-        <!-- Menú lateral omitido por brevedad (igual al de Vendedores) -->
-    </div>
-    <div id="layoutSidenav_content">
-        <main class="container-fluid px-4 mt-4">
-            <h1>Ventas</h1>
-            <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#miModal">Registrar Nueva Venta</button>
-            <a href="Reportes/ventas_pdf.php" class="btn btn-primary mb-3">Generar Reporte</a>
+    <!-- Barra lateral -->
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_nav">
+            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                <div class="sb-sidenav-menu">
+                    <div class="nav">
+                        <!-- Panel -->
+                        <div class="sb-sidenav-menu-heading">Panel</div>
+                        <a class="nav-link" href="Dashboard.php">
+                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                            Panel
+                        </a>
 
-            <!-- Modal Registrar Venta -->
-            <div class="modal fade" id="miModal" tabindex="-1" aria-labelledby="miModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <form action="controllers/registrar_venta.php" method="POST">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Registrar Venta</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="mb-3">
-                                    <label for="fecha" class="form-label">Fecha</label>
-                                    <input type="date" class="form-control" name="fecha" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="descuentos" class="form-label">Descuentos</label>
-                                    <input type="number" step="0.01" class="form-control" name="descuentos" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="total" class="form-label">Total</label>
-                                    <input type="number" step="0.01" class="form-control" name="total" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="id_cliente" class="form-label">Cliente</label>
-                                    <select name="id_cliente" class="form-select" required>
-                                        <option value="">-- Seleccionar --</option>
-                                        <?php foreach($clientes as $c): ?>
-                                            <option value="<?= $c['ID_Cliente'] ?>"><?= htmlspecialchars($c['Nombre']) ?></option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="id_vendedor" class="form-label">Vendedor</label>
-                                    <select name="id_vendedor" class="form-select" required>
-                                        <option value="">-- Seleccionar --</option>
-                                        <?php foreach($vendedores as $v): ?>
-                                            <option value="<?= $v['ID_Vendedor'] ?>"><?= htmlspecialchars($v['Prime_Nombre'] . ' ' . $v['Segundo_Nombre'] . ' ' . $v['Prime_Apellido'] . ' ' . $v['Segundo_Apellido']) ?></option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="id_zona" class="form-label">Zona</label>
-                                    <select name="id_zona" class="form-select" required>
-                                        <option value="">-- Seleccionar --</option>
-                                        <?php foreach($zonas as $z): ?>
-                                            <option value="<?= $z['ID_Zona'] ?>"><?= htmlspecialchars($z['NombreZona']) ?></option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="id_departamento" class="form-label">Departamento</label>
-                                    <select name="id_departamento" class="form-select" required>
-                                        <option value="">-- Seleccionar --</option>
-                                        <?php foreach($departamentos as $d): ?>
-                                            <option value="<?= $d['ID_Departamento'] ?>"><?= htmlspecialchars($d['Nombre']) ?></option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="id_producto" class="form-label">Producto</label>
-                                    <select name="id_producto" class="form-select" required>
-                                        <option value="">-- Seleccionar --</option>
-                                        <?php foreach($productos as $p): ?>
-                                            <option value="<?= $p['ID_Producto'] ?>"><?= htmlspecialchars($p['Nombre']) ?></option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                                <button type="submit" class="btn btn-primary">Registrar</button>
-                            </div>
-                        </form>
+                        <!-- Registros -->
+                        <div class="sb-sidenav-menu-heading">Registros</div>
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseRegistros" aria-expanded="false" aria-controls="collapseRegistros">
+                            <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                            Registros
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapseRegistros" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link" href="Departamentos.php">Departamentos</a>
+                                <a class="nav-link" href="Ciudades.php">Ciudades</a>
+                                <a class="nav-link" href="Zonas.php">Zonas</a>
+                                <a class="nav-link" href="Clientes.php">Clientes</a>
+                                <a class="nav-link" href="Vendedores.php">Vendedores</a>
+                                <a class="nav-link" href="Compras.php">Compras</a>
+                                <a class="nav-link" href="Ventas.php">Ventas</a>
+                                <a class="nav-link" href="Usuarios.php">Usuarios</a>
+                                <a class="nav-link" href="Productos.php">Productos</a>
+                                <a class="nav-link" href="Proveedores.php">Proveedores</a>
+                            </nav>
+                        </div>
+
+                        <!-- Facturas -->
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseFacturas" aria-expanded="false" aria-controls="collapseFacturas">
+                            <div class="sb-nav-link-icon"><i class="fas fa-file-invoice"></i></div>
+                            Facturas
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapseFacturas" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link" href="FacturasEmitidas.php">Emitidas</a>
+                                <a class="nav-link" href="FacturasRecibidas.php">Recibidas</a>
+                            </nav>
+                        </div>
+
+                        <!-- Otros -->
+                        <div class="sb-sidenav-menu-heading">Reportes</div>
+                        <a class="nav-link" href="Reportes.php">
+                            <div class="sb-nav-link-icon"><i class="fas fa-chart-line"></i></div>
+                            Reportes
+                        </a>
                     </div>
                 </div>
-            </div>
 
-            <!-- Tabla Ventas -->
-            <div class="card mb-4">
-                <div class="card-header bg-primary text-white">
-                    <i class="fas fa-table me-2"></i> Tabla Ventas
+                <div class="sb-sidenav-footer">
+                    <div class="small">Conectado como:</div>
+                    <?= htmlspecialchars($_SESSION['Prime_Nombre']) ?>
                 </div>
-                <div class="card-body">
-                    <table id="datatablesSimple" class="table table-striped table-bordered">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Fecha</th>
-                                <th>Descuentos</th>
-                                <th>Total</th>
-                                <th>Cliente</th>
-                                <th>Vendedor</th>
-                                <th>Zona</th>
-                                <th>Departamento</th>
-                                <th>Producto</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php foreach($ventas as $v): ?>
-                            <tr>
-                                <td><?= htmlspecialchars($v['ID_Venta']) ?></td>
-                                <td><?= htmlspecialchars($v['Fecha']) ?></td>
-                                <td><?= htmlspecialchars($v['Descuentos']) ?></td>
-                                <td><?= htmlspecialchars($v['Total']) ?></td>
-                                <td><?= htmlspecialchars($v['Nombre_Cliente']) ?></td>
-                                <td><?= htmlspecialchars($v['Nombre_Vendedor'] . ' ' . $v['Apellido_Vendedor']) ?></td>
-                                <td><?= htmlspecialchars($v['Nombre_Zona']) ?></td>
-                                <td><?= htmlspecialchars($v['Nombre_Departamento']) ?></td>
-                                <td><?= htmlspecialchars($v['Nombre_Producto']) ?></td>
-                                <td>
-                                    <a href="modificar_venta.php?id=<?= $v['ID_Venta'] ?>" title="Editar">
-                                        <i class="fas fa-edit" style="font-size:22px; color:#d63384;"></i>
-                                    </a>
-                                    <a href="#" data-bs-toggle="modal" data-bs-target="#confirmar-delete" data-id="<?= $v['ID_Venta'] ?>" title="Eliminar">
-                                        <i class="fas fa-trash-alt" style="font-size:30px; color:rgb(255,70,70)"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
+            </nav>
+        </div>
+
+        <!-- Contenido principal -->
+        <div id="layoutSidenav_content">
+            <main class="container-fluid px-4 mt-4">
+                <h1>Ventas</h1>
+                <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#miModal">Registrar Nueva Venta</button>
+                <a href="Reportes/ventas_pdf.php" class="btn btn-primary mb-3">Generar Reporte</a>
+
+                <!-- Modal Registrar Venta -->
+                <div class="modal fade" id="miModal" tabindex="-1" aria-labelledby="miModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <form action="controllers/registrar_venta.php" method="POST">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Registrar Venta</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="mb-3">
+                                        <label for="fecha" class="form-label">Fecha</label>
+                                        <input type="date" class="form-control" name="fecha" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="descuentos" class="form-label">Descuentos</label>
+                                        <input type="number" step="0.01" class="form-control" name="descuentos" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="total" class="form-label">Total</label>
+                                        <input type="number" step="0.01" class="form-control" name="total" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="id_cliente" class="form-label">Cliente</label>
+                                        <select name="id_cliente" class="form-select" required>
+                                            <option value="">-- Seleccionar --</option>
+                                            <?php foreach($clientes as $c): ?>
+                                                <option value="<?= $c['ID_Cliente'] ?>"><?= htmlspecialchars($c['Nombre']) ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="id_vendedor" class="form-label">Vendedor</label>
+                                        <select name="id_vendedor" class="form-select" required>
+                                            <option value="">-- Seleccionar --</option>
+                                            <?php foreach($vendedores as $v): ?>
+                                                <option value="<?= $v['ID_Vendedor'] ?>"><?= htmlspecialchars($v['Prime_Nombre'] . ' ' . $v['Segundo_Nombre'] . ' ' . $v['Prime_Apellido'] . ' ' . $v['Segundo_Apellido']) ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="id_zona" class="form-label">Zona</label>
+                                        <select name="id_zona" class="form-select" required>
+                                            <option value="">-- Seleccionar --</option>
+                                            <?php foreach($zonas as $z): ?>
+                                                <option value="<?= $z['ID_Zona'] ?>"><?= htmlspecialchars($z['NombreZona']) ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="id_departamento" class="form-label">Departamento</label>
+                                        <select name="id_departamento" class="form-select" required>
+                                            <option value="">-- Seleccionar --</option>
+                                            <?php foreach($departamentos as $d): ?>
+                                                <option value="<?= $d['ID_Departamento'] ?>"><?= htmlspecialchars($d['Nombre']) ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="id_producto" class="form-label">Producto</label>
+                                        <select name="id_producto" class="form-select" required>
+                                            <option value="">-- Seleccionar --</option>
+                                            <?php foreach($productos as $p): ?>
+                                                <option value="<?= $p['ID_Producto'] ?>"><?= htmlspecialchars($p['Nombre']) ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                    <button type="submit" class="btn btn-primary">Registrar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tabla Ventas -->
+                <div class="card mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <i class="fas fa-table me-2"></i> Tabla Ventas
+                    </div>
+                    <div class="card-body">
+                        <table id="datatablesSimple" class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Fecha</th>
+                                    <th>Descuentos</th>
+                                    <th>Total</th>
+                                    <th>Cliente</th>
+                                    <th>Vendedor</th>
+                                    <th>Zona</th>
+                                    <th>Departamento</th>
+                                    <th>Producto</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach($ventas as $v): ?>
+                                    <tr>
+                                        <td><?= htmlspecialchars($v['ID_Venta']) ?></td>
+                                        <td><?= htmlspecialchars($v['Fecha']) ?></td>
+                                        <td><?= htmlspecialchars($v['Descuentos']) ?></td>
+                                        <td><?= htmlspecialchars($v['Total']) ?></td>
+                                        <td><?= htmlspecialchars($v['Nombre_Cliente']) ?></td>
+                                        <td><?= htmlspecialchars($v['Nombre_Vendedor'] . ' ' . $v['Apellido_Vendedor']) ?></td>
+                                        <td><?= htmlspecialchars($v['Nombre_Zona']) ?></td>
+                                        <td><?= htmlspecialchars($v['Nombre_Departamento']) ?></td>
+                                        <td><?= htmlspecialchars($v['Nombre_Producto']) ?></td>
+                                        <td>
+                                            <a href="modificar_venta.php?id=<?= $v['ID_Venta'] ?>" title="Editar">
+                                                <i class="fas fa-edit" style="font-size:22px; color:#d63384;"></i>
+                                            </a>
+                                            <a href="#" data-bs-toggle="modal" data-bs-target="#confirmar-delete" data-id="<?= $v['ID_Venta'] ?>" title="Eliminar">
+                                                <i class="fas fa-trash-alt" style="font-size:30px; color:rgb(255,70,70)"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </main>
@@ -235,6 +298,7 @@ if ($stmt === false) {
         document.getElementById('btn-eliminar').setAttribute('href', 'controllers/eliminar_venta.php?id=' + idVenta);
     });
 </script>
+
 </body>
 </html>
 
