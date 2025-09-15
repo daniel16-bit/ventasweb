@@ -1,5 +1,5 @@
 <?php  
-include "../models/conexion_sqlserver.php"; // Conexión SQL Server
+include "../models/conexion.php"; // Conexión SQL Server
 
 $where = "";
 if (!empty($_POST['nom'])) {
@@ -11,8 +11,8 @@ $sql = "SELECT
     Z.ID_Zona, 
     Z.NombreZona, 
     D.Nombre AS NombreDepartamento
-FROM ZONA Z
-INNER JOIN DEPARTAMENTO D ON Z.ID_Departamento = D.ID_Departamento
+FROM colfar.ZONA Z
+INNER JOIN colfar.DEPARTAMENTO D ON Z.ID_Departamento = D.ID_Departamento
 $where
 ORDER BY Z.ID_Zona";
 
