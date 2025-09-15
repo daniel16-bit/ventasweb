@@ -121,7 +121,7 @@ if ($stmt === false) {
 
     <!-- Contenido Principal -->
     <div id="layoutSidenav_content">
-        <main>
+        <main class="container-fluid px-4 mt-4">
             <div class="container-fluid px-4 mt-4">
                 <h1>Compras</h1>
                 <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#miModal">Registrar Nueva Compra</button>
@@ -189,10 +189,10 @@ if ($stmt === false) {
                                             <td><?php echo htmlspecialchars($compra['Nombre_Vendedor'] . ' ' . $compra['Apellido_Vendedor']); ?></td>
                                             <td>
                                                 <a href="modificar/modificar_compra.php?id=<?php echo $compra['ID_Compra']; ?>" title="Editar">
-                                                    <i class="fas fa-edit fs-5 text-primary"></i>
+                                                     <i class="fas fa-edit" style="font-size:25px; color:#d63384;"></i>
                                                 </a>
                                                 <a href="#" data-href="controllers/eliminar_compra.php?id=<?php echo $compra['ID_Compra']; ?>" data-bs-toggle="modal" data-bs-target="#confirmar-delete" title="Eliminar">
-                                                    <i class="fas fa-trash-alt fs-5 text-danger"></i>
+                                                    <i class="fas fa-trash-alt" style="font-size:25px; color:rgb(255,70,70)"></i>
                                                 </a>
                                             </td>
                                         </tr>

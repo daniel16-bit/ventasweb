@@ -162,11 +162,11 @@ if ($stmt === false) {
                 </div>
 
                 <!-- Tabla Vendedores -->
-                <div class="card">
+                <div class="card mb-4">
                     <div class="card-header bg-primary text-white"><i class="fas fa-table me-2"></i> Tabla Vendedores</div>
                     <div class="card-body">
-                        <table id="datatablesSimple" class="table table-striped table-bordered">
-                            <thead>
+                        <table id="datatablesSimple" class="table table-striped table-bordered text-center align-middle">
+                            <thead class="table-dark">
                                 <tr>
                                     <th>ID_Vendedor</th>
                                     <th>Nombre Completo</th>
@@ -190,6 +190,9 @@ if ($stmt === false) {
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
+                                <?php else: ?>
+                                    <tr><td colspan="6">No hay compras registradas.</td></tr>
+                                <?php endif; ?>
                             </tbody>
                         </table>
                     </div>
