@@ -1,10 +1,14 @@
-<?php
+<?php 
+include '../models/conexion.php'; // conexión con Azure SQL
 session_start();
-include '../models/conexion.php'; // conexión PDO a SQL Server
 
-// Obtener compras
-try {
-    $sql = "SELECT 
+// Verificar sesión
+if (!isset($_SESSION['Prime_Nombre'])) {
+    header("Location: ../index.php");
+    exit();
+}
+
+ $sql = "SELECT 
                 c.ID_Compra,
                 c.Fecha,
                 c.Cantidad,
@@ -17,11 +21,15 @@ try {
             JOIN colfar.VENDEDOR vd ON v.ID_Vendedor = vd.ID_Vendedor
             JOIN colfar.USUARIO u ON vd.ID_Usuario = u.ID_Usuario";
 
-    $stmt = $conexion->query($sql);
-    $compras = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$stmt = sqlsrv_query($conn, $sql);
 
-} catch (PDOException $e) {
-    die("Error en la consulta: " . $e->getMessage());
+$compras = [];
+if ($stmt === false) {
+    die(print_r(sqlsrv_errors(), true));
+} else {
+    while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
+        $compras[] = $row;
+    }
 }
 ?>
 <!DOCTYPE html>
