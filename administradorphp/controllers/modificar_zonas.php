@@ -15,14 +15,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['modificar'])) {
 
         try {
             // Preparar consulta
-            $sql = "UPDATE colfar.ZONA 
-                    SET NombreZona = ?, ID_Departamento = ? 
-                    WHERE ID_Zona = ?";
-            $stmt = $conexion->prepare($sql);
+            $sql = "UPDATE colfar.ZONA SET NombreZona = ?, ID_Departamento = ? WHERE ID_Zona = ?";
+            
+            // Preparar la consulta usando sqlsrv_prepare
+            $stmt = sqlsrv_prepare($conn, $sql, array(&$nombreZona, &$id_departamento, &$id_zona));
+            
+            // Verificar si la preparación fue exitosa
+            if ($stmt === false) {
+                die(print_r(sqlsrv_errors(), true));
+            }
 
-            // Ejecutar con parámetros
-            $resultado = $stmt->execute([$nombreZona, $id_departamento, $id_zona]);
+            // Ejecutar la consulta
+            $resultado = sqlsrv_execute($stmt);
 
+            // Verificar si la ejecución fue exitosa
             if ($resultado) {
                 // Redirigir después de la actualización exitosa
                 header("Location: ../Zonas.php");
@@ -30,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['modificar'])) {
             } else {
                 echo "Error al actualizar la zona.";
             }
-        } catch (PDOException $e) {
+        } catch (Exception $e) {
             echo "Error en la base de datos: " . $e->getMessage();
         }
     } else {
@@ -38,6 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['modificar'])) {
     }
 }
 ?>
+
 
 
 

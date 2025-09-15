@@ -55,7 +55,7 @@ $result_departamentos = sqlsrv_query($conn, $sql_departamentos);
 <body>    
     <div class="container">
         <h1 class="mt-4">Modificar Zona</h1>
-        <form action="modificar_zonas.php" method="post">
+        <form action="../controllers/modificar_zonas.php" method="post">
             <input type="hidden" name="id" value="<?php echo htmlspecialchars($id_zona); ?>" required>
             
             <div class="mb-3">
