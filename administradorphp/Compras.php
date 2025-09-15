@@ -49,15 +49,17 @@ if ($stmt === false) {
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
         <a class="navbar-brand ps-3" href="Dashboard.php">ADMINISTRACIÓN</a>
         <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle"><i class="fas fa-bars"></i></button>
-        <div class="ms-auto me-3 my-2 my-md-0 text-light">
-            Usted ingresó como: <?php echo htmlspecialchars($_SESSION['Prime_Nombre'] ?? 'Invitado'); ?>
-        </div>
-        <ul class="navbar-nav ms-auto me-3 me-lg-4">
+        <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+            <div class="input-group">
+                <p class="text-light">Usted ingresó como: <?= htmlspecialchars($_SESSION['Prime_Nombre'] ?? 'Invitado') ?></p>
+            </div>
+        </form>
+        <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" href="#">Ajustes</a></li>
-                    <li><a class="dropdown-item" href="#">Historial de Actividades</a></li>
+                    <li><a class="dropdown-item" href="#!">Ajustes</a></li>
+                    <li><a class="dropdown-item" href="#!">Registro de actividades</a></li>
                     <li><hr class="dropdown-divider"></li>
                     <li><a class="dropdown-item" href="../index.php">Cerrar sesión</a></li>
                 </ul>
@@ -67,67 +69,55 @@ if ($stmt === false) {
 
     <!-- Barra lateral -->
     <div id="layoutSidenav">
-      <div id="layoutSidenav_nav"> 
-        <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
-            <div class="sb-sidenav-menu">
-                <div class="nav">
-                    <!-- Panel -->
-                    <div class="sb-sidenav-menu-heading">Panel</div>
-                    <a class="nav-link" href="Dashboard.php">
-                        <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                        Panel
-                    </a>
+        <div id="layoutSidenav_nav">
+            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                <div class="sb-sidenav-menu">
+                    <div class="nav">
+                        <!-- Panel -->
+                        <div class="sb-sidenav-menu-heading">Panel</div>
+                        <a class="nav-link" href="Dashboard.php">
+                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                            Panel
+                        </a>
 
-                    <!-- Registros -->
-                    <div class="sb-sidenav-menu-heading">Registros</div>
-                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseRegistros" aria-expanded="false" aria-controls="collapseRegistros">
-                        <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                        Registros
-                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                    </a>
-                    <div class="collapse" id="collapseRegistros" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                        <nav class="sb-sidenav-menu-nested nav">
-                            <a class="nav-link" href="Departamentos.php">Departamentos</a>
-                            <a class="nav-link" href="Ciudades.php">Ciudades</a>
-                            <a class="nav-link" href="Zonas.php">Zonas</a>
-                            <a class="nav-link" href="Clientes.php">Clientes</a>
-                            <a class="nav-link" href="Vendedores.php">Vendedores</a>
-                            <a class="nav-link" href="Compras.php">Compras</a>
-                            <a class="nav-link" href="Ventas.php">Ventas</a>
-                            <a class="nav-link" href="Usuarios.php">Usuarios</a>
-                            <a class="nav-link" href="Productos.php">Productos</a>
-                            <a class="nav-link" href="Proveedores.php">Proveedores</a>
-                        </nav>
+                        <!-- Registros -->
+                        <div class="sb-sidenav-menu-heading">Registros</div>
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseRegistros" aria-expanded="false" aria-controls="collapseRegistros">
+                            <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                            Registros
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapseRegistros" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link" href="Departamentos.php">Departamentos</a>
+                                <a class="nav-link" href="Ciudades.php">Ciudades</a>
+                                <a class="nav-link" href="Zonas.php">Zonas</a>
+                                <a class="nav-link" href="Clientes.php">Clientes</a>
+                                <a class="nav-link" href="Vendedores.php">Vendedores</a>
+                                <a class="nav-link" href="Compras.php">Compras</a>
+                                <a class="nav-link" href="Ventas.php">Ventas</a>
+                                <a class="nav-link" href="Usuarios.php">Usuarios</a>
+                                <a class="nav-link" href="Productos.php">Productos</a>
+                                <a class="nav-link" href="Proveedores.php">Proveedores</a>
+                            </nav>
+                        </div>
+
+                        <!-- Facturas -->
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseFacturas" aria-expanded="false" aria-controls="collapseFacturas">
+                            <div class="sb-nav-link-icon"><i class="fas fa-file-invoice"></i></div>
+                            Facturas
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapseFacturas" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link" href="FacturasEmitidas.php">Emitidas</a>
+                                <a class="nav-link" href="FacturasRecibidas.php">Recibidas</a>
+                            </nav>
+                        </div>
                     </div>
-
-                    <!-- Facturas -->
-                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseFacturas" aria-expanded="false" aria-controls="collapseFacturas">
-                        <div class="sb-nav-link-icon"><i class="fas fa-file-invoice"></i></div>
-                        Facturas
-                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                    </a>
-                    <div class="collapse" id="collapseFacturas" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
-                        <nav class="sb-sidenav-menu-nested nav">
-                            <a class="nav-link" href="FacturasEmitidas.php">Emitidas</a>
-                            <a class="nav-link" href="FacturasRecibidas.php">Recibidas</a>
-                        </nav>
-                    </div>
-
-                    <!-- Otros -->
-                    <div class="sb-sidenav-menu-heading">Reportes</div>
-                    <a class="nav-link" href="Reportes.php">
-                        <div class="sb-nav-link-icon"><i class="fas fa-chart-line"></i></div>
-                        Reportes
-                    </a>
                 </div>
-            </div>
-
-            <div class="sb-sidenav-footer">
-                <div class="small">Conectado como:</div>
-                <?php echo htmlspecialchars($_SESSION['Prime_Nombre']); ?>
-            </div>
-        </nav>
-    </div>
+            </nav>
+        </div>
 
     <!-- Contenido Principal -->
     <div id="layoutSidenav_content">
