@@ -64,7 +64,7 @@ if(!isset($_SESSION['Prime_Nombre'])){
                     <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
                 <div class="collapse" id="collapseRegistros" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                    <nav class="sb-sidenav-menu-nested nav">
+                     <nav class="sb-sidenav-menu-nested nav">
                         <a class="nav-link" href="Departamentos.php">Departamentos</a>
                         <a class="nav-link" href="Ciudades.php">Ciudades</a>
                         <a class="nav-link" href="Zonas.php">Zonas</a>

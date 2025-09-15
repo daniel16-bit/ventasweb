@@ -77,19 +77,18 @@ if ($stmt === false) {
                             Registros
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
-                        <div class="collapse" id="collapseRegistros" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                            <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" href="Departamentos.php">Departamentos</a>
-                                <a class="nav-link" href="Ciudades.php">Ciudades</a>
-                                <a class="nav-link" href="Zonas.php">Zonas</a>
-                                <a class="nav-link" href="Clientes.php">Clientes</a>
-                                <a class="nav-link" href="Vendedores.php">Vendedores</a>
-                                <a class="nav-link" href="Compras.php">Compras</a>
-                                <a class="nav-link" href="Ventas.php">Ventas</a>
-                                <a class="nav-link" href="Usuarios.php">Usuarios</a>
-                                <a class="nav-link" href="Productos.php">Productos</a>
-                                <a class="nav-link" href="Proveedores.php">Proveedores</a>
-                            </nav>
+ <nav class="sb-sidenav-menu-nested nav">
+                        <a class="nav-link" href="Departamentos.php">Departamentos</a>
+                        <a class="nav-link" href="Ciudades.php">Ciudades</a>
+                        <a class="nav-link" href="Zonas.php">Zonas</a>
+                        <a class="nav-link" href="Clientes.php">Clientes</a>
+                        <a class="nav-link" href="Vendedores.php">Vendedores</a>
+                        <a class="nav-link" href="Compras.php">Compras</a>
+                        <a class="nav-link" href="Ventas.php">Ventas</a>
+                        <a class="nav-link" href="Usuarios.php">Usuarios</a>
+                        <a class="nav-link" href="Productos.php">Productos</a>
+                        <a class="nav-link" href="Proveedores.php">Proveedores</a>
+                    </nav>
                         </div>
 
                         <!-- Facturas -->
