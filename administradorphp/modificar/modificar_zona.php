@@ -1,4 +1,5 @@
 <?php
+// Incluir el archivo de conexión
 include_once '../models/conexion.php';
 
 // Verificar si 'id' está presente en la URL
@@ -21,27 +22,21 @@ $sql = "SELECT
         WHERE
             Z.ID_Zona = ?";
 
-// Verifica que la conexión a la base de datos se ha realizado correctamente
-if ($conexion->connect_error) {
-    die('Conexión fallida: ' . $conexion->connect_error);
-}
-
 // Preparar la consulta
 $stmt = $conexion->prepare($sql);
 if (!$stmt) {
-    die('Error en la preparación de la consulta: ' . $conexion->error);
+    die('Error en la preparación de la consulta: ' . $conexion->errorInfo()[2]);
 }
 
-$stmt->bind_param("i", $id_zona);
+$stmt->bindParam(1, $id_zona, PDO::PARAM_INT);
 $stmt->execute();
-$result = $stmt->get_result();
 
 // Si no se encontró la zona
-if ($result->num_rows === 0) {
+if ($stmt->rowCount() === 0) {
     die('Zona no encontrada');
 }
 
-$zona = $result->fetch_array(MYSQLI_ASSOC);
+$zona = $stmt->fetch(PDO::FETCH_ASSOC);
 
 // Obtener todos los departamentos disponibles para el select
 $sql_departamentos = "SELECT ID_Departamento, Nombre FROM colfar.DEPARTAMENTO";
@@ -70,7 +65,7 @@ $result_departamentos = $conexion->query($sql_departamentos);
             <div class="mb-3">
                 <label for="departamento" class="form-label">Nombre Departamento</label>
                 <select class="form-control" id="departamento" name="departamento" required>
-                    <?php while ($departamento = $result_departamentos->fetch_assoc()) { ?>
+                    <?php while ($departamento = $result_departamentos->fetch(PDO::FETCH_ASSOC)) { ?>
                         <option value="<?php echo $departamento['ID_Departamento']; ?>" <?php echo $departamento['ID_Departamento'] == $zona['ID_Departamento'] ? 'selected' : ''; ?>>
                             <?php echo htmlspecialchars($departamento['Nombre']); ?>
                         </option>
@@ -85,4 +80,5 @@ $result_departamentos = $conexion->query($sql_departamentos);
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+
 
