@@ -158,7 +158,7 @@ sqlsrv_free_stmt($stmt);
                                     <?php foreach ($provedores as $provedor): ?>
                                         <tr>
                                             <td><?php echo $provedor['ID_Proveedor']; ?></td>
-                                            <td><?php echo $provedor['Nombre']; ?></td>
+                                            <td><?php echo $provedor['Nombe']; ?></td>
                                             <td><?php echo $provedor['Telefono']; ?></td>
                                             <td><?php echo isset($provedor['Direccion']) ? $provedor['Direccion'] : ''; ?></td>
                                             <td>
