@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['modificar'])) {
             if ($resultado) {
                 // Redirigir después de la actualización exitosa
                 header("Location: ../Zonas.php");
-                exit();
+                exit(); // Asegúrate de llamar a exit() después de la redirección.
             } else {
                 echo "Error al actualizar la zona.";
             }
@@ -38,5 +38,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['modificar'])) {
     }
 }
 ?>
+
 
 
