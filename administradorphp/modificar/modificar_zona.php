@@ -22,25 +22,26 @@ $sql = "SELECT
         WHERE
             Z.ID_Zona = ?";
 
-// Preparar la consulta
-$stmt = $conexion->prepare($sql);
+// Preparar la consulta usando sqlsrv_query (no es necesario bindParam o execute)
+$params = array($id_zona);
+$stmt = sqlsrv_query($conn, $sql, $params);
+
+// Verificar si hubo un error en la consulta
 if (!$stmt) {
-    die('Error en la preparación de la consulta: ' . $conexion->errorInfo()[2]);
+    die('Error en la consulta: ' . print_r(sqlsrv_errors(), true));
 }
 
-$stmt->bindParam(1, $id_zona, PDO::PARAM_INT);
-$stmt->execute();
-
 // Si no se encontró la zona
-if ($stmt->rowCount() === 0) {
+if (sqlsrv_has_rows($stmt) === false) {
     die('Zona no encontrada');
 }
 
-$zona = $stmt->fetch(PDO::FETCH_ASSOC);
+// Obtener la zona
+$zona = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC);
 
 // Obtener todos los departamentos disponibles para el select
 $sql_departamentos = "SELECT ID_Departamento, Nombre FROM colfar.DEPARTAMENTO";
-$result_departamentos = $conexion->query($sql_departamentos);
+$result_departamentos = sqlsrv_query($conn, $sql_departamentos);
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -65,7 +66,7 @@ $result_departamentos = $conexion->query($sql_departamentos);
             <div class="mb-3">
                 <label for="departamento" class="form-label">Nombre Departamento</label>
                 <select class="form-control" id="departamento" name="departamento" required>
-                    <?php while ($departamento = $result_departamentos->fetch(PDO::FETCH_ASSOC)) { ?>
+                    <?php while ($departamento = sqlsrv_fetch_array($result_departamentos, SQLSRV_FETCH_ASSOC)) { ?>
                         <option value="<?php echo $departamento['ID_Departamento']; ?>" <?php echo $departamento['ID_Departamento'] == $zona['ID_Departamento'] ? 'selected' : ''; ?>>
                             <?php echo htmlspecialchars($departamento['Nombre']); ?>
                         </option>
@@ -80,5 +81,6 @@ $result_departamentos = $conexion->query($sql_departamentos);
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+
 
 
