@@ -3,10 +3,7 @@ include '../models/conexion.php'; // conexión con Azure SQL
 session_start();
 
 // Verificar sesión
-if (!isset($_SESSION['Prime_Nombre'])) {
-    header("Location: ../index.php");
-    exit();
-}
+
 
 $sql = "SELECT 
             c.ID_Compra,
@@ -183,7 +180,8 @@ if ($stmt === false) {
                                     <?php foreach($compras as $compra): ?>
                                         <tr>
                                             <td><?php echo htmlspecialchars($compra['ID_Compra']); ?></td>
-                                            <td><?php echo htmlspecialchars($compra['Fecha']); ?></td>
+                                            <td><?php echo htmlspecialchars($compra['Fecha']->format('Y-m-d')); ?></td>
+
                                             <td><?php echo htmlspecialchars($compra['Cantidad']); ?></td>
                                             <td><?php echo htmlspecialchars($compra['Nombre_Producto']); ?></td>
                                             <td><?php echo htmlspecialchars($compra['Nombre_Vendedor'] . ' ' . $compra['Apellido_Vendedor']); ?></td>

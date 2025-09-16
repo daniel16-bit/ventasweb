@@ -1,25 +1,31 @@
 <?php
-include "../models/conexion.php"; // Conexión con PDO
+include "../models/conexion.php"; // Conexión con SQL Server usando sqlsrv
 
 if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     $id = (int) $_GET['id'];
 
     try {
-        // Preparar la consulta
-        $sql = "DELETE FROM COMPRA WHERE ID_Compra = ?";
-        $stmt = $conexion->prepare($sql);
+        // Consulta SQL con parámetro
+        $sql = "DELETE FROM colfar.COMPRA WHERE ID_Compra = ?";
+        $params = [$id];
 
-        if ($stmt->execute([$id])) {
+        // Ejecutar consulta
+        $stmt = sqlsrv_query($conn, $sql, $params);
+
+        if ($stmt === false) {
+            // ❌ Error al ejecutar
+            echo '<div class="alert alert-danger">❌ Error al eliminar compra.</div>';
+            die(print_r(sqlsrv_errors(), true));
+        } else {
             // ✅ Eliminación exitosa
             header("Location: ../Compras.php");
             exit;
-        } else {
-            echo '<div class="alert alert-danger">❌ Error al eliminar la compra.</div>';
         }
-    } catch (PDOException $e) {
-        echo '<div class="alert alert-danger">⚠️ Error en la base de datos: ' . $e->getMessage() . '</div>';
+    } catch (Exception $e) {
+        echo '<div class="alert alert-danger">⚠️ Error inesperado: ' . $e->getMessage() . '</div>';
     }
 } else {
     echo '<div class="alert alert-warning">⚠️ No se ha especificado una compra válida para eliminar.</div>';
 }
 ?>
+
