@@ -1,25 +1,25 @@
 <?php
-include "../models/conexion.php"; // Conexión con PDO
+include "../models/conexion.php"; // Asegúrate de que $conn esté definido
 
-if (isset($_GET['id'])) {
-    $id = $_GET['id'];
+if (isset($_GET['id']) && is_numeric($_GET['id'])) {
+    $id = (int) $_GET['id'];
 
-    try {
-        // Consulta para eliminar el vendedor
-        $sql = "DELETE FROM VENDEDOR WHERE ID_Vendedor = ?";
-        $stmt = $conexion->prepare($sql);
+    // Consulta para eliminar al vendedor
+    $sql = "DELETE FROM colfar.VENDEDOR WHERE ID_Vendedor = ?";
+    $params = [$id];
 
-        if ($stmt->execute([$id])) {
-            // ✅ Eliminación correcta → redirigir
-            header("Location: ../Vendedores.php");
-            exit;
-        } else {
-            echo '<div class="alert alert-danger">❌ Error al eliminar el vendedor.</div>';
-        }
-    } catch (PDOException $e) {
-        echo '<div class="alert alert-danger">⚠️ Error en la base de datos: ' . $e->getMessage() . '</div>';
+    $stmt = sqlsrv_query($conn, $sql, $params);
+
+    if ($stmt) {
+        // ✅ Eliminado correctamente, redirigir
+        header("Location: ../Vendedores.php");
+        exit;
+    } else {
+        echo '<div class="alert alert-danger">❌ Error al eliminar el vendedor.</div>';
+        die(print_r(sqlsrv_errors(), true)); // Mostrar errores
     }
 } else {
-    echo '<div class="alert alert-warning">⚠️ No se ha especificado un vendedor para eliminar.</div>';
+    echo '<div class="alert alert-warning">⚠️ No se ha especificado un vendedor válido para eliminar.</div>';
 }
 ?>
+
