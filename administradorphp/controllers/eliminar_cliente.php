@@ -1,28 +1,27 @@
 <?php
-include "../models/conexion.php"; // Conexión con PDO
+include "../models/conexion.php"; // Asegúrate de que la conexión está incluida
 
 if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     $id = (int) $_GET['id'];
+    
+    // Preparar la consulta para eliminar el departamento
+    $sql = "DELETE FROM colfar.CLIENTE WHERE ID_Cliente = ?";  
+    $params = [$id];
 
-    try {
-        // Preparar la consulta para eliminar el cliente
-        $sql = "DELETE FROM CLIENTE WHERE ID_Cliente = ?";
-        $stmt = $conexion->prepare($sql);
 
-        if ($stmt->execute([$id])) {
-            // Redirigir a la página de clientes después de la eliminación
-            header("Location: ../Clientes.php");
+     $stmt = sqlsrv_query($conn, $sql, $params);
+    // Preparar y ejecutar la declaración
+    if ($stmt) {
+        
+            // Redirigir a la página de departamentos después de la eliminación
+            header("Location:../Clientes.php");
             exit;
         } else {
-            echo '<div class="alert alert-danger">❌ Error al eliminar el cliente.</div>';
+            echo '<div class="alert alert-danger">Error al eliminar el cliente.</div>';
         }
-    } catch (PDOException $e) {
-        echo '<div class="alert alert-danger">⚠️ Error en la base de datos: ' . $e->getMessage() . '</div>';
+        $stmt->close();
+    } else {
+        echo '<div class="alert alert-danger">Error al preparar la consulta.</div>';
     }
-} else {
-    echo '<div class="alert alert-warning">⚠️ No se ha especificado un cliente válido para eliminar.</div>';
-}
+
 ?>
-
-
-
