@@ -3,10 +3,7 @@ session_start();
 include '../models/conexion.php'; // aquí ya debe estar $conn con sqlsrv_connect()
 
 // Verificar sesión
-if (!isset($_SESSION['Prime_Nombre'])) {
-    header("Location: ../index.php");
-    exit();
-}
+
 
 // Consulta para traer proveedores
 $sql = "SELECT * FROM colfar.PROVEEDOR";
@@ -150,7 +147,6 @@ sqlsrv_free_stmt($stmt);
                                         <th>ID</th>
                                         <th>Nombre Proveedor</th>
                                         <th>Teléfono</th>
-                                        <th>Dirección</th>
                                         <th>Acciones</th>
                                     </tr>
                                 </thead>   
@@ -160,7 +156,7 @@ sqlsrv_free_stmt($stmt);
                                             <td><?php echo $provedor['ID_Proveedor']; ?></td>
                                             <td><?php echo $provedor['Nombe']; ?></td>
                                             <td><?php echo $provedor['Telefono']; ?></td>
-                                            <td><?php echo isset($provedor['Direccion']) ? $provedor['Direccion'] : ''; ?></td>
+                                            
                                             <td>
                                                 <a href="./modificar/modificar_proveedor.php?id=<?php echo $provedor['ID_Proveedor']; ?>">
                                                     <i class="fas fa-edit" style="font-size:20px; color: #0d6efd;"></i>

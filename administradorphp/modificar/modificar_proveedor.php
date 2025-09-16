@@ -1,15 +1,32 @@
 <?php
-include_once '../models/conexion.php';
+include_once '../models/conexion.php'; // Aquí $conn con sqlsrv_connect()
+
+// Verificar que se reciba el ID
+if (!isset($_GET['id'])) {
+    die("ID de proveedor no proporcionado.");
+}
 
 $id_proveedor = $_GET['id'];
-$sql = "SELECT * FROM PROVEEDOR WHERE ID_Proveedor = '$id_proveedor'";
-$result = $conexion->query($sql);
-if ($result->num_rows > 0) {
-    $proveedor = $result->fetch_array(MYSQLI_ASSOC);
-} else {
+
+// Consulta parametrizada para traer el proveedor
+$sql = "SELECT * FROM colfar.PROVEEDOR WHERE ID_Proveedor = ?";
+$params = [$id_proveedor];
+
+$stmt = sqlsrv_query($conn, $sql, $params);
+
+if ($stmt === false) {
+    die(print_r(sqlsrv_errors(), true));
+}
+
+$proveedor = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC);
+
+if (!$proveedor) {
     die("No se encontró el proveedor.");
 }
+
+sqlsrv_free_stmt($stmt);
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -25,18 +42,20 @@ if ($result->num_rows > 0) {
         <form action="../controllers/modificar_provedores.php" method="post">
             <!-- Campo oculto para pasar el ID -->
             <input type="hidden" name="id" value="<?php echo $id_proveedor; ?>" required>
+            
             <div class="mb-3">
                 <label for="nombre" class="form-label">Nombre</label>
-                <input type="text" class="form-control" id="nombre" name="nombre" value="<?php echo $proveedor['Nombe']; ?>" required>
+                <input type="text" class="form-control" id="nombre" name="nombre" 
+                       value="<?php echo $proveedor['Nombe']; ?>" required>
             </div>
+            
             <div class="mb-3">
                 <label for="telefono" class="form-label">Teléfono</label>
-                <input type="text" class="form-control" id="telefono" name="telefono" value="<?php echo $proveedor['Telefono']; ?>" required>
+                <input type="text" class="form-control" id="telefono" name="telefono" 
+                       value="<?php echo $proveedor['Telefono']; ?>" required>
             </div>
-            <div class="mb-3">
-                <label for="direccion" class="form-label">Dirección</label>
-                <input type="text" class="form-control" id="direccion" name="direccion" value="<?php echo $proveedor['Dirección']; ?>" required>
-            </div>
+            
+            
             <button type="submit" class="btn btn-primary" name="modificar" value="ok">Actualizar</button>
         </form>
     </div>

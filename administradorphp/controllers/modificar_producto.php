@@ -34,6 +34,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 } else {
-    header("Location: ../views/Productos.php?error=Acceso inválido");
+    header("Location: ..Productos.php?error=Acceso inválido");
     exit;
 }
