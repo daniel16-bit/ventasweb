@@ -125,7 +125,7 @@ if ($stmt === false) {
                                         <td><?= htmlspecialchars($dep['Nombre']) ?></td>
                                         <td>
                                             <a href="modificar/modificar_departamento.php?id=<?= $dep['ID_Departamento'] ?>" class="text-primary me-2"><i class="fas fa-edit"></i></a>
-                                            <a href="#" data-href="controllers/eliminar_departamento_sqlserver.php?id=<?= $dep['ID_Departamento'] ?>" data-bs-toggle="modal" data-bs-target="#confirmar-delete" class="text-danger"><i class="fas fa-trash-alt"></i></a>
+                                            <a href="#" data-href="controllers/eliminar_departamento.php?id=<?= $dep['ID_Departamento'] ?>" data-bs-toggle="modal" data-bs-target="#confirmar-delete" class="text-danger"><i class="fas fa-trash-alt"></i></a>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
