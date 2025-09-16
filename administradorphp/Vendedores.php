@@ -3,10 +3,7 @@ include '../models/conexion.php'; // conexión con Azure SQL
 session_start();
 
 // Verificar sesión
-if (!isset($_SESSION['Prime_Nombre'])) {
-    header("Location: ../index.php");
-    exit();
-}
+
 
 $sql = "SELECT 
             VE.ID_Vendedor, 

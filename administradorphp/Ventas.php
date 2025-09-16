@@ -2,12 +2,6 @@
 include '../models/conexion.php'; // conexión con Azure SQL
 session_start();
 
-// Verificar sesión
-if (!isset($_SESSION['Prime_Nombre'])) {
-    header("Location: ../index.php");
-    exit();
-}
-
 // Consulta ventas
 $sql = "SELECT 
             V.ID_Venta,
@@ -171,7 +165,7 @@ if ($stmt === false) {
                                         <td><?= htmlspecialchars($venta['Nombre_Producto']) ?></td>
                                         <td>
                                             <!-- Editar -->
-                                            <a href="modificar_venta.php?id=<?= $venta['ID_Venta'] ?>" title="Editar">
+                                            <a href="modificar/modificar_venta.php?id=<?= $venta['ID_Venta'] ?>" title="Editar">
                                                 <i class="fas fa-edit" style="font-size:22px; color:#d63384;"></i>
                                             </a>
                                             <!-- Eliminar -->

@@ -11,23 +11,25 @@ if (!empty($_POST['modificar'])) {
         $pais          = $_POST['pais'];
         $codigoPostal  = $_POST['codigo_postal'];
 
-        try {
-            // Preparar la consulta con parámetros
-            $sql = "UPDATE CIUDAD 
-                    SET Nombre_ciudad = ?, Pais = ?, Codigo_postal = ? 
-                    WHERE ID_Ciudad = ?";
-            $stmt = $conexion->prepare($sql);
+        // Consulta SQL con parámetros
+        $sql = "UPDATE colfar.CIUDAD 
+                SET Nombre_ciudad = ?, Pais = ?, Codigo_postal = ? 
+                WHERE ID_Ciudad = ?";
 
-            // Ejecutar la consulta con los valores
-            $stmt->execute([$nombreCiudad, $pais, $codigoPostal, $idCiudad]);
+        $params = array($nombreCiudad, $pais, $codigoPostal, $idCiudad);
 
-            // Redirigir a la lista de ciudades
-            header("Location: ../Ciudades.php");
-            exit();
+        // Ejecutar consulta
+        $stmt = sqlsrv_query($conn, $sql, $params);
 
-        } catch (PDOException $e) {
-            echo "❌ Error al actualizar la ciudad: " . $e->getMessage();
+        if ($stmt === false) {
+            echo "❌ Error al actualizar la ciudad: ";
+            die(print_r(sqlsrv_errors(), true));
         }
+
+        // Redirigir a la lista de ciudades
+        header("Location: ../Ciudades.php");
+        exit();
+
     } else {
         echo "⚠️ Todos los campos son obligatorios.";
     }

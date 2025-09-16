@@ -175,7 +175,7 @@ if ($stmt === false) {
                                     <td><?php echo htmlspecialchars($ciudad['Pais']); ?></td>
                                     <td><?php echo htmlspecialchars($ciudad['Codigo_postal']); ?></td>
                                     <td>
-                                        <a href="editar_ciudad.php?id=<?php echo $ciudad['ID_Ciudad']; ?>" class="btn btn-primary btn-sm me-1" title="Editar"><i class="fas fa-edit"></i>
+                                        <a href="modificar/modificar_ciudad.php?id=<?php echo $ciudad['ID_Ciudad']; ?>" class="btn btn-primary btn-sm me-1" title="Editar"><i class="fas fa-edit"></i>
                                                 </a>
                                         <a href="controllers/eliminar_ciudad.php?id=<?php echo $ciudad['ID_Ciudad']; ?>"  class="btn btn-danger btn-sm"
                                                    onclick="return confirm('¿Estás seguro de eliminar esta ciudad?')"

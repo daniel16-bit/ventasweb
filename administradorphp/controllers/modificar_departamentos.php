@@ -1,5 +1,5 @@
 <?php
-// Incluir la conexión PDO
+// Incluir la conexión con SQLSRV
 include_once '../models/conexion.php';
 
 if (isset($_POST['modificar'])) {
@@ -7,19 +7,22 @@ if (isset($_POST['modificar'])) {
     $nombreDepartamento = $_POST['nombre'] ?? null;
 
     if (!empty($idDepartamento) && !empty($nombreDepartamento)) {
-        try {
-            // Sentencia preparada con parámetros
-            $sql = "UPDATE DEPARTAMENTO SET Nombre = ? WHERE ID_Departamento = ?";
-            $stmt = $conexion->prepare($sql);
+        // Sentencia con parámetros
+        $sql = "UPDATE colfar.DEPARTAMENTO SET Nombre = ? WHERE ID_Departamento = ?";
+        $params = array($nombreDepartamento, $idDepartamento);
 
-            // Ejecutar consulta con parámetros
-            $stmt->execute([$nombreDepartamento, $idDepartamento]);
+        // Ejecutar consulta
+        $stmt = sqlsrv_query($conn, $sql, $params);
 
+        if ($stmt === false) {
+            // Mostrar errores de SQL Server
+            echo '<div class="alert alert-danger">Error al actualizar el departamento: ';
+            print_r(sqlsrv_errors(), true);
+            echo '</div>';
+        } else {
             // Redirigir después de la actualización
             header("Location: ../Departamentos.php");
             exit;
-        } catch (PDOException $e) {
-            echo '<div class="alert alert-danger">Error al actualizar el departamento: ' . $e->getMessage() . '</div>';
         }
     } else {
         echo '<div class="alert alert-warning">El nombre del departamento es obligatorio.</div>';
