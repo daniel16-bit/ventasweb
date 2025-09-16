@@ -162,14 +162,10 @@ if ($stmt === false) {
                                             <td><?= htmlspecialchars($zona['NombreDepartamento']) ?></td>
                                             <td>
                                                 <a href="modificar/modificar_zona.php?id=<?= $zona['ID_Zona'] ?>" 
-                                                   class="btn btn-primary btn-sm me-1"
-                                                   title="Editar">
-                                                   <i class="fas fa-edit"></i>
+                                                   class="btn btn-primary btn-sm me-1" title="Editar"><i class="fas fa-edit"></i>
                                                 </a>
                                                 <a href="controllers/eliminar_zona.php?id=<?= $zona['ID_Zona'] ?>" class="btn btn-danger btn-sm"
-                                                   onclick="return confirm('¿Estás seguro de eliminar esta zona?')"
-                                                   title="Eliminar">
-                                                   <i class="fas fa-trash-alt"></i>
+                                                   onclick="return confirm('¿Estás seguro de eliminar esta zona?')" title="Eliminar"><i class="fas fa-trash-alt"></i>
                                                 </a>
                                             </td>
                                         </tr>

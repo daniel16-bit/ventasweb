@@ -2,11 +2,7 @@
 session_start();
 include '../models/conexion.php'; // Asegúrate de tener la conexión PDO correcta
 
-// Verificar sesión
-if (!isset($_SESSION['Prime_Nombre'])) {
-    header("Location: ../index.php");
-    exit();
-}
+
 
 $sql = "SELECT * FROM colfar.CIUDAD";
 $stmt = sqlsrv_query($conn, $sql);
@@ -174,13 +170,17 @@ if ($stmt === false) {
                         <tbody>
                             <?php foreach ($ciudades as $ciudad): ?>
                                 <tr>
-                                    <td><?php echo htmlspecialchars($ciudad['ID']); ?></td>
-                                    <td><?php echo htmlspecialchars($ciudad['Nombre']); ?></td>
+                                    <td><?php echo htmlspecialchars($ciudad['ID_Ciudad']); ?></td>
+                                    <td><?php echo htmlspecialchars($ciudad['Nombre_ciudad']); ?></td>
                                     <td><?php echo htmlspecialchars($ciudad['Pais']); ?></td>
-                                    <td><?php echo htmlspecialchars($ciudad['Codigo_Postal']); ?></td>
+                                    <td><?php echo htmlspecialchars($ciudad['Codigo_postal']); ?></td>
                                     <td>
-                                        <a href="editar_ciudad.php?id=<?php echo $ciudad['ID']; ?>" class="btn btn-warning btn-sm">Editar</a>
-                                        <a href="controllers/eliminar_ciudad.php?id=<?php echo $ciudad['ID']; ?>" class="btn btn-danger btn-sm">Eliminar</a>
+                                        <a href="editar_ciudad.php?id=<?php echo $ciudad['ID_Ciudad']; ?>" class="btn btn-primary btn-sm me-1" title="Editar"><i class="fas fa-edit"></i>
+                                                </a>
+                                        <a href="controllers/eliminar_ciudad.php?id=<?php echo $ciudad['ID_Ciudad']; ?>"  class="btn btn-danger btn-sm"
+                                                   onclick="return confirm('¿Estás seguro de eliminar esta ciudad?')"
+                                                   title="Eliminar">
+                                                   <i class="fas fa-trash-alt"></i>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
