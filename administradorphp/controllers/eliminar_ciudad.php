@@ -1,26 +1,26 @@
 <?php
-include "../models/conexion.php"; // Asegúrate de que la conexión está incluida
-if (isset($_GET['id'])) {
-    $id = $_GET['id'];
- 
-    // Preparar la consulta para eliminar el departamento
-    $sql = "DELETE FROM colfar.CIUDAD WHERE ID_Ciudad = ?";    
-    // Preparar y ejecutar la declaración
-    if ($stmt = $conexion->prepare($sql)) {
-        $stmt->bind_param("i", $id); // 'i' indica que el parámetro es un entero
-        if ($stmt->execute()) {
-            // Redirigir a la página de departamentos después de la eliminación
-            header("Location:../Ciudades.php");
-            exit;
-        } else {
-            echo '<div class="alert alert-danger">Error al eliminar la ciudad.</div>';
-        }
-        $stmt->close();
+include "../models/conexion.php"; // Esto debe definir $conn
+
+if (isset($_GET['id']) && is_numeric($_GET['id'])) {
+    $id = (int) $_GET['id'];
+
+    // Consulta SQL con parámetro
+    $sql = "DELETE FROM colfar.CIUDAD WHERE ID_Ciudad = ?";
+    $params = [$id];
+
+    // Ejecutar la consulta con sqlsrv_query
+    $stmt = sqlsrv_query($conn, $sql, $params);
+
+    if ($stmt) {
+        // Redirigir después de eliminar
+        header("Location: ../Ciudades.php");
+        exit;
     } else {
-        echo '<div class="alert alert-danger">Error al preparar la consulta.</div>';
+        echo '<div class="alert alert-danger">❌ Error al eliminar la ciudad.</div>';
+        die(print_r(sqlsrv_errors(), true)); // Muestra errores exactos
     }
 } else {
-    echo '<div class="alert alert-warning">No se ha especificado una ciudad para eliminar.</div>';
+    echo '<div class="alert alert-warning">⚠️ ID de ciudad no válido.</div>';
 }
 ?>
 
