@@ -2,11 +2,7 @@
 include '../models/conexion.php'; // conexión con Azure SQL
 session_start();
 
-// Verificar sesión
-if (!isset($_SESSION['Prime_Nombre'])) {
-    header("Location: ../index.php");
-    exit();
-}
+
 
 $sql = "SELECT 
             P.ID_Producto, 
@@ -145,11 +141,12 @@ if ($stmt === false) {
                                             <td><?= $prod['Stock'] ?></td>
                                             <td><?= $prod['Existencia'] ?></td>
                                             <td>
-    <a href="modificar/modificar_producto.php?id=<?= $prod['ID_Producto'] ?>" 
-       class="btn btn-primary btn-sm me-1"
-       title="Editar">
-       <i class="fas fa-edit"></i>
-    </a>
+<a href="modificar/modificar_producto.php?id=<?= $prod['ID_Producto'] ?>" 
+   class="btn btn-primary btn-sm me-1"
+   title="Editar">
+   <i class="fas fa-edit"></i>
+</a>
+
     <a href="controllers/eliminar_producto.php?id=<?= $prod['ID_Producto'] ?>" 
        class="btn btn-danger btn-sm"
        onclick="return confirm('¿Estás seguro de eliminar este producto?')"
