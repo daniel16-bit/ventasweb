@@ -6,10 +6,12 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
 
     try {
         // Preparar la consulta con PDO
-        $sql = "DELETE FROM DEPARTAMENTO WHERE ID_Departamento = ?";
-        $stmt = $conexion->prepare($sql);
+        $sql = "DELETE FROM colfar.DEPARTAMENTO WHERE ID_Departamento = ?";
+        $params = [$id];
 
-        if ($stmt->execute([$id])) {
+         $stmt = sqlsrv_query($conn, $sql, $params);
+
+        if ($stmt) {
             // ✅ Eliminación correcta
             header("Location: ../Departamentos.php");
             exit;
