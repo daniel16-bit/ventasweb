@@ -1,34 +1,31 @@
 <?php
-include "../models/conexion.php"; // conexión PDO
+include "../models/conexion.php"; // $conn es sqlsrv_connect()
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    try {
-        // Obtener los datos del formulario
-        $tipo      = $_POST["tipo"];
-        $nombre    = $_POST['nombre'];
-        $telefono  = $_POST['telefono'];
-        $direccion = $_POST['direccion'];
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    // Obtener y limpiar los datos del formulario
+    $tipo      = trim($_POST["tipo"] ?? '');
+    $nombre    = trim($_POST['nombre'] ?? '');
+    $telefono  = trim($_POST['telefono'] ?? '');
+    $direccion = trim($_POST['direccion'] ?? '');
 
-        // Preparar la consulta con parámetros
-        $sql = "INSERT INTO CLIENTE (Tipo, Nombre, Telefono, Direccion) 
-                VALUES (?, ?, ?, ?)";
-        
-        $stmt = $conexion->prepare($sql);
-
-        // Ejecutar con los valores
-        $resultado = $stmt->execute([$tipo, $nombre, $telefono, $direccion]);
-
-        if ($resultado) {
-            // Redirigir si todo salió bien
-            header("Location: ../Clientes.php");
-            exit();
-        } else {
-            echo "Error al registrar el cliente.";
-        }
-
-    } catch (PDOException $e) {
-        echo "Error en la base de datos: " . $e->getMessage();
+    // Validar que los campos no estén vacíos
+    if (empty($tipo) || empty($nombre) || empty($telefono) || empty($direccion)) {
+        echo "Todos los campos son obligatorios.";
+        exit();
     }
-} else {
-    echo "Método de solicitud no válido.";
+
+    // Preparar la consulta con parámetros
+    $sql = "INSERT INTO colfar.CLIENTE (Tipo, Nombre, Telefono, Direccion) VALUES (?, ?, ?, ?)";
+    $params = array($tipo, $nombre, $telefono, $direccion);
+
+    $stmt = sqlsrv_query($conn, $sql, $params);
+
+    if ($stmt === false) {
+        die("Error al registrar el cliente: " . print_r(sqlsrv_errors(), true));
+    } else {
+        sqlsrv_free_stmt($stmt);
+        header("Location: ../Clientes.php");
+        exit();
+    }
 }
+?>

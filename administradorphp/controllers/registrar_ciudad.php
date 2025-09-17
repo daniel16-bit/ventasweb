@@ -1,31 +1,35 @@
 <?php
-include "../models/conexion.php"; // Aquí está tu conexión PDO con Azure SQL
+include "../models/conexion.php"; // $conn es tu conexión sqlsrv_connect()
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    try {
-        // Obtener los datos del formulario
-        $nombre        = $_POST['nombre'];
-        $pais          = $_POST['pais'];
-        $codigo_postal = $_POST['codigo_postal'];
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    // Obtener y limpiar los datos del formulario
+    $nombre        = trim($_POST['nombre'] ?? '');
+    $pais          = trim($_POST['pais'] ?? '');
+    $codigo_postal = trim($_POST['codigo_postal'] ?? '');
 
-        // Consulta SQL con parámetros
-        $sql = "INSERT INTO CIUDAD (Nombre_ciudad, Pais, Codigo_postal) 
-                VALUES (?, ?, ?)";
-
-        $stmt = $conexion->prepare($sql);
-
-        // Ejecutar con los valores
-        $resultado = $stmt->execute([$nombre, $pais, $codigo_postal]);
-
-        if ($resultado) {
-            header("Location: ../Ciudades.php");
-            exit();
-        } else {
-            echo "Error al registrar la ciudad.";
-        }
-    } catch (PDOException $e) {
-        echo "Error en la base de datos: " . $e->getMessage();
+    // Validar que los campos no estén vacíos
+    if (empty($nombre) || empty($pais) || empty($codigo_postal)) {
+        echo "Todos los campos son obligatorios.";
+        exit();
     }
-} else {
-    echo "Método de solicitud no válido.";
+
+    if (!is_numeric($codigo_postal)) {
+        echo "El código postal debe ser un número.";
+        exit();
+    }
+
+    // Preparar la consulta con parámetro
+    $sql = "INSERT INTO colfar.CIUDAD (Nombre_ciudad, Pais, Codigo_postal) VALUES (?, ?, ?)";
+    $params = array($nombre, $pais, (int)$codigo_postal);
+
+    $stmt = sqlsrv_query($conn, $sql, $params);
+
+    if ($stmt === false) {
+        die("Error al registrar la ciudad: " . print_r(sqlsrv_errors(), true));
+    } else {
+        sqlsrv_free_stmt($stmt);
+        header("Location: ../Ciudades.php");
+        exit();
+    }
 }
+?>
