@@ -7,7 +7,7 @@ if(isset($_POST['modificar'])){
     $telefono = $_POST['telefono'];
 
     // Quitar acentos del nombre de columna
-    $sql = "UPDATE colfar.PROVEEDOR SET Nombe = ?, Telefono = ?, Dirección = ? WHERE ID_Proveedor = ?";
+    $sql = "UPDATE colfar.PROVEEDOR SET Nombe = ?, Telefono = ? WHERE ID_Proveedor = ?";
     $params = [$nombre, $telefono, $id];
 
     $stmt = sqlsrv_query($conn, $sql, $params);

@@ -1,9 +1,5 @@
 <?php 
-session_start();
-if (!isset($_SESSION['Prime_Nombre'])) {
-    header("Location: ../index.php");
-    exit;
-}
+
 
 // Incluir la conexión a la base de datos
 include '../models/conexion.php'; // Este archivo debe contener tu conexión con la base de datos
@@ -84,7 +80,7 @@ if ($stmt === false) {
                 <div class="modal fade" id="miModal" tabindex="-1">
                     <div class="modal-dialog">
                         <div class="modal-content">
-                            <form action="controllers/registrar_departamento_sqlserver.php" method="POST">
+                            <form action="controllers/registrar_departamento.php" method="POST">
                                 <div class="modal-header">
                                     <h5 class="modal-title">Registrar Departamento</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
