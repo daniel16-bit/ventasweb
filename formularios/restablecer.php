@@ -26,7 +26,7 @@ if (isset($_GET['token'])) {
             $nueva_contra = trim($_POST['nueva_contrasena']);
             $hash = password_hash($nueva_contra, PASSWORD_DEFAULT);
 
-            $sqlUpdate = "UPDATE colfar.USUARIO SET Contraseña = ?, token_recuperacion = NULL, expira_token = NULL WHERE ID_Usuario = ?";
+            $sqlUpdate = "UPDATE colfar.USUARIO SET Contrasena = ?, token_recuperacion = NULL, expira_token = NULL WHERE ID_Usuario = ?";
             $paramsUpdate = [$hash, $usuario['ID_Usuario']];
             $stmtUpdate = sqlsrv_query($conn, $sqlUpdate, $paramsUpdate);
 
