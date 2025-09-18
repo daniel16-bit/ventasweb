@@ -2,7 +2,9 @@
 include '../models/conexion.php'; // conexión con Azure SQL
 session_start();
 
-// Consulta ventas
+// =========================
+// CONSULTA VENTAS
+// =========================
 $sql = "SELECT 
             V.ID_Venta,
             V.Fecha,
@@ -23,7 +25,6 @@ $sql = "SELECT
         INNER JOIN colfar.PRODUCTO P ON V.ID_Producto = P.ID_Producto";
 
 $stmt = sqlsrv_query($conn, $sql);
-
 $ventas = [];
 if ($stmt === false) {
     die(print_r(sqlsrv_errors(), true));
@@ -33,6 +34,26 @@ if ($stmt === false) {
     }
 }
 
+// =========================
+// CONSULTAS PARA EL MODAL
+// =========================
+function getOptions($conn, $tabla, $id, $nombre) {
+    $options = "";
+    $sql = "SELECT $id, $nombre FROM colfar.$tabla";
+    $stmt = sqlsrv_query($conn, $sql);
+    if ($stmt !== false) {
+        while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
+            $options .= "<option value='" . $row[$id] . "'>" . htmlspecialchars($row[$nombre]) . "</option>";
+        }
+    }
+    return $options;
+}
+
+$clientes = getOptions($conn, "CLIENTE", "ID_Cliente", "Nombre");
+$vendedores = getOptions($conn, "VENDEDOR", "ID_Vendedor", "ID_Vendedor"); // Cambia si necesitas mostrar nombre de usuario
+$zonas = getOptions($conn, "ZONA", "ID_Zona", "NombreZona");
+$departamentos = getOptions($conn, "DEPARTAMENTO", "ID_Departamento", "Nombre");
+$productos = getOptions($conn, "PRODUCTO", "ID_Producto", "Nombre");
 ?>
 
 <!DOCTYPE html>
@@ -128,7 +149,74 @@ if ($stmt === false) {
                 </button>
                 <a href="Reportes/ventas_pdf.php" class="btn btn-primary mb-3">Generar Reporte</a>
 
-                <!-- Aquí iría tu modal para registrar venta -->
+                <!-- =========================
+                     MODAL REGISTRAR VENTA
+                ========================== -->
+                <div class="modal fade" id="miModal" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <form action="controllers/registrar_venta.php" method="POST">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Registrar Nueva Venta</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+                                <div class="modal-body row g-3">
+                                    <div class="col-md-6">
+                                        <label class="form-label">Cliente</label>
+                                        <select class="form-control" name="id_cliente" required>
+                                            <option value="">Seleccione...</option>
+                                            <?= $clientes ?>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Vendedor</label>
+                                        <select class="form-control" name="id_vendedor" required>
+                                            <option value="">Seleccione...</option>
+                                            <?= $vendedores ?>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Zona</label>
+                                        <select class="form-control" name="id_zona" required>
+                                            <option value="">Seleccione...</option>
+                                            <?= $zonas ?>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Departamento</label>
+                                        <select class="form-control" name="id_departamento" required>
+                                            <option value="">Seleccione...</option>
+                                            <?= $departamentos ?>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Producto</label>
+                                        <select class="form-control" name="id_producto" required>
+                                            <option value="">Seleccione...</option>
+                                            <?= $productos ?>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Fecha</label>
+                                        <input type="date" class="form-control" name="fecha" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Descuento</label>
+                                        <input type="number" class="form-control" name="descuento" value="0">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Total</label>
+                                        <input type="number" class="form-control" name="total" required>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-success">Registrar</button>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
 
                 <!-- Tabla Ventas -->
                 <div class="card mb-4">
@@ -227,3 +315,4 @@ if ($stmt === false) {
     </script>
 </body>
 </html>
+

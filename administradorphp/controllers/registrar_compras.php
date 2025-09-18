@@ -1,42 +1,44 @@
 <?php
-// Incluir la conexión a la base de datos (PDO con Azure SQL)
+// Incluye el archivo de conexión que usa la extensión sqlsrv
 include '../models/conexion.php';
 
+// Verifica si la solicitud se hizo a través del método POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    try {
-        // Recibir los datos del formulario
-        $fecha        = $_POST['fecha'];
-        $cantidad     = $_POST['cantidad'];
-        $id_producto  = $_POST['id_producto'];
-        $id_proveedor = $_POST['id_proveedor'];
+    // Recibe los datos del formulario de manera segura
+    $fecha        = $_POST['fecha'] ?? null;
+    $cantidad     = $_POST['cantidad'] ?? null;
+    $id_producto  = $_POST['id_producto'] ?? null;
+    $id_proveedor = $_POST['id_proveedor'] ?? null;
 
-        // Validación básica
-        if (empty($fecha) || empty($cantidad) || empty($id_producto) || empty($id_proveedor)) {
-            die("Por favor complete todos los campos.");
-        }
+    // Validación básica para asegurar que todos los campos estén llenos
+    if (empty($fecha) || empty($cantidad) || empty($id_producto) || empty($id_proveedor)) {
+        die("Por favor, complete todos los campos.");
+    }
 
-        // Preparar la consulta con parámetros
-        $sql = "INSERT INTO COMPRA (Fecha, Cantidad, ID_Producto, ID_Proveedor) 
-                VALUES (?, ?, ?, ?)";
+    // Consulta SQL para insertar los datos en la tabla COMPRA
+    // La conexión sqlsrv maneja la seguridad de los parámetros automáticamente
+    $sql = "INSERT INTO colfar.COMPRA (Fecha, Cantidad, ID_Producto, ID_Proveedor) 
+            VALUES (?, ?, ?, ?)";
+    
+    // Prepara el array de parámetros
+    $params = array($fecha, $cantidad, $id_producto, $id_proveedor);
 
-        $stmt = $conexion->prepare($sql);
+    // Ejecuta la consulta
+    $stmt = sqlsrv_query($conn, $sql, $params);
 
-        // Ejecutar con los valores
-        $resultado = $stmt->execute([$fecha, $cantidad, $id_producto, $id_proveedor]);
-
-        if ($resultado) {
-            header("Location: ../Compras.php");
-            exit();
-        } else {
-            echo "Error al registrar la compra.";
-        }
-
-    } catch (PDOException $e) {
-        echo "Error en la base de datos: " . $e->getMessage();
+    // Verifica si la consulta fue exitosa
+    if ($stmt === false) {
+        // Manejo de errores detallado
+        die("Error al ejecutar la consulta: " . print_r(sqlsrv_errors(), true));
+    } else {
+        // Redirecciona a la página de compras si el registro es exitoso
+        header("Location: ../Compras.php");
+        exit();
     }
 } else {
-    // Si no viene por POST, redirigir a Compras
+    // Si la solicitud no es POST, redirecciona para evitar acceso directo al script
     header("Location: ../Compras.php");
     exit();
 }
+?>
 

@@ -2,9 +2,9 @@
 include '../models/conexion.php'; // conexión con Azure SQL
 session_start();
 
-// Verificar sesión
+// Verificar sesión (agrega la lógica de verificación si es necesario)
 
-
+// Consulta para obtener la lista de vendedores con su información de usuario y zona
 $sql = "SELECT 
             VE.ID_Vendedor, 
             U.Prime_Nombre, U.Segundo_Nombre, 
@@ -24,6 +24,41 @@ if ($stmt === false) {
         $vendedores[] = $row;
     }
 }
+
+// Nueva consulta para obtener usuarios que no son vendedores
+$sql_usuarios_elegibles = "SELECT 
+                            U.ID_Usuario, 
+                            U.Prime_Nombre, 
+                            U.Segundo_Nombre, 
+                            U.Prime_Apellido, 
+                            U.Segundo_Apellido
+                         FROM colfar.USUARIO U
+                         LEFT JOIN colfar.VENDEDOR VE ON U.ID_Usuario = VE.ID_Usuario
+                         WHERE VE.ID_Usuario IS NULL";
+
+$stmt_usuarios = sqlsrv_query($conn, $sql_usuarios_elegibles);
+
+$usuarios_elegibles = [];
+if ($stmt_usuarios === false) {
+    die(print_r(sqlsrv_errors(), true));
+} else {
+    while ($row_u = sqlsrv_fetch_array($stmt_usuarios, SQLSRV_FETCH_ASSOC)) {
+        $usuarios_elegibles[] = $row_u;
+    }
+}
+
+// Consulta para obtener las zonas
+$sql_zonas = "SELECT ID_Zona, NombreZona FROM colfar.ZONA";
+$stmt_zonas = sqlsrv_query($conn, $sql_zonas);
+
+$zonas = [];
+if ($stmt_zonas === false) {
+    die(print_r(sqlsrv_errors(), true));
+} else {
+    while ($row_z = sqlsrv_fetch_array($stmt_zonas, SQLSRV_FETCH_ASSOC)) {
+        $zonas[] = $row_z;
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -37,7 +72,6 @@ if ($stmt === false) {
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.css" rel="stylesheet">
 </head>
 <body>
-    <!-- Barra superior -->
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
         <a class="navbar-brand ps-3" href="Dashboard.php">ADMINISTRACIÓN</a>
         <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle"><i class="fas fa-bars"></i></button>
@@ -59,20 +93,17 @@ if ($stmt === false) {
         </ul>
     </nav>
 
-    <!-- Barra lateral -->
     <div id="layoutSidenav">
         <div id="layoutSidenav_nav">
             <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                 <div class="sb-sidenav-menu">
                     <div class="nav">
-                        <!-- Panel -->
                         <div class="sb-sidenav-menu-heading">Panel</div>
                         <a class="nav-link" href="Dashboard.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                             Panel
                         </a>
 
-                        <!-- Registros -->
                         <div class="sb-sidenav-menu-heading">Registros</div>
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseRegistros" aria-expanded="false" aria-controls="collapseRegistros">
                             <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
@@ -80,21 +111,20 @@ if ($stmt === false) {
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
                         <div class="collapse" id="collapseRegistros" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
- <nav class="sb-sidenav-menu-nested nav">
-                        <a class="nav-link" href="Departamentos.php">Departamentos</a>
-                        <a class="nav-link" href="Ciudades.php">Ciudades</a>
-                        <a class="nav-link" href="Zonas.php">Zonas</a>
-                        <a class="nav-link" href="Clientes.php">Clientes</a>
-                        <a class="nav-link" href="Vendedores.php">Vendedores</a>
-                        <a class="nav-link" href="Compras.php">Compras</a>
-                        <a class="nav-link" href="Ventas.php">Ventas</a>
-                        <a class="nav-link" href="Usuarios.php">Usuarios</a>
-                        <a class="nav-link" href="Productos.php">Productos</a>
-                        <a class="nav-link" href="Proveedores.php">Proveedores</a>
-                    </nav>
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link" href="Departamentos.php">Departamentos</a>
+                                <a class="nav-link" href="Ciudades.php">Ciudades</a>
+                                <a class="nav-link" href="Zonas.php">Zonas</a>
+                                <a class="nav-link" href="Clientes.php">Clientes</a>
+                                <a class="nav-link" href="Vendedores.php">Vendedores</a>
+                                <a class="nav-link" href="Compras.php">Compras</a>
+                                <a class="nav-link" href="Ventas.php">Ventas</a>
+                                <a class="nav-link" href="Usuarios.php">Usuarios</a>
+                                <a class="nav-link" href="Productos.php">Productos</a>
+                                <a class="nav-link" href="Proveedores.php">Proveedores</a>
+                            </nav>
                         </div>
 
-                        <!-- Facturas -->
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseFacturas" aria-expanded="false" aria-controls="collapseFacturas">
                             <div class="sb-nav-link-icon"><i class="fas fa-file-invoice"></i></div>
                             Facturas
@@ -111,7 +141,6 @@ if ($stmt === false) {
             </nav>
         </div>
 
-        <!-- Contenido principal -->
         <div id="layoutSidenav_content">
             <main class="container-fluid px-4 mt-4">
                 <h1>VENDEDORES</h1>
@@ -120,11 +149,10 @@ if ($stmt === false) {
                 </button>
                 <a href="Reportes/Vendedores_pdf.php" class="btn btn-primary mb-3">Generar Reporte</a>
 
-                <!-- Modal para Registrar Vendedor -->
                 <div class="modal fade" id="miModal" tabindex="-1" aria-labelledby="miModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
-                            <form action="controllers/registrar_vendedores.php" method="POST">
+                            <form action="controllers/registar_vendedores.php" method="POST">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="miModalLabel">Registrar Vendedor</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
@@ -134,8 +162,10 @@ if ($stmt === false) {
                                         <label for="usuario" class="form-label">Seleccionar Usuario</label>
                                         <select class="form-select" id="usuario" name="usuario" required>
                                             <option value="">-- Seleccionar --</option>
-                                            <?php foreach($usuarios as $u): ?>
-                                                <option value="<?= $u['ID_Usuario'] ?>"><?= htmlspecialchars($u['Prime_Nombre'] . ' ' . $u['Segundo_Nombre'] . ' ' . $u['Prime_Apellido'] . ' ' . $u['Segundo_Apellido']) ?></option>
+                                            <?php foreach($usuarios_elegibles as $u): ?>
+                                                <option value="<?= htmlspecialchars($u['ID_Usuario']) ?>">
+                                                    <?= htmlspecialchars($u['Prime_Nombre'] . ' ' . $u['Segundo_Nombre'] . ' ' . $u['Prime_Apellido'] . ' ' . $u['Segundo_Apellido']) ?>
+                                                </option>
                                             <?php endforeach; ?>
                                         </select>
                                     </div>
@@ -144,7 +174,9 @@ if ($stmt === false) {
                                         <select class="form-select" id="zona" name="zona" required>
                                             <option value="">-- Seleccionar --</option>
                                             <?php foreach($zonas as $z): ?>
-                                                <option value="<?= $z['ID_Zona'] ?>"><?= htmlspecialchars($z['NombreZona']) ?></option>
+                                                <option value="<?= htmlspecialchars($z['ID_Zona']) ?>">
+                                                    <?= htmlspecialchars($z['NombreZona']) ?>
+                                                </option>
                                             <?php endforeach; ?>
                                         </select>
                                     </div>
@@ -158,7 +190,6 @@ if ($stmt === false) {
                     </div>
                 </div>
 
-                <!-- Tabla Vendedores -->
                 <div class="card mb-4">
                     <div class="card-header bg-primary text-white"><i class="fas fa-table me-2"></i> Tabla Vendedores</div>
                     <div class="card-body">
@@ -187,7 +218,6 @@ if ($stmt === false) {
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
-                                
                             </tbody>
                         </table>
                     </div>
@@ -207,7 +237,6 @@ if ($stmt === false) {
         </div>
     </div>
 
-    <!-- Modal Confirmación Eliminar -->
     <div class="modal fade" id="confirmar-delete" tabindex="-1" aria-labelledby="confirmar-delete-label" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -241,4 +270,3 @@ if ($stmt === false) {
     </script>
 </body>
 </html>
-

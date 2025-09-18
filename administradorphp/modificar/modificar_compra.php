@@ -26,8 +26,8 @@ if (!$compra) {
 $sqlProductos = "SELECT ID_Producto, Nombre FROM colfar.PRODUCTO";
 $stmtProductos = sqlsrv_query($conn, $sqlProductos);
 
-// Traer proveedores
-$sqlProveedores = "SELECT ID_Proveedor, Nombe FROM colfar.PROVEEDOR";
+// Traer proveedores (corregido: ahora usa Nombre)
+$sqlProveedores = "SELECT ID_Proveedor, Nombre FROM colfar.PROVEEDOR";
 $stmtProveedores = sqlsrv_query($conn, $sqlProveedores);
 ?>
 <!DOCTYPE html>
@@ -71,24 +71,34 @@ $stmtProveedores = sqlsrv_query($conn, $sqlProveedores);
             </div>
 
             <!-- Select Proveedor -->
-            <div class="mb-3">
-                <label for="id_proveedor" class="form-label">Proveedor</label>
-                <select class="form-select" id="id_proveedor" name="id_proveedor" required>
-                    <?php while ($row = sqlsrv_fetch_array($stmtProveedores, SQLSRV_FETCH_ASSOC)): ?>
-                        <option value="<?php echo $row['ID_Proveedor']; ?>" 
-                            <?php echo ($row['ID_Proveedor'] == $compra['ID_Proveedor']) ? 'selected' : ''; ?>>
-                            <?php echo $row['Nombe']; ?>
-                        </option>
-                    <?php endwhile; ?>
-                </select>
-            </div>
+<!-- Select Proveedor -->
+<div class="mb-3">
+    <label for="id_proveedor" class="form-label">Proveedor</label>
+    <select class="form-control" name="id_proveedor" required>
+        <option value="">Seleccione un proveedor</option>
+        <?php
+        $sqlProveedores = "SELECT ID_Proveedor, Nombe FROM colfar.PROVEEDOR"; 
+        $stmtProveedores = sqlsrv_query($conn, $sqlProveedores);
+
+        if ($stmtProveedores === false) {
+            die(print_r(sqlsrv_errors(), true)); // Muestra error si la consulta falla
+        }
+
+        while ($rowProv = sqlsrv_fetch_array($stmtProveedores, SQLSRV_FETCH_ASSOC)) {
+            $selected = ($rowProv['ID_Proveedor'] == $compra['ID_Proveedor']) ? "selected" : "";
+            echo "<option value='" . $rowProv['ID_Proveedor'] . "' $selected>" . htmlspecialchars($rowProv['Nombe']) . "</option>";
+        }
+        ?>
+    </select>
+</div>
+
 
             <button type="submit" class="btn btn-primary" name="modificar" value="ok">Actualizar</button>
-<a href="../views/Compras.php" class="btn btn-secondary">Cancelar</a>
-
+            <a href="../views/Compras.php" class="btn btn-secondary">Cancelar</a>
         </form>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+
 

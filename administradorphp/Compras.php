@@ -10,13 +10,11 @@ $sql = "SELECT
             c.Fecha,
             c.Cantidad,
             p.Nombre AS Nombre_Producto,
-            u.Prime_Nombre AS Nombre_Vendedor,
-            u.Prime_Apellido AS Apellido_Vendedor
+            pr.Nombe AS Nombre_Proveedor
         FROM colfar.COMPRA c
         JOIN colfar.PRODUCTO p ON c.ID_Producto = p.ID_Producto
-        JOIN colfar.VENTA v ON c.ID_Compra = v.ID_Venta
-        JOIN colfar.VENDEDOR vd ON v.ID_Vendedor = vd.ID_Vendedor
-        JOIN colfar.USUARIO u ON vd.ID_Usuario = u.ID_Usuario";
+        JOIN colfar.PROVEEDOR pr ON c.ID_Proveedor = pr.ID_Proveedor";
+
 
 $stmt = sqlsrv_query($conn, $sql);
 
@@ -143,13 +141,41 @@ if ($stmt === false) {
                                         <input type="number" class="form-control" name="cantidad" required>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="id_producto" class="form-label">ID Producto</label>
-                                        <input type="number" class="form-control" name="id_producto" required>
+                                        <label for="id_producto" class="form-label">Producto</label>
+                                        <select class="form-control" name="id_producto" required>
+                                            <option value="">Seleccione un producto</option>
+                                            <?php
+                                            $sqlProductos = "SELECT ID_Producto, Nombre FROM colfar.PRODUCTO";
+                                            $stmtProductos = sqlsrv_query($conn, $sqlProductos);
+                                            if ($stmtProductos !== false) {
+                                                while ($rowProd = sqlsrv_fetch_array($stmtProductos, SQLSRV_FETCH_ASSOC)) {
+                                                    echo "<option value='".$rowProd['ID_Producto']."'>".htmlspecialchars($rowProd['Nombre'])."</option>";
+                                                }
+                                            }
+                                            ?>
+                                        </select>
                                     </div>
-                                    <div class="mb-3">
-                                        <label for="id_proveedor" class="form-label">ID Proveedor</label>
-                                        <input type="number" class="form-control" name="id_proveedor" required>
-                                    </div>
+
+<div class="mb-3">
+    <label for="id_proveedor" class="form-label">Proveedor</label>
+    <select class="form-control" name="id_proveedor" required>
+        <option value="">Seleccione un proveedor</option>
+        <?php
+        $sqlProveedores = "SELECT ID_Proveedor, Nombe FROM colfar.PROVEEDOR"; 
+        $stmtProveedores = sqlsrv_query($conn, $sqlProveedores);
+
+        if ($stmtProveedores === false) {
+            die(print_r(sqlsrv_errors(), true)); // Muestra error si la consulta falla
+        }
+
+        while ($rowProv = sqlsrv_fetch_array($stmtProveedores, SQLSRV_FETCH_ASSOC)) {
+            echo "<option value='" . $rowProv['ID_Proveedor'] . "'>" . htmlspecialchars($rowProv['Nombe']) . "</option>";
+        }
+        ?>
+    </select>
+</div>
+
+
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
@@ -171,7 +197,7 @@ if ($stmt === false) {
                                     <th>Fecha</th>
                                     <th>Cantidad</th>
                                     <th>Producto</th>
-                                    <th>Vendedor</th>
+                                    <th>Proveedor</th>
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
@@ -184,7 +210,8 @@ if ($stmt === false) {
 
                                             <td><?php echo htmlspecialchars($compra['Cantidad']); ?></td>
                                             <td><?php echo htmlspecialchars($compra['Nombre_Producto']); ?></td>
-                                            <td><?php echo htmlspecialchars($compra['Nombre_Vendedor'] . ' ' . $compra['Apellido_Vendedor']); ?></td>
+                                           <td><?php echo htmlspecialchars($compra['Nombre_Proveedor']); ?></td>
+
                                             <td>
                                                 <a href="modificar/modificar_compra.php?id=<?php echo $compra['ID_Compra']; ?>" title="Editar">
                                                      <i class="fas fa-edit" style="font-size:25px; color:#d63384;"></i>

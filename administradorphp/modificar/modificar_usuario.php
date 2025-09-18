@@ -75,8 +75,8 @@ if (!$usuario) {
             <div class="mb-3">
                 <label for="rol" class="form-label">Rol</label>
                 <select name="rol" class="form-control" required>
-                    <option value="administrador" <?php echo ($usuario['Rol'] === 'administrador') ? 'selected' : ''; ?>>Administrador</option>
-                    <option value="vendedor" <?php echo ($usuario['Rol'] === 'vendedor') ? 'selected' : ''; ?>>Vendedor</option>
+                    <option value="administrador" <?php echo ($usuario['rol'] === 'administrador') ? 'selected' : ''; ?>>Administrador</option>
+                    <option value="vendedor" <?php echo ($usuario['rol'] === 'vendedor') ? 'selected' : ''; ?>>Vendedor</option>
                 </select>
             </div>
 
