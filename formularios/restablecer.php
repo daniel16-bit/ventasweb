@@ -4,33 +4,24 @@ include '../models/conexion.php'; // Conexión SQL Server
 if (isset($_GET['token'])) {
     $token = $_GET['token'];
 
-    // Verificar el token y fecha de expiración
+    // Verificar token
     $sql = "SELECT ID_Usuario, expira_token FROM colfar.USUARIO WHERE token_recuperacion = ?";
     $params = [$token];
     $stmt = sqlsrv_query($conn, $sql, $params);
 
-    if ($stmt === false) {
-        die(print_r(sqlsrv_errors(), true));
-    }
+    if ($stmt === false) die(print_r(sqlsrv_errors(), true));
 
     $usuario = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC);
 
     if ($usuario) {
-        // Convertir fecha a DateTime
         $expira = $usuario['expira_token'];
-        if ($expira instanceof DateTime) {
-            $expiraDateTime = $expira;
-        } else {
-            $expiraDateTime = new DateTime($expira);
-        }
-
+        $expiraDateTime = ($expira instanceof DateTime) ? $expira : new DateTime($expira);
         $ahora = new DateTime();
 
         if ($ahora > $expiraDateTime) {
-            die("El enlace ha expirado.");
+            die('<div class="alert alert-danger text-center mt-5">El enlace ha expirado.</div>');
         }
 
-        // Si se envió el formulario
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nueva_contrasena'])) {
             $nueva_contra = trim($_POST['nueva_contrasena']);
             $hash = password_hash($nueva_contra, PASSWORD_DEFAULT);
@@ -39,14 +30,17 @@ if (isset($_GET['token'])) {
             $paramsUpdate = [$hash, $usuario['ID_Usuario']];
             $stmtUpdate = sqlsrv_query($conn, $sqlUpdate, $paramsUpdate);
 
-            if ($stmtUpdate === false) {
-                die(print_r(sqlsrv_errors(), true));
-            }
+            if ($stmtUpdate === false) die(print_r(sqlsrv_errors(), true));
 
-            echo "¡Contraseña restablecida correctamente!";
+            echo '<div class="alert alert-success text-center mt-5">
+                    ¡Contraseña restablecida correctamente!<br>
+                    Redirigiendo al login...
+                  </div>';
+            echo '<meta http-equiv="refresh" content="3;url=../index.php">';
             exit;
         }
 
+        // Formulario HTML
         ?>
         <!DOCTYPE html>
         <html lang="es">
@@ -56,21 +50,31 @@ if (isset($_GET['token'])) {
             <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
         </head>
         <body class="container mt-5">
-            <h2>Ingresa tu nueva contraseña</h2>
-            <form method="POST">
-                <div class="mb-3">
-                    <input type="password" name="nueva_contrasena" class="form-control" placeholder="Nueva contraseña" required>
+            <div class="row justify-content-center">
+                <div class="col-md-5">
+                    <div class="card shadow">
+                        <div class="card-body">
+                            <h3 class="card-title text-center mb-4">Restablecer Contraseña</h3>
+                            <form method="POST">
+                                <div class="mb-3">
+                                    <input type="password" name="nueva_contrasena" class="form-control" placeholder="Nueva contraseña" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100">Restablecer</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
-                <button type="submit" class="btn btn-primary">Restablecer</button>
-            </form>
+            </div>
         </body>
         </html>
         <?php
     } else {
-        echo "El enlace es inválido.";
+        echo '<div class="alert alert-danger text-center mt-5">El enlace es inválido.</div>';
     }
+
 } else {
-    echo "Token no válido.";
+    echo '<div class="alert alert-danger text-center mt-5">Token no válido.</div>';
 }
 ?>
+
 
