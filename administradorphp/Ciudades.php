@@ -175,12 +175,19 @@ if ($stmt === false) {
                                     <td><?php echo htmlspecialchars($ciudad['Pais']); ?></td>
                                     <td><?php echo htmlspecialchars($ciudad['Codigo_postal']); ?></td>
                                     <td>
-                                        <a href="modificar/modificar_ciudad.php?id=<?php echo $ciudad['ID_Ciudad']; ?>" class="btn btn-primary btn-sm me-1" title="Editar"><i class="fas fa-edit"></i>
-                                                </a>
-                                        <a href="controllers/eliminar_ciudad.php?id=<?php echo $ciudad['ID_Ciudad']; ?>"  class="btn btn-danger btn-sm"
-                                                   onclick="return confirm('¿Estás seguro de eliminar esta ciudad?')"
-                                                   title="Eliminar">
-                                                   <i class="fas fa-trash-alt"></i>
+                                        <a href="modificar/modificar_ciudad.php?id=<?php echo $ciudad['ID_Ciudad']; ?>" class="btn btn-primary btn-sm me-1" title="Editar"><i class="fas fa-edit"></i></a>
+
+                                         <a href="#" 
+   data-href="controllers/eliminar_ciudad.php?id=<?= $ciudad['ID_Ciudad'] ?>" 
+   data-bs-toggle="modal" 
+   data-bs-target="#confirmar-delete" 
+   class="btn btn-danger btn-sm" 
+   title="Eliminar">
+   <i class="fas fa-trash-alt"></i>
+</a>
+
+
+                                        </td>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -192,10 +199,55 @@ if ($stmt === false) {
     </div>
 </div>
 
+    <!-- Modal Eliminar -->
+    <div class="modal fade" id="confirmar-delete" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5>Confirmar eliminación</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+               <div class="modal-body">¿Seguro que deseas eliminar esta ciudad?</div>
+
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <a href="#" id="btn-eliminar" class="btn btn-danger">Eliminar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
 <!-- Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/simple-datatables.js"></script>
 <script src="js/scripts.js"></script>
+<!-- Script: ponlo después de cargar bootstrap.js (al final del body) -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var confirmarModal = document.getElementById('confirmar-delete');
+  if (!confirmarModal) return;
+
+  confirmarModal.addEventListener('show.bs.modal', function (event) {
+    // button que disparó el modal
+    var trigger = event.relatedTarget;
+    console.log('trigger:', trigger);
+    if (!trigger) return;
+
+    // obtener enlace desde data-href
+    var url = trigger.getAttribute('data-href') || trigger.dataset.href;
+    console.log('data-href encontrado:', url);
+
+    // asignar al botón del modal
+    var btnEliminar = confirmarModal.querySelector('#btn-eliminar');
+    if (btnEliminar) {
+      btnEliminar.setAttribute('href', url);
+      console.log('btn-eliminar href seteado a:', btnEliminar.getAttribute('href'));
+    }
+  });
+});
+</script>
+
 </body>
 </html>
