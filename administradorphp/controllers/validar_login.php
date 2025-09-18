@@ -37,8 +37,8 @@ if (isset($_POST['user']) && isset($_POST['password'])) {
     if (sqlsrv_has_rows($stmt)) {
         $row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC);
 
-        // ⚠️ Si la contraseña está hasheada, usa password_verify
-        if ($row['Contrasena'] === $password) {
+        // ✅ Verificar contraseña con hash
+        if (password_verify($password, $row['Contrasena'])) {
             $_SESSION['ID_Usuario'] = $row['ID_Usuario'];
             $_SESSION['Prime_Nombre'] = $row['Prime_Nombre'];
             $_SESSION['Prime_Apellido'] = $row['Prime_Apellido'];
@@ -66,6 +66,9 @@ if (isset($_POST['user']) && isset($_POST['password'])) {
     }
 
     sqlsrv_free_stmt($stmt);
+}
+?>
+
 }
 ?>
 
