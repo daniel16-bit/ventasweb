@@ -18,12 +18,12 @@ if (isset($_POST['user']) && isset($_POST['password'])) {
         header('location: ../../formularios/formulario.php?error=Usuario Requerido');
         exit();
     } elseif (empty($password)) {
-        header('location: ../../formularios/formulario.php?error=Contraseña Requerida');
+        header('location: ../../formularios/formulario.php?error=Contrasena Requerida');
         exit();
     }
 
     // ⚡ Consulta SQL para SQL Server
-    $sql = "SELECT ID_Usuario, Prime_Nombre, Segundo_Nombre, Prime_Apellido, Segundo_Apellido, [Contraseña], Correo, rol
+    $sql = "SELECT ID_Usuario, Prime_Nombre, Segundo_Nombre, Prime_Apellido, Segundo_Apellido, [Contrasena], Correo, rol
             FROM colfar.usuario
             WHERE Correo = ? OR Telefono = ?";
 
@@ -38,7 +38,7 @@ if (isset($_POST['user']) && isset($_POST['password'])) {
         $row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC);
 
         // ⚠️ Si la contraseña está hasheada, usa password_verify
-        if ($row['Contraseña'] === $password) {
+        if ($row['Contrasena'] === $password) {
             $_SESSION['ID_Usuario'] = $row['ID_Usuario'];
             $_SESSION['Prime_Nombre'] = $row['Prime_Nombre'];
             $_SESSION['Prime_Apellido'] = $row['Prime_Apellido'];
