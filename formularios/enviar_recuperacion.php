@@ -37,11 +37,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Enviar correo
         $mail = new PHPMailer(true);
         try {
-            $mail->isSMTP();
+                        $mail->isSMTP();
             $mail->Host       = 'smtp.gmail.com';
             $mail->SMTPAuth   = true;
-            $mail->Username   = 'tu_correo@gmail.com'; // Cambiar
-            $mail->Password   = 'tu_password_app';     // Cambiar
+            $mail->Username   = 'camargocamargodaniel0@gmail.com';
+            $mail->Password   = 'pzwq prdw volx iobo'; // usar app password
             $mail->SMTPSecure = 'tls';
             $mail->Port       = 587;
 
