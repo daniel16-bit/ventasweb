@@ -53,7 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $mail->Body    = "
                 <h1>Solicitud de restablecimiento de contraseña</h1>
                 <p>Haz clic en el siguiente enlace para restablecer tu contraseña:</p>
-                <a href='https://colfar-hda8gyhpbzf0cnhf.canadacentral-01.azurewebsites.net/restablecer.php?token=$token'>Restablecer contraseña</a>
+                <a href='https://colfar-hda8gyhpbzf0cnhf.canadacentral-01.azurewebsites.net/formularios/restablecer.php?token=$token'>Restablecer contraseña</a>
                 <p>Este enlace expirará en 1 hora.</p>
             ";
 
