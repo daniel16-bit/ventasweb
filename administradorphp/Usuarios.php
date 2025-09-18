@@ -4,7 +4,7 @@ session_start();
 
 
 
-$sql = "SELECT ID_Usuario, Prime_Nombre, Segundo_Nombre, Prime_Apellido, Segundo_Apellido, Telefono, Correo, rol FROM colfar.USUARIO";
+$sql = "SELECT ID_Usuario, Prime_Nombre, Segundo_Nombre, Prime_Apellido, Segundo_Apellido, Telefono, Correo, rol, Contrasena FROM colfar.USUARIO";
     
 
 $stmt = sqlsrv_query($conn, $sql);
@@ -114,30 +114,34 @@ if ($stmt === false) {
                                         <th>Teléfono</th>
                                         <th>Correo</th>
                                         <th>Rol</th>
+                                        <th>Contraseña</th>
                                         <th>Acciones</th>
+                                        
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php if (!empty($usuarios)): ?>
                                         <?php foreach ($usuarios as $usuario): ?>
-                                            <tr>
-                                                <td><?php echo htmlspecialchars($usuario['ID_Usuario']); ?></td>
-                                                <td><?php echo htmlspecialchars($usuario['Prime_Nombre']); ?></td>
-                                                <td><?php echo htmlspecialchars($usuario['Segundo_Nombre']); ?></td>
-                                                <td><?php echo htmlspecialchars($usuario['Prime_Apellido']); ?></td>
-                                                <td><?php echo htmlspecialchars($usuario['Segundo_Apellido']); ?></td>
-                                                <td><?php echo htmlspecialchars($usuario['Telefono']); ?></td>
-                                                <td><?php echo htmlspecialchars($usuario['Correo']); ?></td>
-                                                <td><?php echo htmlspecialchars($usuario['rol']); ?></td>
-                                                <td>
-                                                    <a href="./modificar/modificar_usuario.php?id=<?php echo $usuario['ID_Usuario']; ?>" class="btn btn-warning btn-sm" title="Editar">
-                                                        <i class='fas fa-edit'></i>
-                                                    </a>
-                                                    <a href="#" data-href="controllers/eliminar_usuario.php?id=<?php echo $usuario['ID_Usuario']; ?>" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#confirmar-delete" title="Eliminar">
-                                                        <i class="fas fa-trash-alt"></i>
-                                                    </a>
-                                                </td>
-                                            </tr>
+<tr>
+    <td><?php echo htmlspecialchars($usuario['ID_Usuario']); ?></td>
+    <td><?php echo htmlspecialchars($usuario['Prime_Nombre']); ?></td>
+    <td><?php echo htmlspecialchars($usuario['Segundo_Nombre']); ?></td>
+    <td><?php echo htmlspecialchars($usuario['Prime_Apellido']); ?></td>
+    <td><?php echo htmlspecialchars($usuario['Segundo_Apellido']); ?></td>
+    <td><?php echo htmlspecialchars($usuario['Telefono']); ?></td>
+    <td><?php echo htmlspecialchars($usuario['Correo']); ?></td>
+    <td><?php echo htmlspecialchars($usuario['rol']); ?></td>
+    <td><?php echo htmlspecialchars($usuario['Contrasena']); ?></td>
+    <td>
+        <a href="./modificar/modificar_usuario.php?id=<?php echo $usuario['ID_Usuario']; ?>" class="btn btn-warning btn-sm" title="Editar">
+            <i class='fas fa-edit'></i>
+        </a>
+        <a href="#" data-href="controllers/eliminar_usuario.php?id=<?php echo $usuario['ID_Usuario']; ?>" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#confirmar-delete" title="Eliminar">
+            <i class="fas fa-trash-alt"></i>
+        </a>
+    </td>
+</tr>
+
                                         <?php endforeach; ?>
                                     <?php else: ?>
                                         <tr>
