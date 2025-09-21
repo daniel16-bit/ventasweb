@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             Segundo_Apellido = ?, 
             Telefono = ?, 
             Correo = ?, 
-            Contraseña = ?, 
+            Contrasena = ?, 
             Rol = ?
         WHERE ID_Usuario = ?";
 

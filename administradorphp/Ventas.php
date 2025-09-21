@@ -253,13 +253,10 @@ $productos = getOptions($conn, "PRODUCTO", "ID_Producto", "Nombre");
                                         <td><?= htmlspecialchars($venta['Nombre_Producto']) ?></td>
                                         <td>
                                             <!-- Editar -->
-                                            <a href="modificar/modificar_venta.php?id=<?= $venta['ID_Venta'] ?>" title="Editar">
-                                                <i class="fas fa-edit" style="font-size:22px; color:#d63384;"></i>
+                                            <a href="modificar/modificar_venta.php?id=<?= $venta['ID_Venta'] ?>" class="btn btn-primary btn-sm me-1" title="Editar"><i class="fas fa-edit"></i>
                                             </a>
                                             <!-- Eliminar -->
-                                            <a href="#" data-id="<?= $venta['ID_Venta'] ?>" data-bs-toggle="modal" data-bs-target="#confirmar-delete" title="Eliminar">
-                                                <i class="fas fa-trash-alt" style="font-size:25px; color:rgb(255,70,70)"></i>
-                                            </a>
+                                            <a href="#" data-href="controllers/eliminar_venta.php?id=<?= $venta['ID_Venta'] ?>" data-bs-toggle="modal" data-bs-target="#confirmar-delete" class="btn btn-danger btn-sm" title="Eliminar"><i class="fas fa-trash-alt"></i></a>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
@@ -283,7 +280,7 @@ $productos = getOptions($conn, "PRODUCTO", "ID_Producto", "Nombre");
     </div>
 
     <!-- Modal Confirmar Eliminación -->
-    <div class="modal fade" id="confirmar-delete" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="confirmar-delete" tabindex="-1" aria-labelledby="confirmar-delete-label" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -307,11 +304,12 @@ $productos = getOptions($conn, "PRODUCTO", "ID_Producto", "Nombre");
 
         // Modal de eliminación
         var eliminarModal = document.getElementById('confirmar-delete');
-        eliminarModal.addEventListener('show.bs.modal', function (event) {
-            var button = event.relatedTarget;
-            var idVenta = button.getAttribute('data-id');
-            document.getElementById('btn-eliminar').setAttribute('href', 'controllers/eliminar_venta.php?id=' + idVenta);
-        });
+eliminarModal.addEventListener('show.bs.modal', function (event) {
+    var button = event.relatedTarget;
+    var href = button.getAttribute('data-href');
+    document.getElementById('btn-eliminar').setAttribute('href', href);
+});
+
     </script>
 </body>
 </html>

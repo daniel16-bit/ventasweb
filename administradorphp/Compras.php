@@ -215,11 +215,8 @@ if ($stmt === false) {
                                            <td><?php echo htmlspecialchars($compra['Nombre_Proveedor']); ?></td>
 
                                             <td>
-                                                <a href="modificar/modificar_compra.php?id=<?php echo $compra['ID_Compra']; ?>" title="Editar">
-                                                     <i class="fas fa-edit" style="font-size:25px; color:#d63384;"></i>
-                                                </a>
-                                                <a href="#" data-href="controllers/eliminar_compra.php?id=<?php echo $compra['ID_Compra']; ?>" data-bs-toggle="modal" data-bs-target="#confirmar-delete" title="Eliminar">
-                                                    <i class="fas fa-trash-alt" style="font-size:25px; color:rgb(255,70,70)"></i>
+                                                <a href="modificar/modificar_compra.php?id=<?php echo $compra['ID_Compra']; ?>" class="btn btn-primary btn-sm me-1" title="Editar"><i class="fas fa-edit"></i></a>
+                                                <a href="#" data-href="controllers/eliminar_compra.php?id=<?= $compra['ID_Compra'] ?>" data-bs-toggle="modal" data-bs-target="#confirmar-delete" class="btn btn-danger btn-sm" title="Eliminar"><i class="fas fa-trash-alt"></i></a>
                                                 </a>
                                             </td>
                                         </tr>

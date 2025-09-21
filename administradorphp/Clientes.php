@@ -2,11 +2,7 @@
 include '../models/conexion.php'; // conexión con Azure SQL
 session_start();
 
-// Verificar sesión
-if (!isset($_SESSION['Prime_Nombre'])) {
-    header("Location: ../index.php");
-    exit();
-}
+
 
 $sql = "SELECT * FROM colfar.CLIENTE";
 
@@ -134,9 +130,7 @@ if ($stmt === false) {
 
             <!-- Tabla Clientes -->
             <div class="card shadow-sm rounded">
-                <div class="card-header bg-primary text-white">
-                    <i class="fas fa-table me-2"></i> Tabla de Clientes
-                </div>
+                <div class="card-header bg-primary text-white"><i class="fas fa-table me-2"></i> Tabla de Clientes</div>
                 <div class="card-body p-0">
                     <table id="datatablesSimple" class="table table-striped table-hover table-bordered mb-0 text-center align-middle">
                         <thead class="table-dark">
@@ -150,23 +144,23 @@ if ($stmt === false) {
                             </tr>
                         </thead>
                         <tbody>
-                        <?php if (count($clientes) > 0): ?>
-                            <?php foreach ($clientes as $cliente): ?>
-                                <tr>
-                                    <td><?= $cliente['ID_Cliente']; ?></td>
-                                    <td><?= htmlspecialchars($cliente['Tipo']); ?></td>
-                                    <td><?= htmlspecialchars($cliente['Nombre']); ?></td>
-                                    <td><?= htmlspecialchars($cliente['Telefono']); ?></td>
-                                    <td><?= htmlspecialchars($cliente['Direccion']); ?></td>
-                                    <td>
-                                        <a href="./modificar/modificar_cliente.php?id=<?= $cliente['ID_Cliente']; ?>" class="text-primary me-3" data-bs-toggle="tooltip" title="Editar"><i class="fas fa-edit fs-5"></i></a>
-                                        <a href="#" class="text-danger" data-href="controllers/eliminar_cliente.php?id=<?= $cliente['ID_Cliente']; ?>" data-bs-toggle="modal" data-bs-target="#confirmar-delete" title="Eliminar"><i class="fas fa-trash-alt fs-5"></i></a>
-                                    </td>
-                                </tr>
-                            <?php endforeach; ?>
-                        <?php else: ?>
-                            <tr><td colspan="6" class="text-center">No hay clientes registrados.</td></tr>
-                        <?php endif; ?>
+                            <?php if (count($clientes) > 0): ?>
+                                <?php foreach ($clientes as $cliente): ?>
+                                    <tr>
+                                        <td><?= $cliente['ID_Cliente']; ?></td>
+                                        <td><?= htmlspecialchars($cliente['Tipo']); ?></td>
+                                        <td><?= htmlspecialchars($cliente['Nombre']); ?></td>
+                                        <td><?= htmlspecialchars($cliente['Telefono']); ?></td>
+                                        <td><?= htmlspecialchars($cliente['Direccion']); ?></td>
+                                        <td>
+                                            <a href="./modificar/modificar_cliente.php?id=<?= $cliente['ID_Cliente']; ?>"class="btn btn-primary btn-sm me-1" title="Editar"><i class="fas fa-edit"></i></a>
+                                            <a href="#" data-href="controllers/eliminar_cliente.php?id=<?= $cliente['ID_Cliente'] ?>" data-bs-toggle="modal" data-bs-target="#confirmar-delete" class="btn btn-danger btn-sm" title="Eliminar"><i class="fas fa-trash-alt"></i></a>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <tr><td colspan="6" class="text-center">No hay clientes registrados.</td></tr>
+                            <?php endif; ?>
                         </tbody>
                     </table>
                 </div>

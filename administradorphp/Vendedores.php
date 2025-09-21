@@ -209,11 +209,10 @@ if ($stmt_zonas === false) {
                                         <td><?= htmlspecialchars($v['Prime_Nombre'] . ' ' . $v['Segundo_Nombre'] . ' ' . $v['Prime_Apellido'] . ' ' . $v['Segundo_Apellido']) ?></td>
                                         <td><?= htmlspecialchars($v['NombreZona']) ?></td>
                                         <td>
-                                            <a href="./modificar/modificar_vendedores.php?id=<?= $v['ID_Vendedor'] ?>" title="Editar">
-                                                <i class="fas fa-edit" style="font-size:25px; color:#d63384;"></i>
+                                            <a href="./modificar/modificar_vendedores.php?id=<?= $v['ID_Vendedor'] ?>" class="btn btn-primary btn-sm me-1" title="Editar"><i class="fas fa-edit"></i></a>
                                             </a>
-                                            <a href="#" data-href="controllers/eliminar_vendedor.php?id=<?= $v['ID_Vendedor'] ?>" data-bs-toggle="modal" data-bs-target="#confirmar-delete" title="Eliminar">
-                                                <i class="fas fa-trash-alt" style="font-size:25px; color:rgb(255,70,70)"></i>
+                                                <a href="#" data-href="controllers/eliminar_vendedor.php?id=<?= $v['ID_Vendedor']?>" data-bs-toggle="modal" data-bs-target="#confirmar-delete" class="btn btn-danger btn-sm" title="Eliminar"><i class="fas fa-trash-alt"></i></a>
+                                                </a>
                                             </a>
                                         </td>
                                     </tr>

@@ -121,13 +121,7 @@ if ($stmt === false) {
                                         <td><?= htmlspecialchars($dep['Nombre']) ?></td>
                                         <td>
                                             <a href="modificar/modificar_departamento.php?id=<?= $dep['ID_Departamento'] ?>" class="btn btn-primary btn-sm me-1" title="Editar"><i class="fas fa-edit"></i></a>
-<a href="#" 
-   data-href="controllers/eliminar_departamentos.php?id=<?= $dep['ID_Departamento'] ?>" 
-   data-bs-toggle="modal" 
-   data-bs-target="#confirmar-delete" 
-   class="btn btn-danger btn-sm" 
-   title="Eliminar">
-   <i class="fas fa-trash-alt"></i>
+<a href="#" data-href="controllers/eliminar_departamentos.php?id=<?= $de['ID_Departamento'] ?>" data-bs-toggle="modal" data-bs-target="#confirmar-delete" class="btn btn-danger btn-sm" title="Eliminar"><i class="fas fa-trash-alt"></i>
 </a>
 
                                         </td>

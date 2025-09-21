@@ -158,12 +158,12 @@ sqlsrv_free_stmt($stmt);
                                             <td><?php echo $provedor['Telefono']; ?></td>
                                             
                                             <td>
-                                                <a href="./modificar/modificar_proveedor.php?id=<?php echo $provedor['ID_Proveedor']; ?>">
-                                                    <i class="fas fa-edit" style="font-size:20px; color: #0d6efd;"></i>
+                                                <a href="./modificar/modificar_proveedor.php?id=<?php echo $provedor['ID_Proveedor']; ?>"
+                                                   class="btn btn-primary btn-sm me-1" title="Editar"><i class="fas fa-edit"></i>
                                                 </a>
-                                                <a href="controllers/eliminar_proveedor.php?id=<?php echo $provedor['ID_Proveedor']; ?>" 
-                                                   data-bs-toggle="modal" data-bs-target="#confirmar-delete">
-                                                    <i class="fas fa-trash-alt" style="font-size:20px; color:red"></i>
+
+
+                                                 <a href="controllers/eliminar_proveedor.php?id=<?php echo $provedor['ID_Proveedor']; ?>" data-bs-toggle="modal" data-bs-target="#confirmar-delete" class="btn btn-danger btn-sm" title="Eliminar"><i class="fas fa-trash-alt"></i></a>
                                                 </a>
                                             </td>  
                                         </tr>
