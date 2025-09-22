@@ -67,10 +67,9 @@ if (!$usuario) {
             </div>
 
             <div class="mb-3">
-    <label for="contraseña" class="form-label">Contraseña</label>
-    <input type="password" class="form-control" id="contraseña" name="contraseña" placeholder="Ingrese nueva contraseña (opcional)">
-</div>
-    
+                <label for="contraseña" class="form-label">Contraseña</label>
+                <input type="password" class="form-control" id="contraseña" name="contraseña" value="<?php echo $usuario['Contrasena']; ?>" required>
+            </div>
 
             <div class="mb-3">
                 <label for="rol" class="form-label">Rol</label>
