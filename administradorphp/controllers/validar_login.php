@@ -24,7 +24,7 @@ if (isset($_POST['user']) && isset($_POST['password'])) {
 
     // Consulta preparada
     $sql = "SELECT ID_Usuario, Prime_Nombre, Segundo_Nombre, Prime_Apellido, Segundo_Apellido, Contraseña, Correo, rol 
-            FROM USUARIO 
+            FROM colfar.USUARIO 
             WHERE Correo = ? OR Telefono = ?";
 
     $params = array($usuario, $usuario);

@@ -132,6 +132,7 @@ if ($stmt === false) {
     <td><?php echo htmlspecialchars($usuario['Correo']); ?></td>
     <td><?php echo htmlspecialchars($usuario['rol']); ?></td>
     <td><?php echo htmlspecialchars($usuario['Contrasena']); ?></td>
+ 
     <td>
         <a href="./modificar/modificar_usuario.php?id=<?php echo $usuario['ID_Usuario']; ?>"  class="btn btn-primary btn-sm me-1" title="Editar"><i class="fas fa-edit"></i>
         </a>

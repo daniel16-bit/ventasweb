@@ -24,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($usuario) {
         // Generar token
         $token = bin2hex(random_bytes(32));
-        $expira = date("Y-m-d H:i:s", strtotime("+1 hour"));
+        $expira = new DateTime('+1 hour');
 
         // Guardar token y fecha en DB
         $sqlUpdate = "UPDATE colfar.USUARIO SET token_recuperacion = ?, expira_token = ? WHERE ID_Usuario = ?";
