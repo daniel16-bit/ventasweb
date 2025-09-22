@@ -68,7 +68,3 @@ if (isset($_POST['user']) && isset($_POST['password'])) {
     sqlsrv_free_stmt($stmt);
 }
 ?>
-
-}
-?>
-
