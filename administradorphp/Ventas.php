@@ -1,10 +1,7 @@
 <?php 
 include '../models/conexion.php'; // conexión con Azure SQL
 session_start();
-
-// =========================
 // CONSULTA VENTAS
-// =========================
 $sql = "SELECT 
             V.ID_Venta,
             V.Fecha,
@@ -34,9 +31,7 @@ if ($stmt === false) {
     }
 }
 
-// =========================
 // CONSULTAS PARA EL MODAL
-// =========================
 function getOptions($conn, $tabla, $id, $nombre) {
     $options = "";
     $sql = "SELECT $id, $nombre FROM colfar.$tabla";
@@ -80,24 +75,20 @@ $productos = getOptions($conn, "PRODUCTO", "ID_Producto", "Nombre");
 
     <!-- Barra lateral -->
     <div id="layoutSidenav">
-        <div id="layoutSidenav_nav">
-            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
-                <div class="sb-sidenav-menu">
-                    <div class="nav">
-                        <!-- Panel -->
-                        <div class="sb-sidenav-menu-heading">Panel</div>
-                        <a class="nav-link" href="Dashboard.php">
-                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                            Panel
-                        </a>
+        <div id="layoutSidenav_nav">    <!-- Barra lateral -->
+        <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+            <div class="sb-sidenav-menu">
+                <div class="nav">
+                    <div class="sb-sidenav-menu-heading">Panel</div><!-- Panel -->
+                    <a class="nav-link" href="Dashboard.php"><div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>Panel</a>
 
-                        <!-- Registros -->
-                        <div class="sb-sidenav-menu-heading">Registros</div>
-                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseRegistros" aria-expanded="false" aria-controls="collapseRegistros">
-                            <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                            Registros
-                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                        </a>
+                    <!-- Registros -->
+                    <div class="sb-sidenav-menu-heading">Registros</div>
+                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseRegistros" aria-expanded="false" aria-controls="collapseRegistros">
+                        <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                        Registros<div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    </a>
+                    <div class="collapse" id="collapseRegistros" data-bs-parent="#sidenavAccordion">
                         <nav class="sb-sidenav-menu-nested nav">
                             <a class="nav-link" href="Departamentos.php">Departamentos</a>
                             <a class="nav-link" href="Ciudades.php">Ciudades</a>
@@ -110,35 +101,30 @@ $productos = getOptions($conn, "PRODUCTO", "ID_Producto", "Nombre");
                             <a class="nav-link" href="Productos.php">Productos</a>
                             <a class="nav-link" href="Proveedores.php">Proveedores</a>
                         </nav>
+                    </div>
 
-                        <!-- Facturas -->
-                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseFacturas" aria-expanded="false" aria-controls="collapseFacturas">
-                            <div class="sb-nav-link-icon"><i class="fas fa-file-invoice"></i></div>
-                            Facturas
-                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                        </a>
-                        <div class="collapse" id="collapseFacturas" data-bs-parent="#sidenavAccordion">
-                            <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" href="FacturasEmitidas.php">Emitidas</a>
-                                <a class="nav-link" href="FacturasRecibidas.php">Recibidas</a>
-                            </nav>
-                        </div>
-
-                        <!-- Reportes -->
+                     <!-- Facturas -->*
+                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseFacturas" aria-expanded="false" aria-controls="collapseFacturas">
+                        <div class="sb-nav-link-icon"><i class="fas fa-file-invoice"></i></div>
+                        Facturas
+                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    </a>
+                    <div class="collapse" id="collapseFacturas" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+                        <nav class="sb-sidenav-menu-nested nav">
+                            <a class="nav-link" href="FacturasEmitidas.php">Emitidas</a>
+                            <a class="nav-link" href="FacturasRecibidas.php">Recibidas</a>
+                        </nav>
+                    </div>
+                    <!-- Reportes -->
                         <div class="sb-sidenav-menu-heading">Reportes</div>
                         <a class="nav-link" href="Reportes.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-chart-line"></i></div>
                             Reportes
                         </a>
-                    </div>
                 </div>
+            </div>
 
-                <div class="sb-sidenav-footer">
-                    <div class="small">Conectado como:</div>
-                    <?= htmlspecialchars($_SESSION['Prime_Nombre']) ?>
-                </div>
-            </nav>
-        </div>
+    </div>
 
         <!-- Contenido principal -->
         <div id="layoutSidenav_content">
@@ -149,9 +135,7 @@ $productos = getOptions($conn, "PRODUCTO", "ID_Producto", "Nombre");
                 </button>
                 <a href="Reportes/ventas_pdf.php" class="btn btn-primary mb-3">Generar Reporte</a>
 
-                <!-- =========================
-                     MODAL REGISTRAR VENTA
-                ========================== -->
+                <!--  MODAL REGISTRAR VENTA -->
                 <div class="modal fade" id="miModal" tabindex="-1" aria-hidden="true">
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
@@ -278,7 +262,6 @@ $productos = getOptions($conn, "PRODUCTO", "ID_Producto", "Nombre");
             </footer>
         </div>
     </div>
-
     <!-- Modal Confirmar Eliminación -->
     <div class="modal fade" id="confirmar-delete" tabindex="-1" aria-labelledby="confirmar-delete-label" aria-hidden="true">
         <div class="modal-dialog">
@@ -295,13 +278,13 @@ $productos = getOptions($conn, "PRODUCTO", "ID_Producto", "Nombre");
             </div>
         </div>
     </div>
-
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"></script>
+    <script src="js/scripts.js"></script>
+    <script src="js/datatables-simple-demo.js"></script>
     <script>
         new simpleDatatables.DataTable("#datatablesSimple");
-
         // Modal de eliminación
         var eliminarModal = document.getElementById('confirmar-delete');
 eliminarModal.addEventListener('show.bs.modal', function (event) {
@@ -309,8 +292,6 @@ eliminarModal.addEventListener('show.bs.modal', function (event) {
     var href = button.getAttribute('data-href');
     document.getElementById('btn-eliminar').setAttribute('href', href);
 });
-
     </script>
 </body>
 </html>
-

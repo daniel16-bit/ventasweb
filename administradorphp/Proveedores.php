@@ -98,9 +98,13 @@ sqlsrv_free_stmt($stmt);
             <main>
                 <div class="container-fluid px-4">
                     <h1 class="mt-4">PROVEEDORES</h1>
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#miModal">
+                     <ol class="breadcrumb mb-4">
+                    <li class="breadcrumb-item active">COLFAR DE COLOMBIA S.A.S.</li>
+                </ol>
+                    <button type="button" class="btn btn-primary  mb-3" data-bs-toggle="modal" data-bs-target="#miModal">
                         Registrar Proveedor
                     </button>
+                    <a href="Reportes/proveedores_pdf.php" class="btn btn-primary mb-3">Generar Reporte</a>  
 
                     <!-- Modal para registrar proveedor -->
                     <div class="modal fade" id="miModal" tabindex="-1" aria-hidden="true">
@@ -135,13 +139,13 @@ sqlsrv_free_stmt($stmt);
                     </div>
 
                     <!-- Tabla -->
-                    <div class="card mb-4 mt-3">
-                        <div class="card-header">
+                    <div class="card shadow-sm rounded mb-4">
+                        <div class="card-header bg-primary text-white">
                             <i class="fas fa-table me-1"></i>
                             Tabla Proveedores
                         </div>
                         <div class="card-body">
-                            <table id="datatablesSimple">
+                            <table id="datatablesSimple" class="table table-striped table-hover">
                                 <thead>
                                     <tr>
                                         <th>ID</th>
@@ -199,6 +203,7 @@ sqlsrv_free_stmt($stmt);
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"></script>
+    <script src="js/scripts.js"></script>
     <script src="js/datatables-simple-demo.js"></script>
     <script>
         // pasar id al modal de eliminar

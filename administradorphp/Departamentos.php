@@ -72,9 +72,11 @@ if ($stmt === false) {
         <div id="layoutSidenav_content">
             <main class="container-fluid px-4 mt-4">
                 <h1 class="mb-4">DEPARTAMENTOS</h1>
+                <ol class="breadcrumb mb-4">
+                    <li class="breadcrumb-item active">COLFAR DE COLOMBIA S.A.S.</li></ol>
                 <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#miModal">
-                    <i class="fas fa-plus"></i> Registrar Departamento
-                </button>
+                    <i class="fas fa-plus"></i> Registrar Departamento</button>
+                <a href="Reportes/Departamentospdf.php" class="btn btn-primary mb-3">Generar Reporte</a>
 
                 <!-- Modal Registrar -->
                 <div class="modal fade" id="miModal" tabindex="-1">
@@ -118,12 +120,11 @@ if ($stmt === false) {
                                 <?php foreach ($departamentos as $dep): ?>
                                     <tr>
                                         <td><?= $dep['ID_Departamento'] ?></td>
-                                        <td><?= htmlspecialchars($dep['Nombre']) ?></td>
+                                        <td><?= !empty(trim($dep['Nombre'])) ? htmlspecialchars($dep['Nombre']) : '<span class="text-danger">[Sin nombre]</span>' ?></td>
+
                                         <td>
                                             <a href="modificar/modificar_departamento.php?id=<?= $dep['ID_Departamento'] ?>" class="btn btn-primary btn-sm me-1" title="Editar"><i class="fas fa-edit"></i></a>
-<a href="#" data-href="controllers/eliminar_departamentos.php?id=<?= $de['ID_Departamento'] ?>" data-bs-toggle="modal" data-bs-target="#confirmar-delete" class="btn btn-danger btn-sm" title="Eliminar"><i class="fas fa-trash-alt"></i>
-</a>
-
+                                            <a href="#" data-href="controllers/eliminar_departamentos.php?id=<?= $dep['ID_Departamento'] ?>" data-bs-toggle="modal" data-bs-target="#confirmar-delete" class="btn btn-danger btn-sm" title="Eliminar"><i class="fas fa-trash-alt"></i></a>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
@@ -166,7 +167,9 @@ if ($stmt === false) {
 
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/scripts.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"></script>
+    <script src="js/datatables-simple-demo.js"></script>
     <script>
         // DataTable
         const dataTable = new simpleDatatables.DataTable("#datatablesSimple");

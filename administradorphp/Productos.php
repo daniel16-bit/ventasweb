@@ -95,20 +95,20 @@ if ($stmt === false) {
                     </div>
                 </div>
             </div>
-            <div class="sb-sidenav-footer">
-                <div class="small">Conectado como:</div>
-                <?= htmlspecialchars($_SESSION['Prime_Nombre']); ?>
-            </div>
         </nav>
     </div>
 
     <div id="layoutSidenav_content">
         <main>
-            <div class="container-fluid px-4 mt-4">
+            <div class="container-fluid px-4">
                 <h1 class="mt-4">Productos</h1>
                 <ol class="breadcrumb mb-4">
                     <li class="breadcrumb-item active">COLFAR DE COLOMBIA S.A.S.</li>
                 </ol>
+                                    <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#miModal">
+                        <i class="fas fa-plus"></i> Registrar Usuario
+                    </button>
+                    <a href="Reportes/productos_pdf.php" class="btn btn-primary mb-3">Generar Reporte</a>
 
                 <div class="card mb-4">
                     <div class="card-header bg-primary text-white">
@@ -154,6 +154,10 @@ if ($stmt === false) {
        <i class="fas fa-trash-alt"></i>
     </a>
 </td>
+<td class="<?= $prod['Existencia'] <= 5 ? 'table-danger' : '' ?>">
+    <?= $prod['Existencia'] ?>
+</td>
+
 
                                         </tr>
                                     <?php endforeach; ?>

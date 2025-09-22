@@ -95,10 +95,10 @@ if ($stmt === false) {
                     <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#miModal">
                         <i class="fas fa-plus"></i> Registrar Usuario
                     </button>
-                    <a href="Reportes/usuarios_pdf.php" class="btn btn-secondary mb-3">Generar Reporte</a>
+                    <a href="Reportes/usuarios_pdf.php" class="btn btn-primary mb-3">Generar Reporte</a>
 
-                    <div class="card mb-4">
-                        <div class="card-header">
+                    <div class="card shadow-sm rounded mb-4">
+                        <div class="card-header bg-primary text-white">
                             <i class="fas fa-table me-1"></i>
                             Tabla de Usuarios
                         </div>
@@ -210,8 +210,8 @@ if ($stmt === false) {
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="js/scripts.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"></script>
+    <script src="js/scripts.js"></script>
     <script src="js/datatables-simple-demo.js"></script>
 
     <script>

@@ -14,7 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Consulta con parámetros
     $sql = "INSERT INTO colfar.USUARIO 
-            (Prime_Nombre, Segundo_Nombre, Prime_Apellido, Segundo_Apellido, Telefono, Correo, Contraseña, Rol) 
+            (Prime_Nombre, Segundo_Nombre, Prime_Apellido, Segundo_Apellido, Telefono, Correo, Contrasena, Rol) 
             VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
     // Parámetros en el mismo orden que la consulta

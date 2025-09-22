@@ -86,7 +86,7 @@ if ($stmt === false) {
         <main class="container-fluid px-4 mt-4">
             <h1>Clientes</h1>
             <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#miModal">Registrar Nuevo Cliente</button>
-            <a href="Reportes/Clientes_pdf.php" class="btn btn-success mb-3">Generar Reporte</a>
+            <a href="Reportes/Clientes_pdf.php" class="btn btn-primary mb-3">Generar Reporte</a>
 
             <!-- Modal Registrar Cliente -->
             <div class="modal fade" id="miModal" tabindex="-1" aria-labelledby="miModalLabel">
@@ -201,6 +201,8 @@ if ($stmt === false) {
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"></script>
+<script src="js/scripts.js"></script>
+<script src="js/datatables-simple-demo.js"></script>
 <script>
     const dataTable = new simpleDatatables.DataTable("#datatablesSimple");
 

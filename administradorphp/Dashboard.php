@@ -1,11 +1,7 @@
 <?php
 session_start();
 
-// Validar sesión
-if(!isset($_SESSION['Prime_Nombre'])){
-    header("Location: ../index.php"); // Redirige si no hay sesión
-    exit;
-}
+
 ?>
 
 <!DOCTYPE html>
@@ -87,7 +83,7 @@ if(!isset($_SESSION['Prime_Nombre'])){
                 <div class="collapse" id="collapseFacturas" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
                         <a class="nav-link" href="FacturasEmitidas.php">Emitidas</a>
-                        <a class="nav-link" href="FacturasRecibidas.php">Recibidas</a>
+                        <a class="nav-link" href="factura.php">Recibidas</a>
                     </nav>
                 </div>
 
