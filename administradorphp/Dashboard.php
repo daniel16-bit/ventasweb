@@ -99,11 +99,6 @@ if(!isset($_SESSION['Prime_Nombre'])){
                 </a>
             </div>
         </div>
-
-        <div class="sb-sidenav-footer">
-            <div class="small">Conectado como:</div>
-            <?php echo htmlspecialchars($_SESSION['Prime_Nombre']); ?>
-        </div>
     </nav>
 </div>
 

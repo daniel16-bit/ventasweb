@@ -30,7 +30,11 @@
             </div>
             <div class="form_input">
                 <label for="password">Contraseña:</label>
-                <input type="password" class="form-user" id="password" placeholder="Contraseña"   name="password" required>
+                <div class="password-container">
+    <input type="password" class="form-user" id="password" placeholder="Contraseña" name="password" required>
+    <i class="material-icons toggle-password">visibility</i>
+</div>
+
             </div>
             <div>
             <button type="submit" class="btn btn-primary btn-block">Iniciar Sesión</button>
@@ -103,6 +107,19 @@
     function deleteCookie(name) {
         document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     }
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const toggleIcon = document.querySelector('.toggle-password');
+        const passwordInput = document.getElementById('password');
+
+        toggleIcon.addEventListener('click', function () {
+            const isPassword = passwordInput.type === 'password';
+            passwordInput.type = isPassword ? 'text' : 'password';
+            toggleIcon.textContent = isPassword ? 'visibility_off' : 'visibility';
+        });
+    });
 </script>
 
 </body>

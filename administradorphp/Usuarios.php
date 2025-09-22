@@ -28,6 +28,8 @@ if ($stmt === false) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="css/styles.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js"></script>
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js"></script>
+
 </head>
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -131,7 +133,15 @@ if ($stmt === false) {
     <td><?php echo htmlspecialchars($usuario['Telefono']); ?></td>
     <td><?php echo htmlspecialchars($usuario['Correo']); ?></td>
     <td><?php echo htmlspecialchars($usuario['rol']); ?></td>
-    <td><?php echo htmlspecialchars($usuario['Contrasena']); ?></td>
+    <td>
+    <div class="input-group input-group-sm">
+        <input type="password" class="form-control password-field" value="<?php echo htmlspecialchars($usuario['Contrasena']); ?>" readonly>
+        <button class="btn btn-outline-secondary toggle-password" type="button">
+            <i class="fas fa-eye"></i>
+        </button>
+    </div>
+</td>
+
  
     <td>
         <a href="./modificar/modificar_usuario.php?id=<?php echo $usuario['ID_Usuario']; ?>"  class="btn btn-primary btn-sm me-1" title="Editar"><i class="fas fa-edit"></i>
@@ -230,5 +240,18 @@ if ($stmt === false) {
         });
     });
     </script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const toggleIcon = document.querySelector('.toggle-password');
+        const passwordInput = document.getElementById('password');
+
+        toggleIcon.addEventListener('click', function () {
+            const isPassword = passwordInput.type === 'password';
+            passwordInput.type = isPassword ? 'text' : 'password';
+            toggleIcon.textContent = isPassword ? 'visibility_off' : 'visibility';
+        });
+    });
+</script>
 </body>
 </html>

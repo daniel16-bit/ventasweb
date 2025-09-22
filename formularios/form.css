@@ -352,6 +352,25 @@ input[type="email"]:focus {
     border-radius: 4px; /* Esquinas redondeadas */
 }
 
+.password-container {
+    position: relative;
+    width: 100%;
+}
+
+.password-container input {
+    width: 100%;
+    padding-right: 40px; /* Espacio para el ícono */
+}
+
+.password-container .toggle-password {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #888;
+    user-select: none;
+}
 
 
 
