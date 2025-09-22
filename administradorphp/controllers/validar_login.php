@@ -1,5 +1,5 @@
 <?php
-include_once '../models/conexion.php'; // Conexión a SQL Server
+include_once '../models/conexion.php'; // aquí se obtiene $conn
 session_start();
 
 if (isset($_POST['user']) && isset($_POST['password'])) {
@@ -18,56 +18,57 @@ if (isset($_POST['user']) && isset($_POST['password'])) {
         header('location: ../../formularios/formulario.php?error=Usuario Requerido');
         exit();
     } elseif (empty($password)) {
-        header('location: ../../formularios/formulario.php?error=Contraseña Requerida');
+        header('location: ../../formularios/formulario.php?error=Contrasena Requerida');
         exit();
     }
 
-    // Consulta preparada
-    $sql = "SELECT ID_Usuario, Prime_Nombre, Segundo_Nombre, Prime_Apellido, Segundo_Apellido, Contrasena, Correo, rol 
-            FROM colfar.USUARIO 
+    // ⚡ Consulta SQL para SQL Server
+    $sql = "SELECT ID_Usuario, Prime_Nombre, Segundo_Nombre, Prime_Apellido, Segundo_Apellido, [Contrasena], Correo, rol
+            FROM colfar.usuario
             WHERE Correo = ? OR Telefono = ?";
 
     $params = array($usuario, $usuario);
-    $stmt = sqlsrv_prepare($conn, $sql, $params);
+    $stmt = sqlsrv_query($conn, $sql, $params);
 
-    if ($stmt && sqlsrv_execute($stmt)) {
-        if ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
+    if ($stmt === false) {
+        die(print_r(sqlsrv_errors(), true));
+    }
 
-            // ✅ Comparar con password_verify
-            if (password_verify($password, $row['Contraseña'])) {
-                // Iniciar sesión
-                $_SESSION['ID_Usuario'] = $row['ID_Usuario'];
-                $_SESSION['Prime_Nombre'] = $row['Prime_Nombre'];
-                $_SESSION['Prime_Apellido'] = $row['Prime_Apellido'];
-                $_SESSION['rol'] = $row['rol'];
+    if (sqlsrv_has_rows($stmt)) {
+        $row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC);
 
-                // Redirección según rol
-                if (strtolower($row['rol']) == 'vendedor') {
-                    header('Location: ../../vendedor/DashboardVendedor.php');
-                } elseif (strtolower($row['rol']) == 'administrador') {
-                    header('Location: ../Dashboard.php');
-                } else {
-                    header('Location: ../../formularios/formulario.php?error=Rol de usuario no válido');
-                }
+        // ✅ Verificar contraseña con hash
+        if (password_verify($password, $row['Contrasena'])) {
+            $_SESSION['ID_Usuario'] = $row['ID_Usuario'];
+            $_SESSION['Prime_Nombre'] = $row['Prime_Nombre'];
+            $_SESSION['Prime_Apellido'] = $row['Prime_Apellido'];
+            $_SESSION['rol'] = $row['rol'];
+
+            $rol_usuario = strtolower($row['rol']);
+
+            if ($rol_usuario == 'vendedor') {
+                header('Location: ../../vendedor/DashboardVendedor.php');
                 exit();
-
+            } elseif ($rol_usuario == 'administrador') {
+                header('Location: ../Dashboard.php');
+                exit();
             } else {
-                // Contraseña incorrecta
-                header('Location: ../../formularios/formulario.php?error=Usuario o contraseña incorrectos');
+                header('Location: ../../formularios/formulario.php?error=Rol de usuario no válido');
                 exit();
             }
-
         } else {
-            // Usuario no encontrado
-            header('Location: ../../formularios/formulario.php?error=Usuario no registrado');
+            header('Location: ../../formularios/formulario.php?error=Usuario o contraseña incorrectos');
             exit();
         }
-
     } else {
-        // Error en la ejecución
-        die(print_r(sqlsrv_errors(), true));
+        header('Location: ../../formularios/formulario.php?error=Usuario no registrado');
+        exit();
     }
 
     sqlsrv_free_stmt($stmt);
 }
 ?>
+
+}
+?>
+
