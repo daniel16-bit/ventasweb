@@ -1,7 +1,11 @@
 <?php
 session_start();
 
-
+// Validar sesión
+if(!isset($_SESSION['Prime_Nombre'])){
+    header("Location: ../index.php"); // Redirige si no hay sesión
+    exit;
+}
 ?>
 
 <!DOCTYPE html>
