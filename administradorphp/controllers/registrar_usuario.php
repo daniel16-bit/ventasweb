@@ -1,5 +1,5 @@
 <?php
-include "../models/conexion.php"; // aquí deberías tener tu conexión con sqlsrv_connect()
+include "../models/conexion.php"; // conexión con SQL Server
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Obtener los datos del formulario
@@ -9,7 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $segundo_apellido = $_POST['segundo_apellido'];
     $telefono         = $_POST['telefono'];
     $correo           = $_POST['correo'];
-    $contraseña       = $_POST['contraseña'];
+    $contraseña       = password_hash($_POST['contraseña'], PASSWORD_DEFAULT); // ✅ ENCRIPTACIÓN AQUÍ
     $rol              = $_POST['rol'];
 
     // Consulta con parámetros
@@ -33,11 +33,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt = sqlsrv_query($conn, $sql, $params);
 
     if ($stmt) {
-        // Redirigir si se insertó correctamente
         header("Location: ../Usuarios.php");
         exit();
     } else {
-        // Mostrar error si falla
         echo "Error al insertar usuario: <br>";
         die(print_r(sqlsrv_errors(), true));
     }
@@ -45,3 +43,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     echo "Método de solicitud no válido.";
 }
 ?>
+
