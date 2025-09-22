@@ -24,7 +24,7 @@
         }
 
         // Consulta SQL usando parámetros preparados para evitar inyección SQL
-        $sql = "SELECT (ID_Usuario, Prime_Nombre, Segundo_Nombre, Prime_Apellido, Segundo_Apellido, Contraseña, Correo, rol FROM USUARIO WHERE Correo = ? OR Contraseña = ?";
+        $sql = "SELECT (ID_Usuario, Prime_Nombre, Segundo_Nombre, Prime_Apellido, Segundo_Apellido, Contrasena, Correo, rol FROM colfar.USUARIO WHERE Correo = ? OR Contrasena = ?";
         $stmt = mysqli_prepare($conexion, $sql);
         
         // Vincular los parámetros
@@ -41,7 +41,7 @@
             $row = mysqli_fetch_assoc($resultado);
 
             // Comparar la contraseña con la almacenada (recomendación usar password_verify)
-            if (password_verify($password, $row['Contraseña'])) { 
+            if (password_verify($password, $row['Contrasena'])) { 
                 $_SESSION['ID_Usuario'] = $row['ID_Usuario'];
                 $_SESSION['Prime_Nombre'] = $row['Prime_Nombre'];
                 $_SESSION['rol'] = $row['rol'];
