@@ -23,7 +23,7 @@ if (isset($_POST['user']) && isset($_POST['password'])) {
     }
 
     // ⚡ Consulta SQL para SQL Server
-    $sql = "SELECT ID_Usuario, Prime_Nombre, Segundo_Nombre, Prime_Apellido, Segundo_Apellido, [Contrasena], Correo, rol
+    $sql = "SELECT ID_Usuario, Prime_Nombre, Segundo_Nombre, Prime_Apellido, Segundo_Apellido, Contrasena, Correo, rol
             FROM colfar.usuario
             WHERE Correo = ? OR Telefono = ?";
 
