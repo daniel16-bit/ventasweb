@@ -1,3 +1,29 @@
 
-ErrorDocument 404 http://localhost/Colfar/404.html
-ErrorDocument 500 http://localhost/Colfar/500.html
+# Seguridad básica y manejo de errores
+
+# Versión mínima de Apache requerida para algunas directivas
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # Evitar acceso directo a archivos sensibles
+  RewriteRule ^(config|models|controllers)/.*\.php$ - [F,L]
+
+  # Redirección a HTTPS (descomentar si tienes SSL)
+  #RewriteCond %{HTTPS} !=on
+  #RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+  # Quitar index.php de las URLs si usas front controller (opcional)
+  #RewriteCond %{REQUEST_FILENAME} !-f
+  #RewriteCond %{REQUEST_FILENAME} !-d
+  #RewriteRule ^ index.php [L]
+</IfModule>
+
+# Deshabilitar listado de directorios
+Options -Indexes
+
+# Tipo de caracteres por defecto
+AddDefaultCharset UTF-8
+
+# Manejo de errores con rutas relativas
+ErrorDocument 404 /404.html
+ErrorDocument 500 /500.html

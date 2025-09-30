@@ -1,3 +1,90 @@
+/* ==========================
+   Estilos Modal Ajustes de Perfil
+   (scoped por #modalAjustes para no interferir con otros modales)
+   ========================== */
+#modalAjustes .modal-content {
+  border: 0;
+  border-radius: 14px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18);
+}
+
+#modalAjustes .modal-header {
+  background: linear-gradient(135deg, #0d6efd, #1c74ff);
+  color: #fff;
+  border: 0;
+  border-top-left-radius: 14px;
+  border-top-right-radius: 14px;
+  padding: 16px 20px;
+}
+
+#modalAjustes .modal-title {
+  font-weight: 700;
+  letter-spacing: .2px;
+}
+
+#modalAjustes .btn-close {
+  filter: invert(1);
+  opacity: .9;
+}
+
+#modalAjustes .modal-body {
+  padding: 18px 20px 8px;
+}
+
+#modalAjustes .modal-footer {
+  padding: 14px 20px 18px;
+  border-top: 0;
+}
+
+#modalAjustes .form-label {
+  font-weight: 600;
+  color: #212529;
+}
+
+#modalAjustes .form-control {
+  border-radius: 10px;
+  border: 1px solid #e3e6ef;
+  padding: 10px 12px;
+  transition: box-shadow .2s ease, border-color .2s ease;
+}
+
+#modalAjustes .form-control:focus {
+  border-color: #0d6efd;
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.15);
+}
+
+#modalAjustes .text-muted {
+  font-size: .86rem;
+}
+
+#modalAjustes .btn-primary {
+  border-radius: 10px;
+  font-weight: 600;
+  padding: 10px 16px;
+  box-shadow: 0 6px 16px rgba(13, 110, 253, 0.25);
+}
+
+#modalAjustes .btn-secondary {
+  border-radius: 10px;
+  font-weight: 600;
+  padding: 10px 16px;
+}
+
+@media (min-width: 576px) {
+  #modalAjustes .modal-dialog {
+    max-width: 520px;
+  }
+}
+
+/* Pequeños refinamientos visuales */
+#modalAjustes .mb-3 {
+  margin-bottom: 0.9rem !important;
+}
+
+#modalAjustes .modal-footer .btn + .btn {
+  margin-left: 8px;
+}
+
 @charset "UTF-8";
 /*!
 * Start Bootstrap - SB Admin v7.0.7 (https://startbootstrap.com/template/sb-admin)

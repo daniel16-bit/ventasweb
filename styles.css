@@ -1,4 +1,28 @@
-/* General Resets and Base Styles */
+/* Botón flotante de WhatsApp */
+.whatsapp-button {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    width: 60px;
+    height: 60px;
+    z-index: 9999;
+    transition: transform 0.2s;
+}
+.whatsapp-button:hover {
+    transform: scale(1.1) rotate(-5deg);
+}/* Botón flotante de WhatsApp */
+.whatsapp-button {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    width: 60px;
+    height: 60px;
+    z-index: 9999;
+    transition: transform 0.2s;
+}
+.whatsapp-button:hover {
+    transform: scale(1.1) rotate(-5deg);
+}/* General Resets and Base Styles */
 body {
     margin: 0;
     padding: 0;
