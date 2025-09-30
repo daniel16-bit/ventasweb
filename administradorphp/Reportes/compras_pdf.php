@@ -1,5 +1,5 @@
 <?php
-include "../models/conexion_sqlsrv.php"; // Archivo de conexión a SQL Server
+include "../models/conexion.php"; // Archivo de conexión a SQL Server
 
 $where = "";
 $params = array();

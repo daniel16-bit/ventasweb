@@ -233,78 +233,72 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
 
     <form action="" method="POST">
-        <div class="modal fade" id="miModal" tabindex="-1" aria-labelledby="miModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="miModalLabel">REGISTRAR PEDIDO</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-                    <div class="modal-body">
-    <!-- Select Cliente -->
-    <select class="form-control mb-2" name="id_cliente" required>
-        <option value="" disabled selected>Seleccione Cliente</option>
-        <?php
-        sqlsrv_fetch($resultClientes, SQLSRV_SCROLL_ABSOLUTE, 0);
-        while ($cliente = sqlsrv_fetch_array($resultClientes, SQLSRV_FETCH_ASSOC)) { ?>
-            <option value="<?= $cliente['ID_Cliente'] ?>"><?= htmlspecialchars($cliente['Nombre']) ?></option>
-        <?php } ?>
-    </select>
-
-    <input type="text" class="form-control mb-2" placeholder="Teléfono" name="telefono" required />
-    <input type="text" class="form-control mb-2" placeholder="Dirección" name="direccion" required />
-    <input type="text" class="form-control mb-2" placeholder="Descripción del Pedido" name="descripcion" required />
-    <input type="number" class="form-control mb-2" placeholder="Total del Pedido" name="total_pedido" required />
-
-    <!-- Select Método de Pago -->
-    <select class="form-control mb-3" name="metodo_pago" required>
-        <option value="" disabled selected>Seleccione Método de Pago</option>
-        <option value="Efectivo">Efectivo</option>
-        <option value="Nequi">Nequi</option>
-        <option value="Daviplata">Daviplata</option>
-    </select>
-
-    <!-- Productos dinámicos -->
-    <div id="productos-container">
-        <div class="producto-item border rounded p-2 mb-2">
-            <div class="row">
-                <div class="col-md-5">
-                    <label>Producto:</label>
-                    <select class="form-control" name="id_producto[]" required>
-                        <option value="" disabled selected>Seleccione Producto</option>
+    <div class="modal fade" id="miModal" tabindex="-1" aria-labelledby="miModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="miModalLabel">REGISTRAR PEDIDO</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Select Cliente -->
+                    <select class="form-control mb-2" name="id_cliente" required>
+                        <option value="" disabled selected>Seleccione Cliente</option>
                         <?php
-                        sqlsrv_fetch($resultProductos, SQLSRV_SCROLL_ABSOLUTE, 0);
-                        while ($producto = sqlsrv_fetch_array($resultProductos, SQLSRV_FETCH_ASSOC)) { ?>
-                            <option value="<?= $producto['ID_Producto'] ?>"><?= htmlspecialchars($producto['Nombre']) ?></option>
+                        sqlsrv_fetch($resultClientes, SQLSRV_SCROLL_ABSOLUTE, 0);
+                        while ($cliente = sqlsrv_fetch_array($resultClientes, SQLSRV_FETCH_ASSOC)) { ?>
+                            <option value="<?= $cliente['ID_Cliente'] ?>"><?= htmlspecialchars($cliente['Nombre']) ?></option>
                         <?php } ?>
                     </select>
+
+                    <input type="text" class="form-control mb-2" placeholder="Teléfono" name="telefono" required />
+                    <input type="text" class="form-control mb-2" placeholder="Dirección" name="direccion" required />
+                    <input type="text" class="form-control mb-2" placeholder="Descripción del Pedido" name="descripcion" required />
+                    <input type="number" class="form-control mb-2" placeholder="Total del Pedido" name="total_pedido" required />
+
+                    <!-- Select Método de Pago -->
+                    <select class="form-control mb-3" name="metodo_pago" required>
+                        <option value="" disabled selected>Seleccione Método de Pago</option>
+                        <option value="Efectivo">Efectivo</option>
+                        <option value="Nequi">Nequi</option>
+                        <option value="Daviplata">Daviplata</option>
+                    </select>
+
+                    <!-- Producto único -->
+                    <div class="producto-item border rounded p-2 mb-2">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <label>Producto:</label>
+                                <select class="form-control" name="id_producto" required>
+                                    <option value="" disabled selected>Seleccione Producto</option>
+                                    <?php
+                                    sqlsrv_fetch($resultProductos, SQLSRV_SCROLL_ABSOLUTE, 0);
+                                    while ($producto = sqlsrv_fetch_array($resultProductos, SQLSRV_FETCH_ASSOC)) { ?>
+                                        <option value="<?= $producto['ID_Producto'] ?>"><?= htmlspecialchars($producto['Nombre']) ?></option>
+                                    <?php } ?>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Cantidad:</label>
+                                <input type="number" name="cantidad" class="form-control" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label>Valor Total:</label>
+                                <input type="number" name="valor_total" class="form-control" required>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-md-3">
-                    <label>Cantidad:</label>
-                    <input type="number" name="cantidad[]" class="form-control" required>
-                </div>
-                <div class="col-md-3">
-                    <label>Valor Total:</label>
-                    <input type="number" name="valor_total[]" class="form-control" required>
-                </div>
-                <div class="col-md-1 d-flex align-items-end">
-                    <button type="button" class="btn btn-danger btn-sm remove-producto">X</button>
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Registrar</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                 </div>
             </div>
         </div>
     </div>
+</form>
 
-    <button type="button" id="add-producto" class="btn btn-secondary btn-sm">+ Agregar otro producto</button>
-</div>
-
-<div class="modal-footer">
-    <button type="submit" class="btn btn-primary">Registrar</button>
-    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-</div>
-                </div>
-            </div>
-        </div>
-    </form>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>

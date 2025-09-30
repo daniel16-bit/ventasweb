@@ -2,7 +2,7 @@
 header("Content-type: application/xls");
 header("Content-Disposition: attachment; filename=Clientes.xls");
 
-include "../models/conexion_sqlsrv.php"; // Conexión a SQL Server
+include "../models/conexion.php"; // Conexión a SQL Server
 
 $where = "";
 $params = array();

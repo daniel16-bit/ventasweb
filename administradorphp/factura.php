@@ -1,7 +1,6 @@
 <?php
 include '../models/conexion.php';
-$sqlFacturas = "
-    SELECT f.ID_Factura, f.Fecha_Factura, c.Nombre AS Cliente, p.Valor_Total
+$sqlFacturas = "SELECT f.ID_Factura, f.Fecha_Factura, c.Nombre AS Cliente, p.Valor_Total
     FROM colfar.factura f
     JOIN colfar.pedido p ON f.ID_Venta = p.ID_Pedido
     JOIN colfar.cliente c ON p.ID_Cliente = c.ID_Cliente
