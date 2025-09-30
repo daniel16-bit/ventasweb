@@ -1,5 +1,5 @@
 <?php  
-include "../models/conexion_sqlserver.php"; // Conexión SQL Server
+include "../models/conexion.php"; // Conexión SQL Server
 
 $where = "";
 if (!empty($_POST['nom'])) {
