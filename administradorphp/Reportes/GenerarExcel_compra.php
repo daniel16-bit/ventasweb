@@ -30,7 +30,7 @@ JOIN colfar.VENDEDOR vd ON v.ID_Vendedor = vd.ID_Vendedor
 JOIN colfar.USUARIO u ON vd.ID_Usuario = u.ID_Usuario
 $where";
 
-$stmt = sqlsrv_query($$conn, $sql, $params);
+$stmt = sqlsrv_query($conn, $sql, $params);
 if(!$stmt){
     die(print_r(sqlsrv_errors(), true));
 }
