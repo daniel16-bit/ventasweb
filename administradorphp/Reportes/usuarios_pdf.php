@@ -10,8 +10,8 @@ if (!empty($_POST['nom'])) {
               OR Segundo_Apellido LIKE '%$valor%'";
 }
 
-$sql = "SELECT * FROM USUARIO $where";
-$resultado = $conexion->query($sql);
+$sql = "SELECT * FROM colfar.USUARIO $where";
+$resultado = $conn->query($sql);
 ?>
 <!DOCTYPE html>
 <html lang="es">

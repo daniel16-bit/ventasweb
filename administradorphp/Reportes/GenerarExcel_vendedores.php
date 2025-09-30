@@ -17,12 +17,12 @@ $sql = "SELECT
     U.Prime_Apellido AS Apellido_Vendedor, 
     U.Segundo_Apellido AS Segundo_Apellido_Vendedor,
     Z.NombreZona AS Zona
-FROM VENDEDOR VE
-JOIN USUARIO U ON VE.ID_Usuario = U.ID_Usuario
-JOIN ZONA Z ON VE.ID_Zona = Z.ID_Zona
+FROM colfar.VENDEDOR VE
+JOIN colfar.USUARIO U ON VE.ID_Usuario = U.ID_Usuario
+JOIN colfar.ZONA Z ON VE.ID_Zona = Z.ID_Zona
 $where";
 
-$resultado = $conexion->query($sql);
+$resultado = $conn->query($sql);
 ?>
 
 <table border="1">

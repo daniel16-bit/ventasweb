@@ -13,8 +13,8 @@ if (!empty($_POST['nom'])) {
 }
 
 // Consulta SQL Server
-$sql = "SELECT ID_Departamento, Nombre FROM DEPARTAMENTO $where";
-$stmt = sqlsrv_query($conexion, $sql, $params);
+$sql = "SELECT ID_Departamento, Nombre FROM colfar.DEPARTAMENTO $where";
+$stmt = sqlsrv_query($conn, $sql, $params);
 if(!$stmt){
     die(print_r(sqlsrv_errors(), true));
 }

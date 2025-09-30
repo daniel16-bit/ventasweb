@@ -11,8 +11,8 @@ if (!empty($_POST['nom'])) {
 }
 
 $sql = "SELECT ID_Usuario, Prime_Nombre, Segundo_Nombre, Prime_Apellido, Segundo_Apellido, Telefono, Correo 
-        FROM USUARIO $where";
-$resultado = $conexion->query($sql);
+        FROM colfar.USUARIO $where";
+$resultado = $conn->query($sql);
 ?>
 
 <table border="1">

@@ -17,16 +17,13 @@ $sql = "SELECT
     U.Prime_Apellido AS Apellido_Vendedor, 
     U.Segundo_Apellido AS Segundo_Apellido_Vendedor,
     Z.NombreZona AS Zona
-FROM 
-    VENDEDOR VE
-JOIN 
-    USUARIO U ON VE.ID_Usuario = U.ID_Usuario
-JOIN 
-    ZONA Z ON VE.ID_Zona = Z.ID_Zona
+FROM colfar.VENDEDOR VE
+JOIN colfar.USUARIO U ON VE.ID_Usuario = U.ID_Usuario
+JOIN colfar.ZONA Z ON VE.ID_Zona = Z.ID_Zona
 $where
 ORDER BY VE.ID_Vendedor";
 
-$resultado = sqlsrv_query($conexion, $sql);
+$resultado = sqlsrv_query($conn, $sql);
 
 ?>
 <!DOCTYPE html>

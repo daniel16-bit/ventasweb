@@ -13,8 +13,8 @@ if (!empty($_POST['nom'])) {
 }
 
 // Consulta SQL Server
-$sql = "SELECT * FROM CIUDAD $where";
-$stmt = sqlsrv_query($conexion, $sql, $params);
+$sql = "SELECT * FROM colfar.CIUDAD $where";
+$stmt = sqlsrv_query($conn, $sql, $params);
 
 if(!$stmt){
     die(print_r(sqlsrv_errors(), true));
