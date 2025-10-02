@@ -14,7 +14,6 @@ $connectionOptions = array(
     "Uid" => $uid,
     "PWD" => $pwd,
     "CharacterSet" => "UTF-8",
-    "ConnectionTimeout" => 30,
     "LoginTimeout" => 30,
     "Encrypt" => true,
     "TrustServerCertificate" => false,
@@ -28,12 +27,13 @@ $conn = sqlsrv_connect($serverName, $connectionOptions);
 if ($conn === false) {
     $errors = sqlsrv_errors();
     error_log("Error de conexión a la base de datos: " . print_r($errors, true));
-    
-    // En desarrollo, mostrar errores detallados
-    if ($_ENV['APP_ENV'] === 'development' || !isset($_ENV['APP_ENV'])) {
+
+    // Detectar entorno
+    $app_env = $_ENV['APP_ENV'] ?? 'development';
+
+    if ($app_env === 'development') {
         die("Error de conexión a la base de datos: " . print_r($errors, true));
     } else {
-        // En producción, mostrar mensaje genérico
         die("Error de conexión. Por favor, contacte al administrador del sistema.");
     }
 }
@@ -51,3 +51,4 @@ function cerrarConexion($conn) {
 // Registrar función para cerrar conexión al finalizar script
 register_shutdown_function('cerrarConexion', $conn);
 ?>
+
