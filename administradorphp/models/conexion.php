@@ -14,8 +14,7 @@ $connectionOptions = array(
     "Uid" => $uid,
     "PWD" => $pwd,
     "CharacterSet" => "UTF-8",
-    "ConnectionTimeout" => 30,
-    "LoginTimeout" => 30,
+    "LoginTimeout" => 30, // ✅ Correcta
     "Encrypt" => true,
     "TrustServerCertificate" => false,
     "ReturnDatesAsStrings" => true
@@ -51,3 +50,4 @@ function cerrarConexion($conn) {
 // Registrar función para cerrar conexión al finalizar script
 register_shutdown_function('cerrarConexion', $conn);
 ?>
+
