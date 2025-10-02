@@ -40,6 +40,5 @@ $result = sqlsrv_query($conn, $sqlFacturas);
         <?php } ?>
     </tbody>
 </table>
-
 </body>
 </html>
