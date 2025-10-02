@@ -1,15 +1,10 @@
 <?php 
 // Configuración global y sesión segura
-include_once '../config/config.php';
 
 // Incluir la conexión a la base de datos
 include '../models/conexion.php'; // Este archivo debe contener tu conexión con la base de datos
 
-// Verificación de sesión de usuario
-if (!function_exists('validateUserSession') || !validateUserSession()) {
-    header('Location: ../formularios/formulario.php');
-    exit();
-}
+
 
 // Consulta para obtener los departamentos
 $sql = "SELECT * FROM colfar.DEPARTAMENTO";
