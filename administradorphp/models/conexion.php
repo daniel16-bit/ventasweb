@@ -1,38 +1,41 @@
 <?php
-// ========================================
-// CONFIGURACIÓN DE CONEXIÓN A SQL SERVER
-// ========================================
+// Configuración de la base de datos de Azure SQL
+// IMPORTANTE: Para producción, usa variables de entorno en lugar de credenciales hardcodeadas
 
-// ⚠️ ¡IMPORTANTE! Para producción, deberías mover tus credenciales a un archivo .env o a variables de entorno
+// Verificar si las variables de entorno están configuradas
+$serverName = $_ENV['DB_SERVER'] ?? "colfar-db1.database.windows.net";
+$databaseName = $_ENV['DB_NAME'] ?? "colfar";
+$uid = $_ENV['DB_USER'] ?? "colfardb";
+$pwd = $_ENV['DB_PASSWORD'] ?? "Daniel2005";
 
-// Configuración directa (puedes ajustar manualmente)
-$serverName   = "colfar-db1.database.windows.net";
-$databaseName = "colfar";
-$uid          = "colfardb";
-$pwd          = "Daniel2005";
-
-// Opciones válidas para sqlsrv_connect
+// Configuración de conexión mejorada
 $connectionOptions = array(
-    "Database"               => $databaseName,
-    "Uid"                    => $uid,
-    "PWD"                    => $pwd,
-    "CharacterSet"           => "UTF-8",
-    "LoginTimeout"           => 30,
-    "Encrypt"                => true,
+    "Database" => $databaseName,
+    "Uid" => $uid,
+    "PWD" => $pwd,
+    "CharacterSet" => "UTF-8",
+    "ConnectionTimeout" => 30,
+    "LoginTimeout" => 30,
+    "Encrypt" => true,
     "TrustServerCertificate" => false,
-    "ReturnDatesAsStrings"   => true
+    "ReturnDatesAsStrings" => true
 );
 
 // Intentar conectar a la base de datos
 $conn = sqlsrv_connect($serverName, $connectionOptions);
 
-// Si la conexión falla, mostrar error básico (puedes personalizar este mensaje)
+// Verificar si la conexión falló
 if ($conn === false) {
     $errors = sqlsrv_errors();
-    error_log("❌ Error de conexión a la base de datos: " . print_r($errors, true));
+    error_log("Error de conexión a la base de datos: " . print_r($errors, true));
     
-    // Mostrar mensaje genérico al usuario
-    die("❌ No se pudo conectar a la base de datos. Intente más tarde o contacte al administrador.");
+    // En desarrollo, mostrar errores detallados
+    if ($_ENV['APP_ENV'] === 'development' || !isset($_ENV['APP_ENV'])) {
+        die("Error de conexión a la base de datos: " . print_r($errors, true));
+    } else {
+        // En producción, mostrar mensaje genérico
+        die("Error de conexión. Por favor, contacte al administrador del sistema.");
+    }
 }
 
 // Configurar zona horaria
@@ -45,7 +48,6 @@ function cerrarConexion($conn) {
     }
 }
 
-// Cerrar conexión al finalizar
+// Registrar función para cerrar conexión al finalizar script
 register_shutdown_function('cerrarConexion', $conn);
 ?>
-
