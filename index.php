@@ -59,8 +59,8 @@
         </div>
         <div  class="list2"> 
            <ul class=" sty_2">
-             <li><a href="#" class="listas_medi"><i class="fa fa-check" aria-hidden="true"></i>Antiinflamatorios</a></li>
-             <li><a href="#" class="listas_medi"><i class="fa fa-check" aria-hidden="true"></i>aminoácidos esenciales </a></li>
+             <li><a href="medicamentos/index -categoria7-antiinflamatorios.html" class="listas_medi"><i class="fa fa-check" aria-hidden="true"></i>Antiinflamatorios</a></li>
+             <li><a href="medicamentos/index -categoria8-aminoácidos.html" class="listas_medi"><i class="fa fa-check" aria-hidden="true"></i>aminoácidos esenciales </a></li>
              <li><a href="#" class="listas_medi"><i class="fa fa-check" aria-hidden="true"></i>colageno</a></li>
              <li><a href="#" class="listas_medi"><i class="fa fa-check" aria-hidden="true"></i>Sedantes</a></li>
              <li><a href="#" class="listas_medi"><i class="fa fa-check" aria-hidden="true"></i>Mucho más...</a></li>
@@ -73,18 +73,26 @@
 <section class="container2 top-categories">
   <h1 class="heading-1">¡Mejores Categorías!</h1>
   <div class="container-categories">
-      <div class="card-category category-moca">
-          <p>Antiácidos</p>
-          <span>ver más</span>
-      </div>
-      <div class="card-category category-expreso">
-          <p>Antiinflamatorio-Analgésico</p>
-          <span>ver más</span>
-      </div>
-      <div class="card-category category-capuchino">
-          <p>Colagogos-Coléreticos</p>
-          <span>ver más</span>
-      </div>
+<a href="medicamentos/index -categoria4-dermocosmetico.html">
+  <div class="card-category category-moca">
+    <p>Dermocosmetico</p>
+    <span>ver más</span>
+  </div>
+</a>
+
+      <a href="medicamentos/index -categoria7-antiinflamatorios.html">
+  <div class="card-category category-expreso">
+    <p>Antiinflamatorio-Analgésico</p>
+    <span>ver más</span>
+  </div>
+</a>
+      <a href="medicamentos/index -categoria2-alimentosybebidas.html">
+  <div class="card-category category-capuchino">
+    <p>Alimentos y Bebidas</p>
+    <span>ver más</span>
+  </div>
+</a>
+
   </div>
 </section>
 <section class="container3 top-products">
@@ -210,7 +218,7 @@
     </div>
   </div>
   <!--NUESTRO TRABAJO-->
-  <div class="nuestro">
+  <div class="nuestro" id="nuestro-trabajo">
     <h2>Nuestro Trabajo</h2>
     <div class="contenedor_2">
       <div class="columna">

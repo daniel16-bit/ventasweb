@@ -45,7 +45,6 @@
 </div>
 
             <div class="text-center"><a class="small" href="form.olvido.pass.html">¿Has olvidado tu contraseña?</a></div>
-            <div class="text-center"><a class="small" href="form.crea_cuenta.html">¡Crea una cuenta!</a></div>
         </form>
     </div>
     <script>
