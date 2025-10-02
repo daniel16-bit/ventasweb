@@ -1151,5 +1151,314 @@ input[type="search"] {
 	}
 }
 
+/* blog*/
 
+/*
+    ESTILOS GENERALES
+*/
+a {
+    text-decoration: none;
+    color: #007bff;
+    transition: color 0.3s;
+}
+a:hover {
+    color: #0056b3;
+}
+
+h1, h2, h3 {
+    font-family: 'Playfair Display', serif;
+    color: #1a1a1a;
+}
+
+/*
+    HEADER Y NAV
+*/
+.main-header {
+    background-color: #fff;
+    border-bottom: 3px solid #007bff;
+    padding: 15px 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.logo {
+    font-size: 1.8em;
+    font-weight: 700;
+    color: #007bff;
+}
+
+.logo .fas {
+    color: #28a745; /* Color verde para la pastilla */
+    margin-right: 5px;
+}
+
+.nav-bar a {
+    color: #555;
+    margin-left: 25px;
+    font-weight: 500;
+    padding: 5px 0;
+    position: relative;
+}
+
+.nav-bar a.active {
+    color: #007bff;
+    border-bottom: 2px solid #007bff;
+}
+
+/*
+    HERO BANNER
+*/
+.hero-banner {
+    background: linear-gradient(rgba(0, 50, 100, 0.7), rgba(0, 50, 100, 0.7)), url('img/pharmacy_bg.jpg') center/cover; /* Reemplaza 'pharmacy_bg.jpg' con tu imagen */
+    color: white;
+    padding: 80px 50px;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.hero-banner h1 {
+    font-size: 3em;
+    margin-top: 0;
+    color: white;
+}
+
+/*
+    LAYOUT PRINCIPAL DEL BLOG
+*/
+.blog-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    display: flex;
+    gap: 30px;
+}
+
+.post-list {
+    flex: 3; /* Ocupa 3/4 del espacio */
+    min-width: 60%;
+}
+
+.sidebar {
+    flex: 1; /* Ocupa 1/4 del espacio */
+    min-width: 300px;
+}
+
+/*
+    ESTILOS DE POSTS
+*/
+.featured-post {
+    display: flex;
+    background-color: #fff;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.featured-post img {
+    width: 40%;
+    height: auto;
+    object-fit: cover;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+
+.featured-post .post-content {
+    padding: 30px;
+    width: 60%;
+}
+
+.featured-post h2 {
+    font-size: 2.3em;
+    margin: 10px 0 15px 0;
+}
+
+.featured-post .summary {
+    color: #555;
+    line-height: 1.6;
+}
+
+.category {
+    background-color: #28a745;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 0.85em;
+    font-weight: bold;
+    display: inline-block;
+}
+
+.post-meta {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px dashed #eee;
+    font-size: 0.9em;
+    color: #777;
+}
+
+.post-meta span {
+    margin-right: 15px;
+}
+
+/* Posts Regulares */
+.regular-post {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.regular-post img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-bottom: 15px;
+}
+
+.regular-post h3 {
+    font-size: 1.5em;
+    margin: 0 0 10px 0;
+}
+
+/*
+    SIDEBAR
+*/
+.sidebar-section {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.sidebar-section h3 {
+    margin-top: 0;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+}
+
+/* Sección de Búsqueda */
+.search-box {
+    display: flex;
+}
+
+.search-box input {
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px 0 0 5px;
+    font-size: 1em;
+}
+
+.search-box button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.search-box button:hover {
+    background-color: #0056b3;
+}
+
+/* Sección de Categorías */
+.categories-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.categories-section li {
+    padding: 8px 0;
+    border-bottom: 1px dashed #eee;
+}
+
+.categories-section li a {
+    color: #555;
+    display: block;
+}
+
+.categories-section li:last-child {
+    border-bottom: none;
+}
+
+/* Sección de Recientes */
+.latest-post-item {
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px dashed #eee;
+}
+
+.latest-post-item a {
+    font-weight: bold;
+    color: #1a1a1a;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.latest-post-item .date {
+    font-size: 0.85em;
+    color: #999;
+}
+
+
+/*
+    FOOTER
+*/
+.main-footer {
+    background-color: #1a1a1a;
+    color: #ccc;
+    text-align: center;
+    padding: 20px;
+    margin-top: 50px;
+    font-size: 0.9em;
+}
+
+/*
+    RESPONSIVE DESIGN (Para móviles)
+*/
+@media (max-width: 900px) {
+    .blog-container {
+        flex-direction: column;
+    }
+
+    .featured-post {
+        flex-direction: column;
+    }
+
+    .featured-post img {
+        width: 100%;
+        height: 250px;
+        border-radius: 8px 8px 0 0;
+    }
+
+    .featured-post .post-content {
+        width: 100%;
+        padding: 20px;
+    }
+    
+    .post-list, .sidebar {
+        min-width: 100%;
+    }
+
+    .main-header {
+        flex-direction: column;
+        padding: 15px 20px;
+    }
+
+    .nav-bar {
+        margin-top: 15px;
+    }
+    
+    .nav-bar a {
+        margin: 0 10px;
+    }
+}
 

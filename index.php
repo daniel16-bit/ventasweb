@@ -258,8 +258,8 @@
       <ul class="lis_stile">
          <li class="lista_footer"><a class="lis_foo" href="index.php">Inicio</a></li>
          <li class="lista_footer"><a class="lis_foo" href="#SERVICIOS ESPECIALIZADOS">Sevicios</a></li>
-         <li class="lista_footer"><a class="lis_foo" href="./colfar 2.5.5/index.php">productos</a></li>
-         <li class="lista_footer"><a class="lis_foo" href="../ventaswe/formulario.php">Contactenos</a></li>
+         <li class="lista_footer"><a class="lis_foo" href="./medicamentos/index.html">productos</a></li>
+         <li class="lista_footer"><a class="lis_foo" href="formulario.php">Contactenos</a></li>
       </ul>
     </div>
     <div class="copyright">
